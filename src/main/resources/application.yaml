@@ -37,6 +37,12 @@ spring:
         in-memory: true
         pool:
             enabled: false
+
+# --------- 類似 JMX 的東西  ---------
+endpoints:
+    jmx:
+        domain: WebTemplate
+        unique-names: true
         
 # -------- Mail Config --------
 mail:

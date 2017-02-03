@@ -92,6 +92,12 @@ dependencies {
 	compile "org.springframework.boot:spring-boot-starter-mail"
 	compile "org.springframework.boot:spring-boot-starter-websocket"
 	compile "org.springframework.boot:spring-boot-starter-test"
+	
+	// ---------- 待了解這可以幹嘛 ----------
+	// ---------- ref: http://www.jianshu.com/p/734519d3c383 ------------
+	// ---------- ref: http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-jmx.html -----------
+	compile "org.springframework.boot:spring-boot-starter-actuator"
+	compile "org.jolokia:jolokia-core"
 
 	// --------- MyBatis ---------
 	compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootVersion}"
