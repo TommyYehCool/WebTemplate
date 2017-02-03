@@ -95,8 +95,8 @@ dependencies {
 	
 	// ---------- 待了解這可以幹嘛 ----------
 	// ref: https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-enabling
-	// ref: http://www.jianshu.com/p/734519d3c383 ------------
-	// ref: http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-jmx.html -----------
+	// ref: http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-jmx.html
+	// ref: http://www.baeldung.com/spring-boot-actuators
 	compile "org.springframework.boot:spring-boot-starter-actuator"
 	compile "org.jolokia:jolokia-core"
 
