@@ -4,9 +4,11 @@ import com.exfantasy.template.mybatis.model.ActivityMessages;
 import com.exfantasy.template.mybatis.model.ActivityMessagesExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -18,6 +20,9 @@ import org.apache.ibatis.type.JdbcType;
 
 @Mapper
 public interface ActivityMessagesMapper {
+    @DeleteProvider(type=ActivityMessagesSqlProvider.class, method="deleteByExample")
+    int deleteByExample(ActivityMessagesExample example);
+
     @Delete({
         "delete from activity_messages",
         "where msg_id = #{msgId,jdbcType=INTEGER}"
@@ -61,6 +66,12 @@ public interface ActivityMessagesMapper {
         @Result(column="msg", property="msg", jdbcType=JdbcType.VARCHAR)
     })
     ActivityMessages selectByPrimaryKey(Integer msgId);
+
+    @UpdateProvider(type=ActivityMessagesSqlProvider.class, method="updateByExampleSelective")
+    int updateByExampleSelective(@Param("record") ActivityMessages record, @Param("example") ActivityMessagesExample example);
+
+    @UpdateProvider(type=ActivityMessagesSqlProvider.class, method="updateByExample")
+    int updateByExample(@Param("record") ActivityMessages record, @Param("example") ActivityMessagesExample example);
 
     @UpdateProvider(type=ActivityMessagesSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(ActivityMessages record);

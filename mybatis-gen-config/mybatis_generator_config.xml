@@ -133,11 +133,18 @@
 		
 		<!-- Table: activity_messages -->
 		<table schema="testing" tableName="activity_messages" domainObjectName="ActivityMessages"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="true"
+			enableCountByExample="false" enableUpdateByExample="true"
+			enableDeleteByExample="true" enableSelectByExample="true"
 			selectByExampleQueryId="false">
 			
 			<generatedKey column="msg_id" sqlStatement="MySql" identity="true" />
+		</table>
+		
+		<!-- Table: nba_team -->
+		<table schema="testing" tableName="nba_team" domainObjectName="NBATeam"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
 		</table>
 	</context>
 </generatorConfiguration>

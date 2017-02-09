@@ -1,8 +1,10 @@
 package com.exfantasy.template.schedule;
 
-import java.text.SimpleDateFormat;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import com.exfantasy.template.services.nba.NBAService;
 
 /**
  * <pre>
@@ -18,15 +20,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledTasks {
 
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+    @Autowired
+    private NBAService nbaService;
 
 //    @Scheduled(fixedRate = 5000)
 //    public void reportCurrentTime() {
+//    	  SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 //        System.out.println("Fix Scheduler running -> The time is now " + dateFormat.format(new Date()));
 //    }
     
-//    @Scheduled(cron = "0 23 14 9 * ?")
-//    public void testCornSchedule() {
-//    	System.out.println("Cron Scheduler running -> The time is now " + dateFormat.format(new Date()));
-//    }
+    /**
+     * 每天早上 08:00 去抓最新的 NBA 隊伍資料
+     */
+    @Scheduled(cron = "0 0 8 * * *")
+    public void fetchNewestNBATeamsInformation() {
+    	nbaService.fetchNewestNBATeamsInformation();
+    }
 }

@@ -1,57 +1,83 @@
 package com.exfantasy.template.mybatis.mapper;
 
-import com.exfantasy.template.mybatis.model.ActivityMessages;
-import com.exfantasy.template.mybatis.model.ActivityMessagesExample.Criteria;
-import com.exfantasy.template.mybatis.model.ActivityMessagesExample.Criterion;
-import com.exfantasy.template.mybatis.model.ActivityMessagesExample;
+import com.exfantasy.template.mybatis.model.NBATeam;
+import com.exfantasy.template.mybatis.model.NBATeamExample.Criteria;
+import com.exfantasy.template.mybatis.model.NBATeamExample.Criterion;
+import com.exfantasy.template.mybatis.model.NBATeamExample;
 import java.util.List;
-import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
 
-public class ActivityMessagesSqlProvider {
+public class NBATeamSqlProvider {
 
-    public String deleteByExample(ActivityMessagesExample example) {
+    public String insertSelective(NBATeam record) {
         SQL sql = new SQL();
-        sql.DELETE_FROM("activity_messages");
-        applyWhere(sql, example, false);
+        sql.INSERT_INTO("nba_team");
+        
+        if (record.getTeamId() != null) {
+            sql.VALUES("team_id", "#{teamId,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAbbr() != null) {
+            sql.VALUES("abbr", "#{abbr,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCityCh() != null) {
+            sql.VALUES("city_ch", "#{cityCh,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCityEn() != null) {
+            sql.VALUES("city_en", "#{cityEn,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCode() != null) {
+            sql.VALUES("code", "#{code,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getConferenceCh() != null) {
+            sql.VALUES("conference_ch", "#{conferenceCh,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getConferenceEn() != null) {
+            sql.VALUES("conference_en", "#{conferenceEn,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getDivisionCh() != null) {
+            sql.VALUES("division_ch", "#{divisionCh,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getDivisionEn() != null) {
+            sql.VALUES("division_en", "#{divisionEn,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getNameCh() != null) {
+            sql.VALUES("name_ch", "#{nameCh,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getNameEn() != null) {
+            sql.VALUES("name_en", "#{nameEn,jdbcType=VARCHAR}");
+        }
+        
         return sql.toString();
     }
 
-    public String insertSelective(ActivityMessages record) {
-        SQL sql = new SQL();
-        sql.INSERT_INTO("activity_messages");
-        
-        if (record.getActivityId() != null) {
-            sql.VALUES("activity_id", "#{activityId,jdbcType=INTEGER}");
-        }
-        
-        if (record.getCreateUserId() != null) {
-            sql.VALUES("create_user_id", "#{createUserId,jdbcType=INTEGER}");
-        }
-        
-        if (record.getCreateDatetime() != null) {
-            sql.VALUES("create_datetime", "#{createDatetime,jdbcType=TIMESTAMP}");
-        }
-        
-        if (record.getMsg() != null) {
-            sql.VALUES("msg", "#{msg,jdbcType=VARCHAR}");
-        }
-        
-        return sql.toString();
-    }
-
-    public String selectByExample(ActivityMessagesExample example) {
+    public String selectByExample(NBATeamExample example) {
         SQL sql = new SQL();
         if (example != null && example.isDistinct()) {
-            sql.SELECT_DISTINCT("msg_id");
+            sql.SELECT_DISTINCT("team_id");
         } else {
-            sql.SELECT("msg_id");
+            sql.SELECT("team_id");
         }
-        sql.SELECT("activity_id");
-        sql.SELECT("create_user_id");
-        sql.SELECT("create_datetime");
-        sql.SELECT("msg");
-        sql.FROM("activity_messages");
+        sql.SELECT("abbr");
+        sql.SELECT("city_ch");
+        sql.SELECT("city_en");
+        sql.SELECT("code");
+        sql.SELECT("conference_ch");
+        sql.SELECT("conference_en");
+        sql.SELECT("division_ch");
+        sql.SELECT("division_en");
+        sql.SELECT("name_ch");
+        sql.SELECT("name_en");
+        sql.FROM("nba_team");
         applyWhere(sql, example, false);
         
         if (example != null && example.getOrderByClause() != null) {
@@ -61,78 +87,56 @@ public class ActivityMessagesSqlProvider {
         return sql.toString();
     }
 
-    public String updateByExampleSelective(Map<String, Object> parameter) {
-        ActivityMessages record = (ActivityMessages) parameter.get("record");
-        ActivityMessagesExample example = (ActivityMessagesExample) parameter.get("example");
-        
+    public String updateByPrimaryKeySelective(NBATeam record) {
         SQL sql = new SQL();
-        sql.UPDATE("activity_messages");
+        sql.UPDATE("nba_team");
         
-        if (record.getMsgId() != null) {
-            sql.SET("msg_id = #{record.msgId,jdbcType=INTEGER}");
+        if (record.getAbbr() != null) {
+            sql.SET("abbr = #{abbr,jdbcType=VARCHAR}");
         }
         
-        if (record.getActivityId() != null) {
-            sql.SET("activity_id = #{record.activityId,jdbcType=INTEGER}");
+        if (record.getCityCh() != null) {
+            sql.SET("city_ch = #{cityCh,jdbcType=VARCHAR}");
         }
         
-        if (record.getCreateUserId() != null) {
-            sql.SET("create_user_id = #{record.createUserId,jdbcType=INTEGER}");
+        if (record.getCityEn() != null) {
+            sql.SET("city_en = #{cityEn,jdbcType=VARCHAR}");
         }
         
-        if (record.getCreateDatetime() != null) {
-            sql.SET("create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP}");
+        if (record.getCode() != null) {
+            sql.SET("code = #{code,jdbcType=VARCHAR}");
         }
         
-        if (record.getMsg() != null) {
-            sql.SET("msg = #{record.msg,jdbcType=VARCHAR}");
+        if (record.getConferenceCh() != null) {
+            sql.SET("conference_ch = #{conferenceCh,jdbcType=VARCHAR}");
         }
         
-        applyWhere(sql, example, true);
-        return sql.toString();
-    }
-
-    public String updateByExample(Map<String, Object> parameter) {
-        SQL sql = new SQL();
-        sql.UPDATE("activity_messages");
-        
-        sql.SET("msg_id = #{record.msgId,jdbcType=INTEGER}");
-        sql.SET("activity_id = #{record.activityId,jdbcType=INTEGER}");
-        sql.SET("create_user_id = #{record.createUserId,jdbcType=INTEGER}");
-        sql.SET("create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP}");
-        sql.SET("msg = #{record.msg,jdbcType=VARCHAR}");
-        
-        ActivityMessagesExample example = (ActivityMessagesExample) parameter.get("example");
-        applyWhere(sql, example, true);
-        return sql.toString();
-    }
-
-    public String updateByPrimaryKeySelective(ActivityMessages record) {
-        SQL sql = new SQL();
-        sql.UPDATE("activity_messages");
-        
-        if (record.getActivityId() != null) {
-            sql.SET("activity_id = #{activityId,jdbcType=INTEGER}");
+        if (record.getConferenceEn() != null) {
+            sql.SET("conference_en = #{conferenceEn,jdbcType=VARCHAR}");
         }
         
-        if (record.getCreateUserId() != null) {
-            sql.SET("create_user_id = #{createUserId,jdbcType=INTEGER}");
+        if (record.getDivisionCh() != null) {
+            sql.SET("division_ch = #{divisionCh,jdbcType=VARCHAR}");
         }
         
-        if (record.getCreateDatetime() != null) {
-            sql.SET("create_datetime = #{createDatetime,jdbcType=TIMESTAMP}");
+        if (record.getDivisionEn() != null) {
+            sql.SET("division_en = #{divisionEn,jdbcType=VARCHAR}");
         }
         
-        if (record.getMsg() != null) {
-            sql.SET("msg = #{msg,jdbcType=VARCHAR}");
+        if (record.getNameCh() != null) {
+            sql.SET("name_ch = #{nameCh,jdbcType=VARCHAR}");
         }
         
-        sql.WHERE("msg_id = #{msgId,jdbcType=INTEGER}");
+        if (record.getNameEn() != null) {
+            sql.SET("name_en = #{nameEn,jdbcType=VARCHAR}");
+        }
+        
+        sql.WHERE("team_id = #{teamId,jdbcType=INTEGER}");
         
         return sql.toString();
     }
 
-    protected void applyWhere(SQL sql, ActivityMessagesExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(SQL sql, NBATeamExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }

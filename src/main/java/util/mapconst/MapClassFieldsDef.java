@@ -13,7 +13,8 @@ public enum MapClassFieldsDef {
 	MAIL_TEMPLATE_WITH_BLOB("MailTemplateWithBLOBs", MapFieldsOfMailTemplate.values()),
 	ACTIVITY("Activity", MapFieldsOfActivity.values()),
 	JOIN_ACTIVITIES_KEY("JoinActivitiesKey", MapFieldsOfJoinActivities.values()),
-	ACTIVITY_MESSAGES("ActivityMessages", MapFieldsOfActivityMessages.values())
+	ACTIVITY_MESSAGES("ActivityMessages", MapFieldsOfActivityMessages.values()),
+	NBA_TEAM("NBATeam", MapFieldsOfNBATeam.values())
 	;
 	
 	private String className;

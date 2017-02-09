@@ -81,3 +81,19 @@ CREATE TABLE `activity_messages` (
   `msg` varchar(200) NOT NULL,
   PRIMARY KEY (`msg_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `nba_team`;
+CREATE TABLE `nba_team` (
+  `team_id` int(10) NOT NULL,
+  `abbr` varchar(5) NOT NULL,
+  `city_ch` varchar(10) NOT NULL,
+  `city_en` varchar(20) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `conference_ch` varchar(10) NOT NULL,
+  `conference_en` varchar(10) NOT NULL,
+  `division_ch` varchar(10) NOT NULL, 
+  `division_en` varchar(10) NOT NULL,
+  `name_ch` varchar(10) NOT NULL,
+  `name_en` varchar(20) NOT NULL,
+  PRIMARY KEY (`team_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
