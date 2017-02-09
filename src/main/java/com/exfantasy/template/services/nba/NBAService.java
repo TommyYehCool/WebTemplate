@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.exfantasy.template.mybatis.custom.CustomNBATeamMapper;
 import com.exfantasy.template.mybatis.model.NBATeam;
+import com.exfantasy.template.mybatis.model.NBATeamExample;
+import com.exfantasy.template.mybatis.model.NBATeamExample.Criteria;
 import com.exfantasy.template.vo.json.NBATeamFromNBATw;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
@@ -47,5 +49,13 @@ public class NBAService {
 		} catch (IOException e) {
 			logger.error("IOException raised while converting json data to NBATeamFromNBATw", e);
 		}
+	}
+
+	public NBATeam queryNBATeamByAbbr(String abbr) {
+		NBATeamExample example = new NBATeamExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andAbbrEqualTo(abbr);
+		List<NBATeam> teams = nbaTeamMapper.selectByExample(example);
+		return teams.size() == 1 ? teams.get(0) : null;
 	}
 }
