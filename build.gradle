@@ -97,8 +97,9 @@ dependencies {
 	// ref: https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-enabling
 	// ref: http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-jmx.html
 	// ref: http://www.baeldung.com/spring-boot-actuators
-	compile "org.springframework.boot:spring-boot-starter-actuator"
-	compile "org.jolokia:jolokia-core"
+	// ---------- 先把這個拿掉, 因為若用他 swagger 會多出有的沒的, 等研究透徹怎麼用再說 ----------
+	// compile "org.springframework.boot:spring-boot-starter-actuator"
+	// compile "org.jolokia:jolokia-core"
 
 	// --------- MyBatis ---------
 	compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringBootVersion}"
