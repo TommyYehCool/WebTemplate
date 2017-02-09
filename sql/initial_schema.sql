@@ -97,3 +97,13 @@ CREATE TABLE `nba_team` (
   `name_en` varchar(20) NOT NULL,
   PRIMARY KEY (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `nba_schedule`;
+CREATE TABLE `nba_schedule` (
+  `game_id` int(10) NOT NULL,
+  `game_time_in_millis` bigint NOT NULL,
+  `game_time` datetime NOT NULL,
+  `home_team_id` int(10) NOT NULL,
+  `away_team_id` int(10) NOT NULL,
+  PRIMARY KEY (`game_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

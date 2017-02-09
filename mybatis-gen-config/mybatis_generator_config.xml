@@ -146,5 +146,12 @@
 			enableDeleteByExample="false" enableSelectByExample="true"
 			selectByExampleQueryId="false">
 		</table>
+		
+		<!-- Table: nba_schedule -->
+		<table schema="testing" tableName="nba_schedule" domainObjectName="NBASchedule"
+			enableCountByExample="true" enableUpdateByExample="true"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
 	</context>
 </generatorConfiguration>

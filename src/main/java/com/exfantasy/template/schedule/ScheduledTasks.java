@@ -33,7 +33,10 @@ public class ScheduledTasks {
      * 每天早上 08:00 去抓最新的 NBA 隊伍資料
      */
     @Scheduled(cron = "0 0 8 * * *")
+//    @Scheduled(cron = "0 4 17 * * *")
     public void fetchNewestNBATeamsInformation() {
     	nbaService.fetchNewestNBATeamsInformation();
+    	
+    	nbaService.fetchNewestNBASchedules();
     }
 }

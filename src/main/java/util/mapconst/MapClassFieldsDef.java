@@ -14,7 +14,8 @@ public enum MapClassFieldsDef {
 	ACTIVITY("Activity", MapFieldsOfActivity.values()),
 	JOIN_ACTIVITIES_KEY("JoinActivitiesKey", MapFieldsOfJoinActivities.values()),
 	ACTIVITY_MESSAGES("ActivityMessages", MapFieldsOfActivityMessages.values()),
-	NBA_TEAM("NBATeam", MapFieldsOfNBATeam.values())
+	NBA_TEAM("NBATeam", MapFieldsOfNBATeam.values()),
+	NBA_SCHEDULE("NBASchedule", MapFieldsOfNBASchedule.values())
 	;
 	
 	private String className;

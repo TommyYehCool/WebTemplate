@@ -8,10 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exfantasy.template.mybatis.custom.CustomNBAScheduleMapper;
 import com.exfantasy.template.mybatis.custom.CustomNBATeamMapper;
+import com.exfantasy.template.mybatis.model.NBASchedule;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.mybatis.model.NBATeamExample;
 import com.exfantasy.template.mybatis.model.NBATeamExample.Criteria;
+import com.exfantasy.template.vo.json.NBAScheduleFromNBATw;
 import com.exfantasy.template.vo.json.NBATeamFromNBATw;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
@@ -24,8 +27,13 @@ public class NBAService {
 
 	private final String URL_NBA_TEAM_NBA_TAIWAN = "http://tw.global.nba.com/stats2/league/divisionteamlist.json?locale=zh_TW";
 	
+	private final String URL_NBA_SCHEDULE_NBA_TAIWAN = "https://tw.global.nba.com/stats2/season/schedule.json?countryCode=TW&days=7&dst=0&locale=zh_TW&tz=%2B8";
+	
 	@Autowired
 	private CustomNBATeamMapper nbaTeamMapper;
+	
+	@Autowired
+	private CustomNBAScheduleMapper nbaScheduleMapper;
 	
 	public void fetchNewestNBATeamsInformation() {
 		ObjectMapper mapper = new ObjectMapper();
@@ -48,6 +56,28 @@ public class NBAService {
 			logger.error("HttpUtilException raised while trying to get newest NBA Team information from url: <{}>", URL_NBA_TEAM_NBA_TAIWAN, e);
 		} catch (IOException e) {
 			logger.error("IOException raised while converting json data to NBATeamFromNBATw", e);
+		}
+	}
+	
+	public void fetchNewestNBASchedules() {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_SCHEDULE_NBA_TAIWAN);
+			
+			NBAScheduleFromNBATw resp = mapper.readValue(jsonResp, NBAScheduleFromNBATw.class);
+			
+			List<NBASchedule> schedules = resp.getSchedules();
+			
+			for (NBASchedule schedule : schedules) { 
+				nbaScheduleMapper.upsert(schedule);
+			}
+			
+			logger.info(">>>>> Upsert newest NBA Schedules done <<<<<");
+			
+		} catch (HttpUtilException e) {
+			logger.error("HttpUtilException raised while trying to get newest NBA Schedules from url: <{}>", URL_NBA_TEAM_NBA_TAIWAN, e);
+		} catch (IOException e) {
+			logger.error("IOException raised while converting json data to NBAScheduleFromNBATw", e);
 		}
 	}
 
