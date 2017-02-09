@@ -44,13 +44,13 @@ public class NBAService {
 			
 			List<NBATeam> teams = resp.getTeams();
 			
-			int deleteCounts = nbaTeamMapper.deleteAll();
+			int upsertCnts = 0;
 			
-			logger.info(">>>>> Delete exist NBA Teams information done, delete-cnts: {} <<<<<", deleteCounts);
+			for (NBATeam team : teams) {
+				upsertCnts += nbaTeamMapper.upsert(team);
+			}
 			
-			int insertCounts = nbaTeamMapper.batchInsertNBATeams(teams);
-			
-			logger.info(">>>>> Insert newest NBA Teams information done, insert-cnts: {} <<<<<", insertCounts);
+			logger.info(">>>>> Upsert newest NBA Teams information done, counts: {} <<<<<", upsertCnts);
 			
 		} catch (HttpUtilException e) {
 			logger.error("HttpUtilException raised while trying to get newest NBA Team information from url: <{}>", URL_NBA_TEAM_NBA_TAIWAN, e);
@@ -68,11 +68,13 @@ public class NBAService {
 			
 			List<NBASchedule> schedules = resp.getSchedules();
 			
+			int upsertCnts = 0;
+			
 			for (NBASchedule schedule : schedules) { 
-				nbaScheduleMapper.upsert(schedule);
+				upsertCnts += nbaScheduleMapper.upsert(schedule);
 			}
 			
-			logger.info(">>>>> Upsert newest NBA Schedules done <<<<<");
+			logger.info(">>>>> Upsert newest NBA Schedules done, counts: {} <<<<<", upsertCnts);
 			
 		} catch (HttpUtilException e) {
 			logger.error("HttpUtilException raised while trying to get newest NBA Schedules from url: <{}>", URL_NBA_TEAM_NBA_TAIWAN, e);

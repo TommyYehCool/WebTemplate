@@ -22,6 +22,10 @@ public class ScheduledTasks {
 
     @Autowired
     private NBAService nbaService;
+    
+    private final String SCHEDULED_TIME = "0 0 8 * * *";
+
+//    private final String SCHEDULED_TIME = "0 36 17 * * *";
 
 //    @Scheduled(fixedRate = 5000)
 //    public void reportCurrentTime() {
@@ -32,7 +36,7 @@ public class ScheduledTasks {
     /**
      * 每天早上 08:00 去抓最新的 NBA 隊伍資料
      */
-    @Scheduled(cron = "0 0 8 * * *")
+    @Scheduled(cron = SCHEDULED_TIME)
     public void fetchNewestNBATeamsInformation() {
     	nbaService.fetchNewestNBATeamsInformation();
     }
@@ -40,7 +44,7 @@ public class ScheduledTasks {
     /**
      * 每天早上 08:00 去抓最新的 NBA 賽程資料
      */
-    @Scheduled(cron = "0 0 8 * * *")
+    @Scheduled(cron = SCHEDULED_TIME)
     public void fetchNewestNBASchedules() {
     	nbaService.fetchNewestNBASchedules();
     }

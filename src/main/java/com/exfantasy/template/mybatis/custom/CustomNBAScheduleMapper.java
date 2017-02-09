@@ -8,15 +8,24 @@ import com.exfantasy.template.mybatis.model.NBASchedule;
 
 @Mapper
 public interface CustomNBAScheduleMapper extends NBAScheduleMapper {
+
+	/**
+	 * <pre>
+	 * Upsert NBA 賽程資料
+	 * </pre>
+	 * 
+	 * @param record
+	 * @return
+	 */
 	@Insert({
 		"insert into nba_schedule ",
 		"(",
 			"game_id, ",
 			"game_time_in_millis, ",
 			"game_time, ",
-			"home_team_id,", 
+			"home_team_id, ", 
 			"away_team_id",
-        ")",
+        ") ",
         "values ",
         "(",
         	"#{gameId,jdbcType=INTEGER}, ",
