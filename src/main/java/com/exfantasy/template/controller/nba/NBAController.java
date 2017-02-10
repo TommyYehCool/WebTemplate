@@ -33,7 +33,8 @@ public class NBAController {
 	
 	@RequestMapping(value = "/get_nba_team/{abbr}", method = RequestMethod.GET)
 	@ApiOperation(value = "使用簡稱查詢 NBA 隊伍", notes = "使用簡稱查詢 NBA 隊伍", response = NBATeam.class)
-	public @ResponseBody NBATeam getNBATeam(@ApiParam("欲查詢的簡稱") @PathVariable("abbr") String abbr) {
+	public @ResponseBody NBATeam getNBATeam(
+			@ApiParam("欲查詢的簡稱") @PathVariable(value = "abbr", required = true) String abbr) {
 		return nbaService.queryNBATeamByAbbr(abbr);
 	}
 	
@@ -49,13 +50,14 @@ public class NBAController {
 	@RequestMapping(value = "/get_schedules", method = RequestMethod.GET)
 	@ApiOperation(value = "抓取當天 NBA 賽程資料", notes = "抓取當天 NBA 賽程資料", responseContainer = "List", response = NBAScheduleResp.class)
 	public @ResponseBody List<NBAScheduleResp> getSchedules(
-			@RequestParam(value = "日期", required = true) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
+			@ApiParam("欲查詢的日期") @RequestParam(value = "date", required = true) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
 		return nbaService.queryNBASchedulesByDate(date);
 	}
 	
 	@RequestMapping(value = "/get_game_result/{gameId}", method = RequestMethod.GET)
 	@ApiOperation(value = "使用場次編號查詢比賽結果", notes = "使用場次編號查詢比賽結果", response = NBAGameResp.class)
-	public @ResponseBody NBAGameResp getNBAGameResult(@ApiParam("欲查詢的場次編號") @PathVariable("gameId") Integer gameId) {
+	public @ResponseBody NBAGameResp getNBAGameResult(
+			@ApiParam("欲查詢的場次編號") @PathVariable(value = "gameId", required = true) Integer gameId) {
 		return nbaService.queryNBAGameByGameId(gameId);
 	}
 }
