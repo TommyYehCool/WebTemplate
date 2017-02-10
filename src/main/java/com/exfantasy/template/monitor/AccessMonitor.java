@@ -102,11 +102,11 @@ public class AccessMonitor {
 
 			timeSpent = System.currentTimeMillis() - startTime;
 
-			logger.info("<<<<< Access: {} done, result: <{}>, time-spent: <{} ms>", logStr, result, timeSpent);
+			logger.info("<<<<< Access completed: {}, result: <{}>, time-spent: <{} ms>", logStr, result, timeSpent);
 		} catch (Throwable t) {
 			timeSpent = System.currentTimeMillis() - startTime;
 
-			logger.error("<<<<< Access: {} failed, exception raised: <{}>, time-spent: <{} ms>", logStr, t, timeSpent);
+			logger.error("<<<<< Access failed: {}, exception raised: <{}>, time-spent: <{} ms>", logStr, t, timeSpent);
 
 			throw t;
 		}
