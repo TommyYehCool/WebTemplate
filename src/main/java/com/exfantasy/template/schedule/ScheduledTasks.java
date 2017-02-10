@@ -25,7 +25,7 @@ public class ScheduledTasks {
     
     private final String SCHEDULED_TIME = "0 0 8 * * *";
 
-//    private final String SCHEDULED_TIME = "0 36 17 * * *";
+//    private final String SCHEDULED_TIME = "0 6 10 * * *";
 
 //    @Scheduled(fixedRate = 5000)
 //    public void reportCurrentTime() {
