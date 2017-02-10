@@ -33,8 +33,8 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	@Update({
 		"<script>",
 			"<foreach collection='list' item='consume' separator=';'>",
-				"update consume ",
-				"set got = #{consume.got,jdbcType=INTEGER} ",
+				"update consume",
+				"set got = #{consume.got,jdbcType=INTEGER}",
 				"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR}",
 			"</foreach>",
 		"</script>"
@@ -52,8 +52,8 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	@Update({
 		"<script>",
 			"<foreach collection='list' item='consume' separator=';'>",
-				"update consume ",
-				"set already_sent = #{consume.alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler} ",
+				"update consume",
+				"set already_sent = #{consume.alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler}",
 				"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR}",
 			"</foreach>",
 		"</script>"
@@ -63,7 +63,7 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	@Delete({
 		"<script>",
 			"<foreach collection='list' item='lotteryNo' separator=';'>",
-				"delete from consume ",
+				"delete from consume",
 				"where lottery_no = #{lotteryNo,jdbcType=VARCHAR}",
 			"</foreach>",
 		"</script>"

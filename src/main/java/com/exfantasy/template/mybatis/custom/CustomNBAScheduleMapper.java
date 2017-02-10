@@ -27,26 +27,26 @@ public interface CustomNBAScheduleMapper extends NBAScheduleMapper {
 	 * @return
 	 */
 	@Insert({
-		"insert into nba_schedule ",
+		"insert into nba_schedule",
 		"(",
-			"game_id, ",
-			"game_time_in_millis, ",
-			"game_time, ",
-			"home_team_id, ", 
+			"game_id,",
+			"game_time_in_millis,",
+			"game_time,",
+			"home_team_id,", 
 			"away_team_id",
-        ") ",
-        "values ",
+        ")",
+        "values",
         "(",
-        	"#{gameId,jdbcType=INTEGER}, ",
-        	"#{gameTimeInMillis,jdbcType=BIGINT}, ",
-        	"#{gameTime,jdbcType=TIMESTAMP}, ",
-        	"#{homeTeamId,jdbcType=INTEGER}, ",
+        	"#{gameId,jdbcType=INTEGER},",
+        	"#{gameTimeInMillis,jdbcType=BIGINT},",
+        	"#{gameTime,jdbcType=TIMESTAMP},",
+        	"#{homeTeamId,jdbcType=INTEGER},",
         	"#{awayTeamId,jdbcType=INTEGER}",
         ")",
-        "on duplicate key update ",
-        	"game_time_in_millis = #{gameTimeInMillis,jdbcType=BIGINT}, ",
-        	"game_time = #{gameTime,jdbcType=TIMESTAMP}, ",
-        	"home_team_id = #{homeTeamId,jdbcType=INTEGER}, ",
+        "on duplicate key update",
+        	"game_time_in_millis = #{gameTimeInMillis,jdbcType=BIGINT},",
+        	"game_time = #{gameTime,jdbcType=TIMESTAMP},",
+        	"home_team_id = #{homeTeamId,jdbcType=INTEGER},",
         	"away_team_id = #{awayTeamId,jdbcType=INTEGER}"
 	})
 	int upsert(NBASchedule record);
@@ -62,15 +62,15 @@ public interface CustomNBAScheduleMapper extends NBAScheduleMapper {
 	 */
 	@Select({
 		"select",
-			"ns.game_id as gameId, ",
-			"ns.game_time as gameTimeDate, ",
-			"ht.name_ch as homeTeamNameCh, ",
-			"ht.name_en as homeTeamNameEn, ",
-			"at.name_ch as awayTeamNameCh, ",
-			"at.name_en as awayTeamNameEn ",
-		"from nba_schedule as ns ",
-		"left join nba_team as ht on ns.home_team_id = ht.team_id ",
-		"left join nba_team as at on ns.away_team_id = at.team_id ",
+			"ns.game_id as gameId,",
+			"ns.game_time as gameTimeDate,",
+			"ht.name_ch as homeTeamNameCh,",
+			"ht.name_en as homeTeamNameEn,",
+			"at.name_ch as awayTeamNameCh,",
+			"at.name_en as awayTeamNameEn",
+		"from nba_schedule as ns",
+		"left join nba_team as ht on ns.home_team_id = ht.team_id",
+		"left join nba_team as at on ns.away_team_id = at.team_id",
 		"where ns.game_time between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}"
 	})
 	@Results(
