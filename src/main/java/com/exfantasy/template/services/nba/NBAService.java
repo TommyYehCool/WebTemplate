@@ -134,8 +134,7 @@ public class NBAService {
 	public List<NBAScheduleResp> queryNBASchedulesByDate(Date date) {
 		Date startTime = date;
 		Date endTime = getEndTime(date);
-		List<NBAScheduleResp> schedules = nbaScheduleMapper.selectNBASchedulesGameTimeBetween(startTime, endTime);
-		return schedules;
+		return nbaScheduleMapper.selectNBASchedulesGameTimeBetween(startTime, endTime);
 	}
 
 	private Date getEndTime(Date date) {
@@ -148,7 +147,6 @@ public class NBAService {
 	}
 
 	public NBAGameResp queryNBAGameByGameId(Integer gameId) {
-		NBAGameResp game = nbaGameMapper.selectNBAGameByGameId(gameId); 
-		return game;
+		return nbaGameMapper.selectNBAGameByGameId(gameId);
 	}
 }

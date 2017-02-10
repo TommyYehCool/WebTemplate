@@ -2,6 +2,11 @@ package com.exfantasy.template.mybatis.custom;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.type.JdbcType;
 
 import com.exfantasy.template.mybatis.mapper.NBAGameMapper;
 import com.exfantasy.template.mybatis.model.NBAGame;
@@ -64,7 +69,57 @@ public interface CustomNBAGameMapper extends NBAGameMapper {
 	})
 	int upsert(NBAGame game);
 
-	// TODO select 語法
-	NBAGameResp selectNBAGameByGameId(Integer gameId);
+	/**
+	 * <pre>
+	 * 根據場次編號查詢 NBA 比賽結果
+	 * </pre>
+	 * 
+	 * @param gameId
+	 * @return
+	 */
+	@Select({
+		"select",
+		"ng.game_id as gameId, ",
+		"ht.name_ch as homeTeamNameCh, ",
+		"ht.name_en as homeTeamNameEn, ",
+		"at.name_ch as awayTeamNameCh, ",
+		"at.name_en as awayTeamNameEn, ",
+		"ng.home_team_1st_scores as homeTeam1stScores, ",
+		"ng.home_team_2nd_scores as homeTeam2ndScores, ",
+		"ng.home_team_3rd_scores as homeTeam3rdScores, ",
+		"ng.home_team_4th_scores as homeTeam4thScores, ",
+		"ng.home_team_scores_sum as homeTeamScoresSum, ",
+		"ng.away_team_1st_scores as awayTeam1stScores, ",
+		"ng.away_team_2nd_scores as awayTeam2ndScores, ",
+		"ng.away_team_3rd_scores as awayTeam3rdScores, ",
+		"ng.away_team_4th_scores as awayTeam4thScores, ",
+		"ng.away_team_scores_sum as awayTeamScoresSum, ",
+		"ng.total_scores_sum as totalScoresSum ",
+		"from nba_game as ng ",
+		"left join nba_schedule as ns on ng.game_id = ns.game_id ",
+		"left join nba_team as ht on ns.home_team_id = ht.team_id ",
+		"left join nba_team as at on ns.away_team_id = at.team_id ",
+		"where ng.game_id = #{gameId,jdbcType=INTEGER}"
+	})
+	@Results({
+		@Result(column="gameId", property="gameId", jdbcType=JdbcType.INTEGER, id=true),
+		@Result(column="homeTeamNameCh", property="homeTeamNameCh", jdbcType=JdbcType.VARCHAR),
+		@Result(column="homeTeamNameEn", property="homeTeamNameEn", jdbcType=JdbcType.VARCHAR),
+		@Result(column="awayTeamNameCh", property="awayTeamNameCh", jdbcType=JdbcType.VARCHAR),
+		@Result(column="awayTeamNameEn", property="awayTeamNameEn", jdbcType=JdbcType.VARCHAR),
+		@Result(column="homeTeam1stScores", property="homeTeam1stScores", jdbcType=JdbcType.INTEGER),
+		@Result(column="homeTeam2ndScores", property="homeTeam2ndScores", jdbcType=JdbcType.INTEGER),
+		@Result(column="homeTeam3rdScores", property="homeTeam3rdScores", jdbcType=JdbcType.INTEGER),
+		@Result(column="homeTeam4thScores", property="homeTeam4thScores", jdbcType=JdbcType.INTEGER),
+		@Result(column="homeTeamScoresSum", property="homeTeamScoresSum", jdbcType=JdbcType.INTEGER),
+		@Result(column="awayTeam1stScores", property="awayTeam1stScores", jdbcType=JdbcType.INTEGER),
+		@Result(column="awayTeam2ndScores", property="awayTeam2ndScores", jdbcType=JdbcType.INTEGER),
+		@Result(column="awayTeam3rdScores", property="awayTeam3rdScores", jdbcType=JdbcType.INTEGER),
+		@Result(column="awayTeam4thScores", property="awayTeam4thScores", jdbcType=JdbcType.INTEGER),
+		@Result(column="awayTeamScoresSum", property="awayTeamScoresSum", jdbcType=JdbcType.INTEGER),
+		@Result(column="totalScoresSum", property="totalScoresSum", jdbcType=JdbcType.INTEGER)
+		
+	})
+	NBAGameResp selectNBAGameByGameId(@Param("gameId") Integer gameId);
 
 }
