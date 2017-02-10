@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.exfantasy.template.mybatis.custom.CustomNBAScheduleMapper;
 import com.exfantasy.template.mybatis.custom.CustomNBATeamMapper;
@@ -23,6 +25,7 @@ import com.exfantasy.utils.http.HttpUtilException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class NBAService {
 	
 	private Logger logger = LoggerFactory.getLogger(NBAService.class);
@@ -37,6 +40,7 @@ public class NBAService {
 	@Autowired
 	private CustomNBAScheduleMapper nbaScheduleMapper;
 	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void fetchNewestNBATeamsInformation() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -61,6 +65,7 @@ public class NBAService {
 		}
 	}
 	
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
 	public void fetchNewestNBASchedules() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
