@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.request;
+package com.exfantasy.template.vo.request.user;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;

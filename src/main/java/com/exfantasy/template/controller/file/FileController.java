@@ -1,4 +1,4 @@
-package com.exfantasy.template.controller;
+package com.exfantasy.template.controller.file;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.file.FileService;
 import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.vo.response.RespCommon;
-import com.exfantasy.template.vo.response.ListFileResp;
+import com.exfantasy.template.vo.response.file.ListFileResp;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

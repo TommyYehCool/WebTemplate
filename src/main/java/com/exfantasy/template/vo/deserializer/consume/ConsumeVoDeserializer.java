@@ -1,9 +1,9 @@
-package com.exfantasy.template.vo.deserializer;
+package com.exfantasy.template.vo.deserializer.consume;
 
 import java.io.IOException;
 import java.time.LocalDate;
 
-import com.exfantasy.template.vo.request.ConsumeVo;
+import com.exfantasy.template.vo.request.consume.ConsumeVo;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;

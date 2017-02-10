@@ -1,4 +1,4 @@
-package com.exfantasy.template.controller;
+package com.exfantasy.template.controller.nba;
 
 import java.util.Date;
 import java.util.List;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.services.nba.NBAService;
-import com.exfantasy.template.vo.response.NBAScheduleResp;
 import com.exfantasy.template.vo.response.RespCommon;
+import com.exfantasy.template.vo.response.nba.NBAScheduleResp;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

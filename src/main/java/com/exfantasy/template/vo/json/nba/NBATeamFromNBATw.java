@@ -1,10 +1,10 @@
-package com.exfantasy.template.vo.json;
+package com.exfantasy.template.vo.json.nba;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.exfantasy.template.mybatis.model.NBATeam;
-import com.exfantasy.template.vo.deserializer.NBATeamFromNBATwDeserializer;
+import com.exfantasy.template.vo.deserializer.nba.NBATeamFromNBATwDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.Data;

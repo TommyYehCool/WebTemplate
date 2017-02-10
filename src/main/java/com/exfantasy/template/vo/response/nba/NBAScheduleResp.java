@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.response;
+package com.exfantasy.template.vo.response.nba;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

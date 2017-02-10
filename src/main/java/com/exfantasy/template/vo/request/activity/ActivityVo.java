@@ -1,11 +1,11 @@
-package com.exfantasy.template.vo.request;
+package com.exfantasy.template.vo.request.activity;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
-import com.exfantasy.template.vo.deserializer.ActivityVoDeserializer;
+import com.exfantasy.template.vo.deserializer.activity.ActivityVoDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import io.swagger.annotations.ApiModelProperty;

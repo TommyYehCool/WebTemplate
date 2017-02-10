@@ -1,4 +1,4 @@
-package com.exfantasy.template.controller;
+package com.exfantasy.template.controller.test;
 
 import javax.mail.MessagingException;
 

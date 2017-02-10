@@ -1,4 +1,4 @@
-package com.exfantasy.template.controller;
+package com.exfantasy.template.controller.consume;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -23,9 +23,9 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.consume.ConsumeService;
 import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.util.ErrorMsgUtil;
-import com.exfantasy.template.vo.request.ConsumeVo;
+import com.exfantasy.template.vo.request.consume.ConsumeVo;
 import com.exfantasy.template.vo.response.RespCommon;
-import com.exfantasy.template.vo.response.RespReward;
+import com.exfantasy.template.vo.response.consume.RespReward;
 import com.exfantasy.utils.tools.typhoon_vacation.TyphoonVacationInfo;
 
 import io.swagger.annotations.Api;

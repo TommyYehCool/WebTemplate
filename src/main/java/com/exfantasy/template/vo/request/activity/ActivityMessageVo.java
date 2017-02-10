@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.request;
+package com.exfantasy.template.vo.request.activity;
 
 import javax.validation.constraints.NotNull;
 

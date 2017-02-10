@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.deserializer;
+package com.exfantasy.template.vo.deserializer.activity;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -9,7 +9,7 @@ import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.exfantasy.template.vo.request.ActivityVo;
+import com.exfantasy.template.vo.request.activity.ActivityVo;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;

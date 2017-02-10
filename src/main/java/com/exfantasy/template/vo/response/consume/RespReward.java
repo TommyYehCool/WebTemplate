@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.response;
+package com.exfantasy.template.vo.response.consume;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

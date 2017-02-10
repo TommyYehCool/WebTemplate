@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.response;
+package com.exfantasy.template.vo.response.activity;
 
 import java.util.Date;
 

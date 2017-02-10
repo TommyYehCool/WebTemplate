@@ -13,7 +13,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import com.exfantasy.template.mybatis.mapper.NBAScheduleMapper;
 import com.exfantasy.template.mybatis.model.NBASchedule;
-import com.exfantasy.template.vo.response.NBAScheduleResp;
+import com.exfantasy.template.vo.response.nba.NBAScheduleResp;
 
 @Mapper
 public interface CustomNBAScheduleMapper extends NBAScheduleMapper {

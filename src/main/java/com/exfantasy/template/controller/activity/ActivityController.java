@@ -1,4 +1,4 @@
-package com.exfantasy.template.controller;
+package com.exfantasy.template.controller.activity;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.activity.ActivityService;
 import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.util.ErrorMsgUtil;
-import com.exfantasy.template.vo.request.ActivityMessageVo;
-import com.exfantasy.template.vo.request.ActivityVo;
-import com.exfantasy.template.vo.response.ActivityMessagesResp;
+import com.exfantasy.template.vo.request.activity.ActivityMessageVo;
+import com.exfantasy.template.vo.request.activity.ActivityVo;
 import com.exfantasy.template.vo.response.RespCommon;
+import com.exfantasy.template.vo.response.activity.ActivityMessagesResp;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

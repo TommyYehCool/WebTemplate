@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.type.JdbcType;
 
 import com.exfantasy.template.mybatis.mapper.ActivityMessagesMapper;
-import com.exfantasy.template.vo.response.ActivityMessagesResp;
+import com.exfantasy.template.vo.response.activity.ActivityMessagesResp;
 
 @Mapper
 public interface CustomActivityMessagesMapper extends ActivityMessagesMapper {

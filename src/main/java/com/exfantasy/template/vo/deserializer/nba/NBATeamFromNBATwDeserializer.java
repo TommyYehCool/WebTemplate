@@ -1,10 +1,10 @@
-package com.exfantasy.template.vo.deserializer;
+package com.exfantasy.template.vo.deserializer.nba;
 
 import java.io.IOException;
 import java.util.Iterator;
 
 import com.exfantasy.template.mybatis.model.NBATeam;
-import com.exfantasy.template.vo.json.NBATeamFromNBATw;
+import com.exfantasy.template.vo.json.nba.NBATeamFromNBATw;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;

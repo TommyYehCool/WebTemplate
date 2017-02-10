@@ -1,4 +1,4 @@
-package com.exfantasy.template.controller;
+package com.exfantasy.template.controller.user;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +30,7 @@ import com.exfantasy.template.mybatis.model.UserRole;
 import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.services.user.UserService;
 import com.exfantasy.template.util.ErrorMsgUtil;
-import com.exfantasy.template.vo.request.RegisterVo;
+import com.exfantasy.template.vo.request.user.RegisterVo;
 import com.exfantasy.template.vo.response.RespCommon;
 
 import io.swagger.annotations.Api;

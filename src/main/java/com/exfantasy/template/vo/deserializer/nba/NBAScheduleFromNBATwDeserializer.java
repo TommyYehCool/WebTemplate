@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.deserializer;
+package com.exfantasy.template.vo.deserializer.nba;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.exfantasy.template.mybatis.model.NBASchedule;
-import com.exfantasy.template.vo.json.NBAScheduleFromNBATw;
+import com.exfantasy.template.vo.json.nba.NBAScheduleFromNBATw;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;

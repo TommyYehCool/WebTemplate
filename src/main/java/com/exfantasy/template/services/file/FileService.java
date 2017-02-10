@@ -17,7 +17,7 @@ import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.session.SessionService;
-import com.exfantasy.template.vo.response.ListFileResp;
+import com.exfantasy.template.vo.response.file.ListFileResp;
 
 @Service
 public class FileService {

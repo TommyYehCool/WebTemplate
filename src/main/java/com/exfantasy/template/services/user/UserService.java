@@ -30,7 +30,7 @@ import com.exfantasy.template.services.file.FileService;
 import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.util.BCryptUtil;
 import com.exfantasy.template.util.RandomUtil;
-import com.exfantasy.template.vo.request.RegisterVo;
+import com.exfantasy.template.vo.request.user.RegisterVo;
 
 /**
  * <pre>
