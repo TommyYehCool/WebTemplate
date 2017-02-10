@@ -35,9 +35,9 @@ public class TestMyBatisStoredProcedure {
 	
 	@Test
 	public void test_2_SP_findConsumeByLotteryNo() throws Exception {
-		String lotteryNo = "25323189";
+		String lotteryNo = "23710239";
 		Consume consume = consumeMapper.findConsumeByLotteryNo(lotteryNo);
-		assertThat(consume.isAlreadySent()).isTrue();
+		assertThat(consume.isAlreadySent()).isFalse();
 		System.out.println("test_2_SP_findConsumeByLotteryNo -> " + consume);
 	}
 }

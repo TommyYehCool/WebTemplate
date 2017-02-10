@@ -73,13 +73,16 @@ public interface CustomNBAScheduleMapper extends NBAScheduleMapper {
 		"left join nba_team as at on ns.away_team_id = at.team_id ",
 		"where ns.game_time between #{startTime,jdbcType=TIMESTAMP} and #{endTime,jdbcType=TIMESTAMP}"
 	})
-	@Results({
-		@Result(column="gameId", property="gameId", jdbcType=JdbcType.INTEGER, id=true),
-		@Result(column="gameTimeDate", property="gameTimeDate", jdbcType=JdbcType.TIMESTAMP),
-		@Result(column="homeTeamNameCh", property="homeTeamNameCh", jdbcType=JdbcType.VARCHAR),
-		@Result(column="homeTeamNameEn", property="homeTeamNameEn", jdbcType=JdbcType.VARCHAR),
-		@Result(column="awayTeamNameCh", property="awayTeamNameCh", jdbcType=JdbcType.VARCHAR),
-		@Result(column="awayTeamNameEn", property="awayTeamNameEn", jdbcType=JdbcType.VARCHAR)
-	})
+	@Results(
+		id = "NBAScheduleResp",
+		value = {
+			@Result(column="gameId", property="gameId", jdbcType=JdbcType.INTEGER, id=true),
+			@Result(column="gameTimeDate", property="gameTimeDate", jdbcType=JdbcType.TIMESTAMP),
+			@Result(column="homeTeamNameCh", property="homeTeamNameCh", jdbcType=JdbcType.VARCHAR),
+			@Result(column="homeTeamNameEn", property="homeTeamNameEn", jdbcType=JdbcType.VARCHAR),
+			@Result(column="awayTeamNameCh", property="awayTeamNameCh", jdbcType=JdbcType.VARCHAR),
+			@Result(column="awayTeamNameEn", property="awayTeamNameEn", jdbcType=JdbcType.VARCHAR)
+		}
+	)
 	List<NBAScheduleResp> selectNBASchedulesGameTimeBetween(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -31,11 +32,11 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	 */
 	@Update({
 		"<script>",
-		"<foreach collection='list' item='consume' separator=';'>",
-		"update consume ",
-		"set got = #{consume.got,jdbcType=INTEGER} ",
-		"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR}",
-		"</foreach>",
+			"<foreach collection='list' item='consume' separator=';'>",
+				"update consume ",
+				"set got = #{consume.got,jdbcType=INTEGER} ",
+				"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR}",
+			"</foreach>",
 		"</script>"
 	})
 	int batchUpdateGot(List<Consume> consumesToUpdateGot);
@@ -50,66 +51,56 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	 */
 	@Update({
 		"<script>",
-		"<foreach collection='list' item='consume' separator=';'>",
-		"update consume ",
-		"set already_sent = #{consume.alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler} ",
-		"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR}",
-		"</foreach>",
+			"<foreach collection='list' item='consume' separator=';'>",
+				"update consume ",
+				"set already_sent = #{consume.alreadySent,jdbcType=CHAR,typeHandler=com.exfantasy.template.mybatis.typehandler.BooleanTypeHandler} ",
+				"where lottery_no = #{consume.lotteryNo,jdbcType=VARCHAR}",
+			"</foreach>",
 		"</script>"
 	})
 	int batchUpdateAlreadtSent(List<Consume> consumesToUpdateAlreadySent);
 	
 	@Delete({
 		"<script>",
-		"<foreach collection='list' item='lotteryNo' separator=';'>",
-		"delete from consume ",
-		"where lottery_no = #{lotteryNo,jdbcType=VARCHAR}",
-		"</foreach>",
+			"<foreach collection='list' item='lotteryNo' separator=';'>",
+				"delete from consume ",
+				"where lottery_no = #{lotteryNo,jdbcType=VARCHAR}",
+			"</foreach>",
 		"</script>"
 	})
 	int batchDeleteByLotteryNo(List<String> lotteryNos);
 	
-	@Select(
-		value = "{" + 
-					"call FindConsumesByUid(" + 
-						"#{uid, mode=IN, jdbcType=INTEGER}" + 
-					")" + 
-				"}"
-	)
+	@Select({
+		"call FindConsumesByUid(", 
+			"#{uid, mode=IN, jdbcType=INTEGER}", 
+		")", 
+	})
 	@Options(statementType = StatementType.CALLABLE) 
 	@ResultType(Consume.class)
-	@Results({
-        @Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR, id=true),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="consume_date", property="consumeDate", jdbcType=JdbcType.DATE),
-        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
-        @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
-        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER),
-        @Result(column="already_sent", property="alreadySent", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
-    })
+	@Results(
+		id = "Consume",
+		value = 
+			{
+				@Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR, id=true),
+				@Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
+				@Result(column="consume_date", property="consumeDate", jdbcType=JdbcType.DATE),
+				@Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
+				@Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
+				@Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
+				@Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
+				@Result(column="got", property="got", jdbcType=JdbcType.INTEGER),
+				@Result(column="already_sent", property="alreadySent", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
+			}
+	)
 	List<Consume> findConsumesByUid(@Param("uid") Integer uid);
 	
-	@Select(
-		value = "{" + 
-					"call FindConsumesByLotteryNo(" + 
-						"#{lotteryNo, mode=IN, jdbcType=VARCHAR}" + 
-					")" + 
-				"}"
-	)
+	@Select({
+		"call FindConsumesByLotteryNo(",
+			"#{lotteryNo, mode=IN, jdbcType=VARCHAR}", 
+		")" 
+	})
 	@Options(statementType = StatementType.CALLABLE) 
 	@ResultType(Consume.class)
-	@Results({
-        @Result(column="lottery_no", property="lotteryNo", jdbcType=JdbcType.VARCHAR, id=true),
-        @Result(column="user_id", property="userId", jdbcType=JdbcType.INTEGER),
-        @Result(column="consume_date", property="consumeDate", jdbcType=JdbcType.DATE),
-        @Result(column="type", property="type", jdbcType=JdbcType.INTEGER),
-        @Result(column="prod_name", property="prodName", jdbcType=JdbcType.VARCHAR),
-        @Result(column="amount", property="amount", jdbcType=JdbcType.DECIMAL),
-        @Result(column="prize", property="prize", jdbcType=JdbcType.DECIMAL),
-        @Result(column="got", property="got", jdbcType=JdbcType.INTEGER),
-        @Result(column="already_sent", property="alreadySent", typeHandler=BooleanTypeHandler.class, jdbcType=JdbcType.CHAR)
-    })
+	@ResultMap("Consume")
 	Consume findConsumeByLotteryNo(@Param("lotteryNo") String lotteryNo);
 }

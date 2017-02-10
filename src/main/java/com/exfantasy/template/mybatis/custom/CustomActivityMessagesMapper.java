@@ -16,16 +16,21 @@ import com.exfantasy.template.vo.response.activity.ActivityMessagesResp;
 public interface CustomActivityMessagesMapper extends ActivityMessagesMapper {
 	@Select({
         "select",
-        "u.email as create_user_mail, am.create_datetime as create_datetime, am.msg as msg",
+        "u.email as create_user_mail, ",
+        "am.create_datetime as create_datetime, ",
+        "am.msg as msg",
         "from activity_messages am",
         "left join user u on am.create_user_id = u.user_id",
         "where am.activity_id = #{activityId,jdbcType=INTEGER}"
     })
-    @Results({
-        @Result(column="create_user_mail", property="createUserEmail", jdbcType=JdbcType.VARCHAR),
-        @Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
-        @Result(column="msg", property="msg", jdbcType=JdbcType.VARCHAR)
-    })
+    @Results(
+    	id = "ActivityMessagesResp",
+    	value = {
+    		@Result(column="create_user_mail", property="createUserEmail", jdbcType=JdbcType.VARCHAR),
+    		@Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
+    		@Result(column="msg", property="msg", jdbcType=JdbcType.VARCHAR)
+    	}
+    )
 	List<ActivityMessagesResp> selectActivityMessagesRespByActivityId(@Param("activityId") Integer activityId);
 	
 }
