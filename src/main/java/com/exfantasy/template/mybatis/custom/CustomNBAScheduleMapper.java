@@ -62,12 +62,12 @@ public interface CustomNBAScheduleMapper extends NBAScheduleMapper {
 	 */
 	@Select({
 		"select",
-		"ns.game_id as gameId, ",
-		"ns.game_time as gameTimeDate, ",
-		"ht.name_ch as homeTeamNameCh, ",
-		"ht.name_en as homeTeamNameEn, ",
-		"at.name_ch as awayTeamNameCh, ",
-		"at.name_en as awayTeamNameEn ",
+			"ns.game_id as gameId, ",
+			"ns.game_time as gameTimeDate, ",
+			"ht.name_ch as homeTeamNameCh, ",
+			"ht.name_en as homeTeamNameEn, ",
+			"at.name_ch as awayTeamNameCh, ",
+			"at.name_en as awayTeamNameEn ",
 		"from nba_schedule as ns ",
 		"left join nba_team as ht on ns.home_team_id = ht.team_id ",
 		"left join nba_team as at on ns.away_team_id = at.team_id ",

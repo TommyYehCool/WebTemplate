@@ -16,9 +16,9 @@ import com.exfantasy.template.vo.response.activity.ActivityMessagesResp;
 public interface CustomActivityMessagesMapper extends ActivityMessagesMapper {
 	@Select({
         "select",
-        "u.email as create_user_mail, ",
-        "am.create_datetime as create_datetime, ",
-        "am.msg as msg",
+        	"u.email as create_user_mail,",
+        	"am.create_datetime as create_datetime,",
+        	"am.msg as msg",
         "from activity_messages am",
         "left join user u on am.create_user_id = u.user_id",
         "where am.activity_id = #{activityId,jdbcType=INTEGER}"

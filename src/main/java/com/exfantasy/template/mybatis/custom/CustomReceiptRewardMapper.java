@@ -38,11 +38,11 @@ public interface CustomReceiptRewardMapper extends ReceiptRewardMapper {
 	 */
 	@Delete({
 		"<script>",
-		"delete from receipt_reward",
-		"where section in",
-		"<foreach collection='list' item='section' open='(' separator=',' close=')'>",
-		"#{section,jdbcType=CHAR}",
-		"</foreach>",
+			"delete from receipt_reward",
+			"where section in",
+			"<foreach collection='list' item='section' open='(' separator=',' close=')'>",
+				"#{section,jdbcType=CHAR}",
+			"</foreach>",
 		"</script>"
 	})
 	int batchDeleteBySection(List<String> sections);
@@ -58,12 +58,12 @@ public interface CustomReceiptRewardMapper extends ReceiptRewardMapper {
 	 */
 	@Insert({
 		"<script>",
-		"insert into receipt_reward (section, reward_type, number) values",
-		"<foreach collection='list' item='record' separator=','>",
-		"(",
-		"#{record.section,jdbcType=CHAR}, #{record.rewardType,jdbcType=INTEGER}, #{record.number,jdbcType=CHAR}",
-		")",
-		"</foreach>",
+			"insert into receipt_reward (section, reward_type, number) values",
+			"<foreach collection='list' item='record' separator=','>",
+				"(",
+					"#{record.section,jdbcType=CHAR}, #{record.rewardType,jdbcType=INTEGER}, #{record.number,jdbcType=CHAR}",
+				")",
+			"</foreach>",
 		"</script>"
 	})
 	int batchInsert(List<ReceiptReward> receiptRewards);

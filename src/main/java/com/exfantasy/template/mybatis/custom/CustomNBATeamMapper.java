@@ -35,17 +35,17 @@ public interface CustomNBATeamMapper extends NBATeamMapper {
 	 */
 	@Insert({
 		"<script>",
-		"insert into nba_team values",
-		"<foreach collection='list' item='team' separator=','>",
-		"(",
-			"#{team.teamId,jdbcType=INTEGER}, #{team.abbr,jdbcType=VARCHAR}, ",
-			"#{team.cityCh,jdbcType=VARCHAR}, #{team.cityEn,jdbcType=VARCHAR}, ",
-        	"#{team.code,jdbcType=VARCHAR}, #{team.conferenceCh,jdbcType=VARCHAR}, ",
-        	"#{team.conferenceEn,jdbcType=VARCHAR}, #{team.divisionCh,jdbcType=VARCHAR}, ",
-        	"#{team.divisionEn,jdbcType=VARCHAR}, #{team.nameCh,jdbcType=VARCHAR}, ",
-        	"#{team.nameEn,jdbcType=VARCHAR}",
-		")",
-		"</foreach>",
+			"insert into nba_team values",
+			"<foreach collection='list' item='team' separator=','>",
+				"(",
+					"#{team.teamId,jdbcType=INTEGER}, #{team.abbr,jdbcType=VARCHAR}, ",
+					"#{team.cityCh,jdbcType=VARCHAR}, #{team.cityEn,jdbcType=VARCHAR}, ",
+					"#{team.code,jdbcType=VARCHAR}, #{team.conferenceCh,jdbcType=VARCHAR}, ",
+					"#{team.conferenceEn,jdbcType=VARCHAR}, #{team.divisionCh,jdbcType=VARCHAR}, ",
+					"#{team.divisionEn,jdbcType=VARCHAR}, #{team.nameCh,jdbcType=VARCHAR}, ",
+					"#{team.nameEn,jdbcType=VARCHAR}",
+				")",
+			"</foreach>",
 		"</script>"
 	})
 	@Deprecated
