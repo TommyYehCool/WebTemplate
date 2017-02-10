@@ -149,5 +149,9 @@ public class NBAService {
 	public NBAGameResp queryNBAGameByGameId(Integer gameId) {
 		return nbaGameMapper.selectNBAGameByGameId(gameId);
 	}
+
+	public List<NBAGameResp> queryNBAGamess() {
+		return nbaGameMapper.selectNBAGameResps();
+	}
 	
 }

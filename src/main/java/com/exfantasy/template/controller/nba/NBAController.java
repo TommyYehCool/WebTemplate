@@ -54,10 +54,17 @@ public class NBAController {
 		return nbaService.queryNBASchedulesByDate(date);
 	}
 	
+	@RequestMapping(value = "/get_game_results", method = RequestMethod.GET)
+	@ApiOperation(value = "查詢目前所有比賽結果", notes = "查詢目前所有比賽結果", responseContainer = "List", response = NBAGameResp.class)
+	public @ResponseBody List<NBAGameResp> getNBAGameResults() {
+		return nbaService.queryNBAGamess();
+	}
+	
 	@RequestMapping(value = "/get_game_result/{gameId}", method = RequestMethod.GET)
 	@ApiOperation(value = "使用場次編號查詢比賽結果", notes = "使用場次編號查詢比賽結果", response = NBAGameResp.class)
 	public @ResponseBody NBAGameResp getNBAGameResult(
 			@ApiParam("欲查詢的場次編號") @PathVariable(value = "gameId", required = true) Integer gameId) {
 		return nbaService.queryNBAGameByGameId(gameId);
 	}
+	
 }
