@@ -93,7 +93,7 @@ public class NBAService {
 			logger.info(">>>>> Upsert newest NBA Schedules done, counts: {} <<<<<", upsertCnts);
 			
 		} catch (HttpUtilException e) {
-			logger.error("HttpUtilException raised while trying to get newest NBA Schedules from url: <{}>", URL_NBA_TEAM_NBA_TAIWAN, e);
+			logger.error("HttpUtilException raised while trying to get newest NBA Schedules from url: <{}>", URL_NBA_SCHEDULE_NBA_TAIWAN, e);
 		} catch (IOException e) {
 			logger.error("IOException raised while converting json data to NBAScheduleFromNBATw", e);
 		}
@@ -149,4 +149,5 @@ public class NBAService {
 	public NBAGameResp queryNBAGameByGameId(Integer gameId) {
 		return nbaGameMapper.selectNBAGameByGameId(gameId);
 	}
+	
 }
