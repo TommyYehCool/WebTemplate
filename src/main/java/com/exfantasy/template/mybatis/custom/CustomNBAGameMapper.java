@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.exfantasy.template.mybatis.mapper.NBAGameMapper;
 import com.exfantasy.template.mybatis.model.NBAGame;
+import com.exfantasy.template.vo.response.nba.NBAGameResp;
 
 @Mapper
 public interface CustomNBAGameMapper extends NBAGameMapper {
@@ -62,5 +63,8 @@ public interface CustomNBAGameMapper extends NBAGameMapper {
         	"total_scores_sum = #{totalScoresSum,jdbcType=INTEGER}",
 	})
 	int upsert(NBAGame game);
+
+	// TODO select 語法
+	NBAGameResp selectNBAGameByGameId(Integer gameId);
 
 }

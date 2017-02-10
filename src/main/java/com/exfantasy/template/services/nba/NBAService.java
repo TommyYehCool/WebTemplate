@@ -22,6 +22,7 @@ import com.exfantasy.template.mybatis.model.NBATeamExample;
 import com.exfantasy.template.vo.json.nba.NBAGameFromNBAData;
 import com.exfantasy.template.vo.json.nba.NBAScheduleFromNBATw;
 import com.exfantasy.template.vo.json.nba.NBATeamFromNBATw;
+import com.exfantasy.template.vo.response.nba.NBAGameResp;
 import com.exfantasy.template.vo.response.nba.NBAScheduleResp;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
@@ -144,5 +145,10 @@ public class NBAService {
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
 		return cal.getTime();
+	}
+
+	public NBAGameResp queryNBAGameByGameId(Integer gameId) {
+		NBAGameResp game = nbaGameMapper.selectNBAGameByGameId(gameId); 
+		return game;
 	}
 }
