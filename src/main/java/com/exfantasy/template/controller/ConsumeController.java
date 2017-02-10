@@ -144,7 +144,7 @@ public class ConsumeController {
 	 * @return List<<code>{@link com.exfantasy.template.mybatis.model.Consume}</code>> 記帳資訊
 	 */
 	@RequestMapping(value = "/get_consume", method = RequestMethod.GET)
-	@ApiOperation(value = "查詢記帳資料", notes = "查詢記帳資料", response = Consume.class)
+	@ApiOperation(value = "查詢記帳資料", notes = "查詢記帳資料", responseContainer = "List", response = Consume.class)
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "startDate", value = "開始時間", required = false, dataType = "Date"),
 		@ApiImplicitParam(name = "endDate", value = "結束時間", required = false, dataType = "Date"),

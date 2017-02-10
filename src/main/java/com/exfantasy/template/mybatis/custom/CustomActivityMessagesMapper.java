@@ -3,6 +3,7 @@ package com.exfantasy.template.mybatis.custom;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -25,6 +26,6 @@ public interface CustomActivityMessagesMapper extends ActivityMessagesMapper {
         @Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="msg", property="msg", jdbcType=JdbcType.VARCHAR)
     })
-	List<ActivityMessagesResp> selectActivityMessagesRespByActivityId(Integer activityId);
+	List<ActivityMessagesResp> selectActivityMessagesRespByActivityId(@Param("activityId") Integer activityId);
 	
 }

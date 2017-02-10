@@ -1,6 +1,8 @@
 package com.exfantasy.template.services.nba;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,9 +15,9 @@ import com.exfantasy.template.mybatis.custom.CustomNBATeamMapper;
 import com.exfantasy.template.mybatis.model.NBASchedule;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.mybatis.model.NBATeamExample;
-import com.exfantasy.template.mybatis.model.NBATeamExample.Criteria;
 import com.exfantasy.template.vo.json.NBAScheduleFromNBATw;
 import com.exfantasy.template.vo.json.NBATeamFromNBATw;
+import com.exfantasy.template.vo.response.NBAScheduleResp;
 import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -85,9 +87,24 @@ public class NBAService {
 
 	public NBATeam queryNBATeamByAbbr(String abbr) {
 		NBATeamExample example = new NBATeamExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andAbbrEqualTo(abbr);
+		example.createCriteria().andAbbrEqualTo(abbr);
 		List<NBATeam> teams = nbaTeamMapper.selectByExample(example);
 		return teams.size() == 1 ? teams.get(0) : null;
+	}
+	
+	public List<NBAScheduleResp> queryNBASchedulesByDate(Date date) {
+		Date startTime = date;
+		Date endTime = getEndTime(date);
+		List<NBAScheduleResp> schedules = nbaScheduleMapper.selectNBASchedulesGameTimeBetween(startTime, endTime);
+		return schedules;
+	}
+
+	private Date getEndTime(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR, 23);
+		cal.set(Calendar.MINUTE, 59);
+		cal.set(Calendar.SECOND, 59);
+		return cal.getTime();
 	}
 }
