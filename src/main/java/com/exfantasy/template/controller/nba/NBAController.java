@@ -41,6 +41,7 @@ public class NBAController {
 	public @ResponseBody RespCommon getLatestInformations() {
 		nbaService.fetchNewestNBATeamsInformation();
 		nbaService.fetchNewestNBASchedules();
+		nbaService.fetchNewestNBAGames();
 		return new RespCommon(ResultCode.SUCCESS);
 	}
 	

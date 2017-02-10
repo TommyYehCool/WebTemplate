@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -64,12 +63,6 @@ public interface NBAScheduleMapper {
         @Result(column="away_team_id", property="awayTeamId", jdbcType=JdbcType.INTEGER)
     })
     NBASchedule selectByPrimaryKey(Integer gameId);
-
-    @UpdateProvider(type=NBAScheduleSqlProvider.class, method="updateByExampleSelective")
-    int updateByExampleSelective(@Param("record") NBASchedule record, @Param("example") NBAScheduleExample example);
-
-    @UpdateProvider(type=NBAScheduleSqlProvider.class, method="updateByExample")
-    int updateByExample(@Param("record") NBASchedule record, @Param("example") NBAScheduleExample example);
 
     @UpdateProvider(type=NBAScheduleSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(NBASchedule record);

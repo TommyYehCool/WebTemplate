@@ -9,6 +9,13 @@ import org.apache.ibatis.jdbc.SQL;
 
 public class NBATeamSqlProvider {
 
+    public String countByExample(NBATeamExample example) {
+        SQL sql = new SQL();
+        sql.SELECT("count(*)").FROM("nba_team");
+        applyWhere(sql, example, false);
+        return sql.toString();
+    }
+
     public String insertSelective(NBATeam record) {
         SQL sql = new SQL();
         sql.INSERT_INTO("nba_team");

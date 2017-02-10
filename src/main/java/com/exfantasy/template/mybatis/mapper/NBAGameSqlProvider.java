@@ -1,60 +1,95 @@
 package com.exfantasy.template.mybatis.mapper;
 
-import com.exfantasy.template.mybatis.model.NBASchedule;
-import com.exfantasy.template.mybatis.model.NBAScheduleExample.Criteria;
-import com.exfantasy.template.mybatis.model.NBAScheduleExample.Criterion;
-import com.exfantasy.template.mybatis.model.NBAScheduleExample;
+import com.exfantasy.template.mybatis.model.NBAGame;
+import com.exfantasy.template.mybatis.model.NBAGameExample.Criteria;
+import com.exfantasy.template.mybatis.model.NBAGameExample.Criterion;
+import com.exfantasy.template.mybatis.model.NBAGameExample;
 import java.util.List;
 import org.apache.ibatis.jdbc.SQL;
 
-public class NBAScheduleSqlProvider {
+public class NBAGameSqlProvider {
 
-    public String countByExample(NBAScheduleExample example) {
+    public String countByExample(NBAGameExample example) {
         SQL sql = new SQL();
-        sql.SELECT("count(*)").FROM("nba_schedule");
+        sql.SELECT("count(*)").FROM("nba_game");
         applyWhere(sql, example, false);
         return sql.toString();
     }
 
-    public String insertSelective(NBASchedule record) {
+    public String insertSelective(NBAGame record) {
         SQL sql = new SQL();
-        sql.INSERT_INTO("nba_schedule");
+        sql.INSERT_INTO("nba_game");
         
         if (record.getGameId() != null) {
             sql.VALUES("game_id", "#{gameId,jdbcType=INTEGER}");
         }
         
-        if (record.getGameTimeInMillis() != null) {
-            sql.VALUES("game_time_in_millis", "#{gameTimeInMillis,jdbcType=BIGINT}");
+        if (record.getHomeTeam1stScores() != null) {
+            sql.VALUES("home_team_1st_scores", "#{homeTeam1stScores,jdbcType=INTEGER}");
         }
         
-        if (record.getGameTime() != null) {
-            sql.VALUES("game_time", "#{gameTime,jdbcType=TIMESTAMP}");
+        if (record.getHomeTeam2ndScores() != null) {
+            sql.VALUES("home_team_2nd_scores", "#{homeTeam2ndScores,jdbcType=INTEGER}");
         }
         
-        if (record.getHomeTeamId() != null) {
-            sql.VALUES("home_team_id", "#{homeTeamId,jdbcType=INTEGER}");
+        if (record.getHomeTeam3rdScores() != null) {
+            sql.VALUES("home_team_3rd_scores", "#{homeTeam3rdScores,jdbcType=INTEGER}");
         }
         
-        if (record.getAwayTeamId() != null) {
-            sql.VALUES("away_team_id", "#{awayTeamId,jdbcType=INTEGER}");
+        if (record.getHomeTeam4thScores() != null) {
+            sql.VALUES("home_team_4th_scores", "#{homeTeam4thScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getHomeTeamScoresSum() != null) {
+            sql.VALUES("home_team_scores_sum", "#{homeTeamScoresSum,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeam1stScores() != null) {
+            sql.VALUES("away_team_1st_scores", "#{awayTeam1stScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeam2ndScores() != null) {
+            sql.VALUES("away_team_2nd_scores", "#{awayTeam2ndScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeam3rdScores() != null) {
+            sql.VALUES("away_team_3rd_scores", "#{awayTeam3rdScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeam4thScores() != null) {
+            sql.VALUES("away_team_4th_scores", "#{awayTeam4thScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeamScoresSum() != null) {
+            sql.VALUES("away_team_scores_sum", "#{awayTeamScoresSum,jdbcType=INTEGER}");
+        }
+        
+        if (record.getTotalScoresSum() != null) {
+            sql.VALUES("total_scores_sum", "#{totalScoresSum,jdbcType=INTEGER}");
         }
         
         return sql.toString();
     }
 
-    public String selectByExample(NBAScheduleExample example) {
+    public String selectByExample(NBAGameExample example) {
         SQL sql = new SQL();
         if (example != null && example.isDistinct()) {
             sql.SELECT_DISTINCT("game_id");
         } else {
             sql.SELECT("game_id");
         }
-        sql.SELECT("game_time_in_millis");
-        sql.SELECT("game_time");
-        sql.SELECT("home_team_id");
-        sql.SELECT("away_team_id");
-        sql.FROM("nba_schedule");
+        sql.SELECT("home_team_1st_scores");
+        sql.SELECT("home_team_2nd_scores");
+        sql.SELECT("home_team_3rd_scores");
+        sql.SELECT("home_team_4th_scores");
+        sql.SELECT("home_team_scores_sum");
+        sql.SELECT("away_team_1st_scores");
+        sql.SELECT("away_team_2nd_scores");
+        sql.SELECT("away_team_3rd_scores");
+        sql.SELECT("away_team_4th_scores");
+        sql.SELECT("away_team_scores_sum");
+        sql.SELECT("total_scores_sum");
+        sql.FROM("nba_game");
         applyWhere(sql, example, false);
         
         if (example != null && example.getOrderByClause() != null) {
@@ -64,24 +99,52 @@ public class NBAScheduleSqlProvider {
         return sql.toString();
     }
 
-    public String updateByPrimaryKeySelective(NBASchedule record) {
+    public String updateByPrimaryKeySelective(NBAGame record) {
         SQL sql = new SQL();
-        sql.UPDATE("nba_schedule");
+        sql.UPDATE("nba_game");
         
-        if (record.getGameTimeInMillis() != null) {
-            sql.SET("game_time_in_millis = #{gameTimeInMillis,jdbcType=BIGINT}");
+        if (record.getHomeTeam1stScores() != null) {
+            sql.SET("home_team_1st_scores = #{homeTeam1stScores,jdbcType=INTEGER}");
         }
         
-        if (record.getGameTime() != null) {
-            sql.SET("game_time = #{gameTime,jdbcType=TIMESTAMP}");
+        if (record.getHomeTeam2ndScores() != null) {
+            sql.SET("home_team_2nd_scores = #{homeTeam2ndScores,jdbcType=INTEGER}");
         }
         
-        if (record.getHomeTeamId() != null) {
-            sql.SET("home_team_id = #{homeTeamId,jdbcType=INTEGER}");
+        if (record.getHomeTeam3rdScores() != null) {
+            sql.SET("home_team_3rd_scores = #{homeTeam3rdScores,jdbcType=INTEGER}");
         }
         
-        if (record.getAwayTeamId() != null) {
-            sql.SET("away_team_id = #{awayTeamId,jdbcType=INTEGER}");
+        if (record.getHomeTeam4thScores() != null) {
+            sql.SET("home_team_4th_scores = #{homeTeam4thScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getHomeTeamScoresSum() != null) {
+            sql.SET("home_team_scores_sum = #{homeTeamScoresSum,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeam1stScores() != null) {
+            sql.SET("away_team_1st_scores = #{awayTeam1stScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeam2ndScores() != null) {
+            sql.SET("away_team_2nd_scores = #{awayTeam2ndScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeam3rdScores() != null) {
+            sql.SET("away_team_3rd_scores = #{awayTeam3rdScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeam4thScores() != null) {
+            sql.SET("away_team_4th_scores = #{awayTeam4thScores,jdbcType=INTEGER}");
+        }
+        
+        if (record.getAwayTeamScoresSum() != null) {
+            sql.SET("away_team_scores_sum = #{awayTeamScoresSum,jdbcType=INTEGER}");
+        }
+        
+        if (record.getTotalScoresSum() != null) {
+            sql.SET("total_scores_sum = #{totalScoresSum,jdbcType=INTEGER}");
         }
         
         sql.WHERE("game_id = #{gameId,jdbcType=INTEGER}");
@@ -89,7 +152,7 @@ public class NBAScheduleSqlProvider {
         return sql.toString();
     }
 
-    protected void applyWhere(SQL sql, NBAScheduleExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(SQL sql, NBAGameExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }

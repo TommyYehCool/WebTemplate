@@ -17,6 +17,9 @@ import org.apache.ibatis.type.JdbcType;
 
 @Mapper
 public interface NBATeamMapper {
+    @SelectProvider(type=NBATeamSqlProvider.class, method="countByExample")
+    int countByExample(NBATeamExample example);
+
     @Delete({
         "delete from nba_team",
         "where team_id = #{teamId,jdbcType=INTEGER}"

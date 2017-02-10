@@ -48,4 +48,12 @@ public class ScheduledTasks {
     public void fetchNewestNBASchedules() {
     	nbaService.fetchNewestNBASchedules();
     }
+    
+    /**
+     * 每天早上 08:00 去抓最新的 NBA 賽程資料
+     */
+    @Scheduled(cron = SCHEDULED_TIME)
+    public void fetchNewestNBAGames() {
+    	nbaService.fetchNewestNBAGames();
+    }
 }

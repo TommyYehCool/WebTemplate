@@ -107,3 +107,20 @@ CREATE TABLE `nba_schedule` (
   `away_team_id` int(10) NOT NULL,
   PRIMARY KEY (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `nba_game`;
+CREATE TABLE `nba_game` (
+  `game_id` int(10) NOT NULL,
+  `home_team_1st_scores` int(3) NOT NULL DEFAULT 0,
+  `home_team_2nd_scores` int(3) NOT NULL DEFAULT 0,
+  `home_team_3rd_scores` int(3) NOT NULL DEFAULT 0,
+  `home_team_4th_scores` int(3) NOT NULL DEFAULT 0,
+  `home_team_scores_sum` int(3) NOT NULL DEFAULT 0,
+  `away_team_1st_scores` int(3) NOT NULL DEFAULT 0,
+  `away_team_2nd_scores` int(3) NOT NULL DEFAULT 0,
+  `away_team_3rd_scores` int(3) NOT NULL DEFAULT 0,
+  `away_team_4th_scores` int(3) NOT NULL DEFAULT 0,
+  `away_team_scores_sum` int(3) NOT NULL DEFAULT 0,
+  `total_scores_sum` int(3) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`game_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

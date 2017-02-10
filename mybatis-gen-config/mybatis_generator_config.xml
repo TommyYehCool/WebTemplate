@@ -142,14 +142,21 @@
 		
 		<!-- Table: nba_team -->
 		<table schema="testing" tableName="nba_team" domainObjectName="NBATeam"
-			enableCountByExample="false" enableUpdateByExample="false"
+			enableCountByExample="true" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="true"
 			selectByExampleQueryId="false">
 		</table>
 		
 		<!-- Table: nba_schedule -->
 		<table schema="testing" tableName="nba_schedule" domainObjectName="NBASchedule"
-			enableCountByExample="true" enableUpdateByExample="true"
+			enableCountByExample="true" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="true"
+			selectByExampleQueryId="false">
+		</table>
+		
+		<!-- Table: nba_game -->
+		<table schema="testing" tableName="nba_game" domainObjectName="NBAGame"
+			enableCountByExample="true" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="true"
 			selectByExampleQueryId="false">
 		</table>
