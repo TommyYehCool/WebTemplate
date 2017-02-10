@@ -60,6 +60,14 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	})
 	int batchUpdateAlreadtSent(List<Consume> consumesToUpdateAlreadySent);
 	
+	/**
+	 * <pre>
+	 * 根據發票號碼批次刪除消費資料
+	 * </pre>
+	 * 
+	 * @param lotteryNos
+	 * @return
+	 */
 	@Delete({
 		"<script>",
 			"<foreach collection='list' item='lotteryNo' separator=';'>",
@@ -70,6 +78,14 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	})
 	int batchDeleteByLotteryNo(List<String> lotteryNos);
 	
+	/**
+	 * <pre>
+	 * [測試呼叫 SP] 根據 Uid 查詢出所有消費資料 
+	 * </pre>
+	 * 
+	 * @param uid
+	 * @return
+	 */
 	@Select({
 		"call FindConsumesByUid(", 
 			"#{uid, mode=IN, jdbcType=INTEGER}", 
@@ -94,6 +110,14 @@ public interface CustomConsumeMapper extends ConsumeMapper {
 	)
 	List<Consume> findConsumesByUid(@Param("uid") Integer uid);
 	
+	/**
+	 * <pre>
+	 * [測試呼叫 SP] 根據發票號碼查詢出對應消費資料 
+	 * </pre>
+	 * 
+	 * @param uid
+	 * @return
+	 */
 	@Select({
 		"call FindConsumesByLotteryNo(",
 			"#{lotteryNo, mode=IN, jdbcType=VARCHAR}", 
