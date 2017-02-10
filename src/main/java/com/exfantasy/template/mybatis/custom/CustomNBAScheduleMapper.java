@@ -51,6 +51,15 @@ public interface CustomNBAScheduleMapper extends NBAScheduleMapper {
 	})
 	int upsert(NBASchedule record);
 	
+	/**
+	 * <pre>
+	 * 根據日期查詢 NBA 賽程
+	 * </pre>
+	 * 
+	 * @param startTime
+	 * @param endTime
+	 * @return
+	 */
 	@Select({
 		"select",
 		"ns.game_id as gameId, ",
