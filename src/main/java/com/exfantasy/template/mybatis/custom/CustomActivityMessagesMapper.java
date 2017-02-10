@@ -16,8 +16,8 @@ import com.exfantasy.template.vo.response.activity.ActivityMessagesResp;
 public interface CustomActivityMessagesMapper extends ActivityMessagesMapper {
 	@Select({
         "select",
-        	"u.email as create_user_mail,",
-        	"am.create_datetime as create_datetime,",
+        	"u.email as createUserEmail,",
+        	"am.create_datetime as createDatetime,",
         	"am.msg as msg",
         "from activity_messages am",
         "left join user u on am.create_user_id = u.user_id",
@@ -26,8 +26,8 @@ public interface CustomActivityMessagesMapper extends ActivityMessagesMapper {
     @Results(
     	id = "ActivityMessagesResp",
     	value = {
-    		@Result(column="create_user_mail", property="createUserEmail", jdbcType=JdbcType.VARCHAR),
-    		@Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
+    		@Result(column="createUserEmail", property="createUserEmail", jdbcType=JdbcType.VARCHAR),
+    		@Result(column="createDatetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
     		@Result(column="msg", property="msg", jdbcType=JdbcType.VARCHAR)
     	}
     )
