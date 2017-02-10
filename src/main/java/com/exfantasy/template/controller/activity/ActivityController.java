@@ -31,6 +31,14 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+/**
+ * <pre>
+ * 活動相關 APIs
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Controller
 @RequestMapping(value = "/activity")
 @Api("ActivityController - 活動相關 API")

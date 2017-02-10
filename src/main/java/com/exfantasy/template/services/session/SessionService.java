@@ -8,6 +8,14 @@ import org.springframework.stereotype.Service;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.user.UserService;
 
+/**
+ * <pre>
+ * 主要用來取得登入者資訊, 因為 cache 的關係
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Service
 public class SessionService {
 	

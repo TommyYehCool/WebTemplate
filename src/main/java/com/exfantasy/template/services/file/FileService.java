@@ -19,6 +19,14 @@ import com.exfantasy.template.services.dropbox.DropboxService;
 import com.exfantasy.template.services.session.SessionService;
 import com.exfantasy.template.vo.response.file.ListFileResp;
 
+/**
+ * <pre>
+ * 處理檔案相關 service
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Service
 public class FileService {
 	private static final Logger logger = LoggerFactory.getLogger(FileService.class);

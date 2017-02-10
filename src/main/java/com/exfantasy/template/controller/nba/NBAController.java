@@ -23,6 +23,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+/**
+ * <pre>
+ * NBA 相關 APIs
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Controller
 @RequestMapping(value = "/nba")
 @Api("NBAController - NBA 相關 API")

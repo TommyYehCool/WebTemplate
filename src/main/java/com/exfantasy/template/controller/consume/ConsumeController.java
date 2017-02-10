@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * <pre>
- * 記帳相關 API
+ * 記帳相關 APIs
  * </pre>
  * 
  * @author tommy.feng

@@ -28,6 +28,14 @@ import com.exfantasy.utils.http.HttpUtil;
 import com.exfantasy.utils.http.HttpUtilException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * <pre>
+ * 處理 NBA 相關 service
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class NBAService {

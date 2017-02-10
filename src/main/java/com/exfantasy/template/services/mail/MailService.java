@@ -23,7 +23,9 @@ import com.exfantasy.template.mybatis.model.MailTemplateWithBLOBs;
 import com.exfantasy.template.mybatis.model.User;
 
 /**
- * 處理發送 email 邏輯
+ * <pre>
+ * 處理發送 email service
+ * </pre>
  * 
  * @author tommy.feng
  *

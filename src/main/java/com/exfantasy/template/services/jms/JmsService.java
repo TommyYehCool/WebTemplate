@@ -5,6 +5,14 @@ import org.springframework.stereotype.Service;
 
 import com.exfantasy.template.jms.Producer;
 
+/**
+ * <pre>
+ * 處理 JMS 相關 service
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Service
 public class JmsService {
 

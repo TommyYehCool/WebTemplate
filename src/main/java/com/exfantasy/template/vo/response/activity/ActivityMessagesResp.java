@@ -5,6 +5,14 @@ import java.util.Date;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * <pre>
+ * 活動留言
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Data
 public class ActivityMessagesResp {
 	@ApiModelProperty(notes = "留言者的 email")

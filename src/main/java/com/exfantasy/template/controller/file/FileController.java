@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * <pre>
- * 檔案管理相關 API
+ * 檔案管理相關 APIs
  * </pre>
  * 
  * @author tommy.feng

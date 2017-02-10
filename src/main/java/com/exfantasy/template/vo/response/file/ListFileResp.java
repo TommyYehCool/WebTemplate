@@ -7,6 +7,14 @@ import com.exfantasy.template.cnst.CloudStorage;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+/**
+ * <pre>
+ * 檔案資訊
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Data
 public class ListFileResp {
 	@ApiModelProperty(notes = "儲存的雲端空間")

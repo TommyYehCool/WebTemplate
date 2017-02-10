@@ -25,6 +25,14 @@ import com.exfantasy.template.mybatis.model.UserExample;
 import com.exfantasy.template.vo.request.activity.ActivityVo;
 import com.exfantasy.template.vo.response.activity.ActivityMessagesResp;
 
+/**
+ * <pre>
+ * 處理活動相關 service
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ActivityService {

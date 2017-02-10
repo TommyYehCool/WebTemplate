@@ -34,7 +34,7 @@ import com.exfantasy.utils.tools.typhoon_vacation.TyphoonVacationUtil;
 
 /**
  * <pre>
- * 處理消費資料相關邏輯
+ * 處理消費資料相關 service
  * </pre>
  * 
  * @author tommy.feng

@@ -7,6 +7,14 @@ import org.springframework.stereotype.Component;
 
 import com.exfantasy.template.cnst.QueueName;
 
+/**
+ * <pre>
+ * 用來處理 ActiveMQ 的訊息
+ * </pre>
+ * 
+ * @author tommy.feng
+ *
+ */
 @Component
 public class Consumer {
 	private static final Logger logger = LoggerFactory.getLogger(Consumer.class);

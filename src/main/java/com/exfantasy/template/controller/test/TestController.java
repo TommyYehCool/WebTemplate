@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * <pre>
- * 測試相關 API
+ * 測試相關 APIs
  * </pre>
  * 
  * @author tommy.feng
