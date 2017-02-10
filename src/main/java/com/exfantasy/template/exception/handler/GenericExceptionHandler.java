@@ -36,7 +36,7 @@ public class GenericExceptionHandler {
 	}
 	
 	@ExceptionHandler(AccessDeniedException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
 	@ResponseBody
 	public RespCommon handleAccessDeniedException(AccessDeniedException ex) {
 		logger.error("AccessDeniedException raised", ex);
