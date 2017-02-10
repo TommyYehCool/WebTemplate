@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.deserializer.consume;
+package com.exfantasy.template.vo.json.deserializer.consume;
 
 import java.io.IOException;
 import java.time.LocalDate;

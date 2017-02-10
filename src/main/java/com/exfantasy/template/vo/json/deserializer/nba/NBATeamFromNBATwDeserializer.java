@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.deserializer.nba;
+package com.exfantasy.template.vo.json.deserializer.nba;
 
 import java.io.IOException;
 import java.util.Iterator;

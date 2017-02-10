@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.exfantasy.template.vo.deserializer.consume.ConsumeVoDeserializer;
+import com.exfantasy.template.vo.json.deserializer.consume.ConsumeVoDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import io.swagger.annotations.ApiModelProperty;

@@ -1,4 +1,4 @@
-package com.exfantasy.template.vo.deserializer.activity;
+package com.exfantasy.template.vo.json.deserializer.activity;
 
 import java.io.IOException;
 import java.math.BigDecimal;
