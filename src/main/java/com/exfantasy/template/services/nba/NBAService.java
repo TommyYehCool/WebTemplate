@@ -22,7 +22,7 @@ import com.exfantasy.template.mybatis.model.NBASchedule;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.mybatis.model.NBATeamExample;
 import com.exfantasy.template.vo.json.nba.NBATodayGamesFromNBAData;
-import com.exfantasy.template.vo.json.nba.NBADateGamesFromNBAData;
+import com.exfantasy.template.vo.json.nba.NBADateGamesFromNBATaiwan;
 import com.exfantasy.template.vo.json.nba.NBAScheduleFromNBATw;
 import com.exfantasy.template.vo.json.nba.NBATeamFromNBATw;
 import com.exfantasy.template.vo.response.nba.NBAGameResp;
@@ -149,7 +149,7 @@ public class NBAService {
 		try {
 			String jsonResp = HttpUtil.sendGetRequest(requestUrl);
 			
-			NBADateGamesFromNBAData resp = mapper.readValue(jsonResp, NBADateGamesFromNBAData.class);
+			NBADateGamesFromNBATaiwan resp = mapper.readValue(jsonResp, NBADateGamesFromNBATaiwan.class);
 			
 			List<NBAGame> games = resp.getGames();
 			

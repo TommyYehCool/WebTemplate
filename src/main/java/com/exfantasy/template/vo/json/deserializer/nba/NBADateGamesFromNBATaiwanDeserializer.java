@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import com.exfantasy.template.mybatis.model.NBAGame;
-import com.exfantasy.template.vo.json.nba.NBADateGamesFromNBAData;
+import com.exfantasy.template.vo.json.nba.NBADateGamesFromNBATaiwan;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
@@ -12,11 +12,11 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class NBADateGamesFromNBADataDeserializer extends JsonDeserializer<NBADateGamesFromNBAData> {
+public class NBADateGamesFromNBATaiwanDeserializer extends JsonDeserializer<NBADateGamesFromNBATaiwan> {
 	
 	@Override
-	public NBADateGamesFromNBAData deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-		NBADateGamesFromNBAData resp = new NBADateGamesFromNBAData();
+	public NBADateGamesFromNBATaiwan deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+		NBADateGamesFromNBATaiwan resp = new NBADateGamesFromNBATaiwan();
 		
 		ObjectCodec oc = jp.getCodec();
 		JsonNode rootNode = oc.readTree(jp);
