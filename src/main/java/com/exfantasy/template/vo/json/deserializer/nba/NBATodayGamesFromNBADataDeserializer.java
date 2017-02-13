@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.exfantasy.template.mybatis.model.NBAGame;
-import com.exfantasy.template.vo.json.nba.NBAGameFromNBAData;
+import com.exfantasy.template.vo.json.nba.NBATodayGamesFromNBAData;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
@@ -19,16 +19,16 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class NBAGameFromNBADataDeserializer extends JsonDeserializer<NBAGameFromNBAData> {
+public class NBATodayGamesFromNBADataDeserializer extends JsonDeserializer<NBATodayGamesFromNBAData> {
 	
-	private final Logger logger = LoggerFactory.getLogger(NBAGameFromNBADataDeserializer.class);
+	private final Logger logger = LoggerFactory.getLogger(NBATodayGamesFromNBADataDeserializer.class);
 	
 	private final SimpleDateFormat srcDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private final SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
 	@Override
-	public NBAGameFromNBAData deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-		NBAGameFromNBAData resp = new NBAGameFromNBAData();
+	public NBATodayGamesFromNBAData deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+		NBATodayGamesFromNBAData resp = new NBATodayGamesFromNBAData();
 		
 		ObjectCodec oc = jp.getCodec();
 		JsonNode rootNode = oc.readTree(jp);

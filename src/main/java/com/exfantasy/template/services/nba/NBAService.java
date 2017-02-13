@@ -1,6 +1,8 @@
 package com.exfantasy.template.services.nba;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +21,8 @@ import com.exfantasy.template.mybatis.model.NBAGame;
 import com.exfantasy.template.mybatis.model.NBASchedule;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.mybatis.model.NBATeamExample;
-import com.exfantasy.template.vo.json.nba.NBAGameFromNBAData;
+import com.exfantasy.template.vo.json.nba.NBATodayGamesFromNBAData;
+import com.exfantasy.template.vo.json.nba.NBADateGamesFromNBAData;
 import com.exfantasy.template.vo.json.nba.NBAScheduleFromNBATw;
 import com.exfantasy.template.vo.json.nba.NBATeamFromNBATw;
 import com.exfantasy.template.vo.response.nba.NBAGameResp;
@@ -46,7 +49,9 @@ public class NBAService {
 	
 	private final String URL_NBA_SCHEDULE_NBA_TAIWAN = "https://tw.global.nba.com/stats2/season/schedule.json?countryCode=TW&days=7&dst=0&locale=zh_TW&tz=%2B8";
 	
-	private final String URL_NBA_GAME_NBA_DATA = "http://data.nba.com/data/5s/v2015/json/mobile_teams/nba/2016/scores/00_todays_scores.json";
+	private final String URL_NBA_TODAY_GAME_NBA_DATA = "http://data.nba.com/data/5s/v2015/json/mobile_teams/nba/2016/scores/00_todays_scores.json";
+	
+	private final String URL_NBA_DATE_GAME_NBA_DATE = "http://tw.global.nba.com/stats2/scores/daily.json?countryCode=TW&locale=zh_TW&gameDate={0}";
 	
 	@Autowired
 	private CustomNBATeamMapper nbaTeamMapper;
@@ -108,12 +113,12 @@ public class NBAService {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false, rollbackFor = Exception.class)
-	public void fetchNewestNBAGames() {
+	public void fetchTodayNBAGameResults() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_GAME_NBA_DATA);
+			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_TODAY_GAME_NBA_DATA);
 			
-			NBAGameFromNBAData resp = mapper.readValue(jsonResp, NBAGameFromNBAData.class);
+			NBATodayGamesFromNBAData resp = mapper.readValue(jsonResp, NBATodayGamesFromNBAData.class);
 			
 			List<NBAGame> games = resp.getGames();
 			
@@ -123,12 +128,42 @@ public class NBAService {
 				upsertCnts += nbaGameMapper.upsert(game);
 			}
 			
-			logger.info(">>>>> Upsert newest NBA Games done, counts: {} <<<<<", upsertCnts);
+			logger.info(">>>>> Upsert today NBA Game results done, counts: {} <<<<<", upsertCnts);
 			
 		} catch (HttpUtilException e) {
-			logger.error("HttpUtilException raised while trying to get newest NBA Games from url: <{}>", URL_NBA_GAME_NBA_DATA, e);
+			logger.error("HttpUtilException raised while trying to get today NBA Game resutls from url: <{}>", URL_NBA_TODAY_GAME_NBA_DATA, e);
 		} catch (IOException e) {
-			logger.error("IOException raised while converting json data to NBAGamesFromNBAData", e);
+			logger.error("IOException raised while converting json data to NBATodayGamesFromNBAData", e);
+		}
+	}
+	
+	public void fetchDateGameResults(Date date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String strDate = dateFormat.format(date);
+		
+		String requestUrl = MessageFormat.format(URL_NBA_DATE_GAME_NBA_DATE, strDate);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String jsonResp = HttpUtil.sendGetRequest(requestUrl);
+			
+			NBADateGamesFromNBAData resp = mapper.readValue(jsonResp, NBADateGamesFromNBAData.class);
+			
+			List<NBAGame> games = resp.getGames();
+			
+			int upsertCnts = 0;
+			
+			for (NBAGame game : games) {
+				upsertCnts += nbaGameMapper.upsert(game);
+			}
+			
+			logger.info(">>>>> Upsert date NBA Game results done, date: {}, counts: {} <<<<<", strDate, upsertCnts);
+			
+		} catch (HttpUtilException e) {
+			logger.error("HttpUtilException raised while trying to get date NBA Game results from url: <{}>", requestUrl, e);
+		} catch (IOException e) {
+			logger.error("IOException raised while converting json data to NBADateGamesFromNBAData", e);
 		}
 	}
 
@@ -161,5 +196,5 @@ public class NBAService {
 	public List<NBAGameResp> queryNBAGamess() {
 		return nbaGameMapper.selectNBAGameResps();
 	}
-	
+
 }

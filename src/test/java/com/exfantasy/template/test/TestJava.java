@@ -1,13 +1,14 @@
 package com.exfantasy.template.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.sql.Date;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestJava {
@@ -22,5 +23,13 @@ public class TestJava {
 		SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		assertThat(dateTimeFormat.format(date)).isEqualTo(timeStr);
+	}
+	
+	@Test
+	public void testStringFormat() {
+		String date = "2017-2-12";
+		String url = "http://tw.global.nba.com/stats2/scores/daily.json?countryCode=TW&locale=zh_TW&gameDate={0}";
+		String formattedUrl = MessageFormat.format(url, date);
+		System.out.println(formattedUrl);
 	}
 }

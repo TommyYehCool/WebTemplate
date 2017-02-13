@@ -46,12 +46,20 @@ public class NBAController {
 		return nbaService.queryNBATeamByAbbr(abbr);
 	}
 	
-	@RequestMapping(value = "/get_latest_informations", method = RequestMethod.GET)
+	@RequestMapping(value = "/fetch_latest_informations", method = RequestMethod.GET)
 	@ApiOperation(value = "抓取新的 NBA 隊伍及賽程資訊", notes = "抓取新的 NBA 隊伍及賽程資訊", response = RespCommon.class)
-	public @ResponseBody RespCommon getLatestInformations() {
+	public @ResponseBody RespCommon fetchLatestInformations() {
 		nbaService.fetchNewestNBATeamsInformation();
 		nbaService.fetchNewestNBASchedules();
-		nbaService.fetchNewestNBAGames();
+		nbaService.fetchTodayNBAGameResults();
+		return new RespCommon(ResultCode.SUCCESS);
+	}
+	
+	@RequestMapping(value = "/fetch_date_game_results", method = RequestMethod.GET)
+	@ApiOperation(value = "抓取某一天 NBA 賽程資訊", notes = "抓取某一天 NBA 賽程資訊", response = RespCommon.class)
+	public @ResponseBody RespCommon fetchDateGameResults(
+			@ApiParam("欲抓取的日期") @RequestParam(value = "date", required = true) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
+		nbaService.fetchDateGameResults(date);
 		return new RespCommon(ResultCode.SUCCESS);
 	}
 	

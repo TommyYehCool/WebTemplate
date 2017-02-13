@@ -54,6 +54,6 @@ public class ScheduledTasks {
      */
     @Scheduled(cron = SCHEDULED_TIME)
     public void fetchNewestNBAGames() {
-    	nbaService.fetchNewestNBAGames();
+    	nbaService.fetchTodayNBAGameResults();
     }
 }
