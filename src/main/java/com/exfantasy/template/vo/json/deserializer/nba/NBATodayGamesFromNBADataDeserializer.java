@@ -56,7 +56,7 @@ public class NBATodayGamesFromNBADataDeserializer extends JsonDeserializer<NBATo
 			int homeTeam2ndScores = homeTeamNode.get("q2").asInt(0);
 			int homeTeam3rdScores = homeTeamNode.get("q3").asInt(0);
 			int homeTeam4thScores = homeTeamNode.get("q4").asInt(0);
-			int homeTeamScoreSum = homeTeamNode.get("s").asInt(0);
+			int homeTeamScoresSum = homeTeamNode.get("s").asInt(0);
 
 			// Data: 客隊資訊
 			JsonNode awayTeamNode = gameNode.get("v");
@@ -65,10 +65,10 @@ public class NBATodayGamesFromNBADataDeserializer extends JsonDeserializer<NBATo
 			int awayTeam2ndScores = awayTeamNode.get("q2").asInt(0);
 			int awayTeam3rdScores = awayTeamNode.get("q3").asInt(0);
 			int awayTeam4thScores = awayTeamNode.get("q4").asInt(0);
-			int awayTeamScoreSum = awayTeamNode.get("s").asInt(0);
+			int awayTeamScoresSum = awayTeamNode.get("s").asInt(0);
 			
 			// 兩隊總分加總
-			Integer totalScoresSum = homeTeamScoreSum + awayTeamScoreSum;
+			Integer totalScoresSum = homeTeamScoresSum + awayTeamScoresSum;
 			
 			// ----- 儲存每場比賽資訊 -----
 			NBAGame nbaGame = new NBAGame();
@@ -80,13 +80,13 @@ public class NBATodayGamesFromNBADataDeserializer extends JsonDeserializer<NBATo
 			nbaGame.setHomeTeam2ndScores(homeTeam2ndScores);
 			nbaGame.setHomeTeam3rdScores(homeTeam3rdScores);
 			nbaGame.setHomeTeam4thScores(homeTeam4thScores);
-			nbaGame.setHomeTeamScoresSum(homeTeamScoreSum);
+			nbaGame.setHomeTeamScoresSum(homeTeamScoresSum);
 			
 			nbaGame.setAwayTeam1stScores(awayTeam1stScores);
 			nbaGame.setAwayTeam2ndScores(awayTeam2ndScores);
 			nbaGame.setAwayTeam3rdScores(awayTeam3rdScores);
 			nbaGame.setAwayTeam4thScores(awayTeam4thScores);
-			nbaGame.setAwayTeamScoresSum(awayTeamScoreSum);
+			nbaGame.setAwayTeamScoresSum(awayTeamScoresSum);
 			
 			nbaGame.setTotalScoresSum(totalScoresSum);
 
