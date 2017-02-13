@@ -24,8 +24,8 @@ import com.exfantasy.template.mybatis.model.NBASchedule;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.mybatis.model.NBATeamExample;
 import com.exfantasy.template.vo.json.nba.NBADateGamesFromNBATw;
-import com.exfantasy.template.vo.json.nba.NBAScheduleFromNBATw;
-import com.exfantasy.template.vo.json.nba.NBATeamFromNBATw;
+import com.exfantasy.template.vo.json.nba.NBASchedulesFromNBATw;
+import com.exfantasy.template.vo.json.nba.NBATeamsFromNBATw;
 import com.exfantasy.template.vo.json.nba.NBATodayGamesFromNBAData;
 import com.exfantasy.template.vo.response.nba.NBAGameResp;
 import com.exfantasy.template.vo.response.nba.NBAScheduleResp;
@@ -70,7 +70,7 @@ public class NBAService {
 		try {
 			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_TEAMS_FROM_NBA_TAIWAN);
 			
-			NBATeamFromNBATw resp = mapper.readValue(jsonResp, NBATeamFromNBATw.class);
+			NBATeamsFromNBATw resp = mapper.readValue(jsonResp, NBATeamsFromNBATw.class);
 			
 			List<NBATeam> teams = resp.getTeams();
 			
@@ -95,7 +95,7 @@ public class NBAService {
 		try {
 			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_SCHEDULES_FROM_NBA_TAIWAN);
 			
-			NBAScheduleFromNBATw resp = mapper.readValue(jsonResp, NBAScheduleFromNBATw.class);
+			NBASchedulesFromNBATw resp = mapper.readValue(jsonResp, NBASchedulesFromNBATw.class);
 			
 			List<NBASchedule> schedules = resp.getSchedules();
 			

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.exfantasy.template.mybatis.model.NBASchedule;
-import com.exfantasy.template.vo.json.deserializer.nba.NBAScheduleFromNBATwDeserializer;
+import com.exfantasy.template.vo.json.deserializer.nba.NBASchedulesFromNBATwDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import lombok.Data;
 
 @Data
-@JsonDeserialize(using = NBAScheduleFromNBATwDeserializer.class)
-public class NBAScheduleFromNBATw {
+@JsonDeserialize(using = NBASchedulesFromNBATwDeserializer.class)
+public class NBASchedulesFromNBATw {
 
 	private List<NBASchedule> schedules = new ArrayList<>();
 	

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import com.exfantasy.template.cnst.nba.NBAConference;
 import com.exfantasy.template.cnst.nba.NBADivision;
 import com.exfantasy.template.mybatis.model.NBATeam;
-import com.exfantasy.template.vo.json.nba.NBATeamFromNBATw;
+import com.exfantasy.template.vo.json.nba.NBATeamsFromNBATw;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
@@ -14,12 +14,12 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class NBATeamFromNBATwDeserializer extends JsonDeserializer<NBATeamFromNBATw> {
+public class NBATeamsFromNBATwDeserializer extends JsonDeserializer<NBATeamsFromNBATw> {
 
 	@Override
-	public NBATeamFromNBATw deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+	public NBATeamsFromNBATw deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 		// 暫存整包 json 回應
-		NBATeamFromNBATw resp = new NBATeamFromNBATw();
+		NBATeamsFromNBATw resp = new NBATeamsFromNBATw();
 		
 		// 取出 root node
 		ObjectCodec oc = jp.getCodec();

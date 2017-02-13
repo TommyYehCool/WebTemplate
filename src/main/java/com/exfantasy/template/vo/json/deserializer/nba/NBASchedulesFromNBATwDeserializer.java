@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.exfantasy.template.mybatis.model.NBASchedule;
-import com.exfantasy.template.vo.json.nba.NBAScheduleFromNBATw;
+import com.exfantasy.template.vo.json.nba.NBASchedulesFromNBATw;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
@@ -18,17 +18,17 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class NBAScheduleFromNBATwDeserializer extends JsonDeserializer<NBAScheduleFromNBATw> {
+public class NBASchedulesFromNBATwDeserializer extends JsonDeserializer<NBASchedulesFromNBATw> {
 	
-	private final Logger logger = LoggerFactory.getLogger(NBAScheduleFromNBATwDeserializer.class);
+	private final Logger logger = LoggerFactory.getLogger(NBASchedulesFromNBATwDeserializer.class);
 	
 	// 處理每一天的日期
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	
 	@Override
-	public NBAScheduleFromNBATw deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+	public NBASchedulesFromNBATw deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
 		// 暫存整包 json 回應
-		NBAScheduleFromNBATw resp = new NBAScheduleFromNBATw();
+		NBASchedulesFromNBATw resp = new NBASchedulesFromNBATw();
 
 		// use to process time
 		Calendar cal = Calendar.getInstance();
