@@ -5,21 +5,21 @@ public enum MapFieldsOfNBATeam implements MapFields {
 	
 	ABBR("abbr", "簡稱"),
 	
-	CITY_CH("cityCh", "城市"),
+	CITY_CH("cityCh", "城市-中文"),
 	
 	CITY_EN("cityEn", "城市-英文"),
 	
 	CODE("code", "代碼"),
 	
-	CONFERENCE_CH("conferenceCh", "聯盟"),
+	CONFERENCE_CH("conferenceCh", "聯盟-中文"),
 	
 	CONFERENCE_EN("conferenceEn", "聯盟-英文"),
 	
-	DIVISION_CH("divisionCh", "組別"),
+	DIVISION_CH("divisionCh", "組別-中文"),
 	
 	DIVISION_EN("divisionEn", "組別-英文"),
 	
-	NAME_CH("nameCh", "隊名"),
+	NAME_CH("nameCh", "隊名-中文"),
 	
 	NAME_EN("nameEn", "隊名-英文")
 	;

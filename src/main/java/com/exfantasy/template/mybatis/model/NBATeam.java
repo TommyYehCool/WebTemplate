@@ -9,7 +9,7 @@ public class NBATeam {
     @ApiModelProperty(notes = "簡稱", required = true)
     private String abbr;
 
-    @ApiModelProperty(notes = "城市", required = true)
+    @ApiModelProperty(notes = "城市-中文", required = true)
     private String cityCh;
 
     @ApiModelProperty(notes = "城市-英文", required = true)
@@ -18,19 +18,19 @@ public class NBATeam {
     @ApiModelProperty(notes = "代碼", required = true)
     private String code;
 
-    @ApiModelProperty(notes = "聯盟", required = true)
+    @ApiModelProperty(notes = "聯盟-中文", required = true)
     private String conferenceCh;
 
     @ApiModelProperty(notes = "聯盟-英文", required = true)
     private String conferenceEn;
 
-    @ApiModelProperty(notes = "組別", required = true)
+    @ApiModelProperty(notes = "組別-中文", required = true)
     private String divisionCh;
 
     @ApiModelProperty(notes = "組別-英文", required = true)
     private String divisionEn;
 
-    @ApiModelProperty(notes = "隊名", required = true)
+    @ApiModelProperty(notes = "隊名-中文", required = true)
     private String nameCh;
 
     @ApiModelProperty(notes = "隊名-英文", required = true)
