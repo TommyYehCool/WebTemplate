@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.exfantasy.template.cnst.nba.NBAConference;
+import com.exfantasy.template.cnst.nba.NBADivision;
 import com.exfantasy.template.mybatis.custom.CustomNBAGameMapper;
 import com.exfantasy.template.mybatis.custom.CustomNBAScheduleMapper;
 import com.exfantasy.template.mybatis.custom.CustomNBATeamMapper;
@@ -21,10 +23,10 @@ import com.exfantasy.template.mybatis.model.NBAGame;
 import com.exfantasy.template.mybatis.model.NBASchedule;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.mybatis.model.NBATeamExample;
-import com.exfantasy.template.vo.json.nba.NBATodayGamesFromNBAData;
 import com.exfantasy.template.vo.json.nba.NBADateGamesFromNBATw;
 import com.exfantasy.template.vo.json.nba.NBAScheduleFromNBATw;
 import com.exfantasy.template.vo.json.nba.NBATeamFromNBATw;
+import com.exfantasy.template.vo.json.nba.NBATodayGamesFromNBAData;
 import com.exfantasy.template.vo.response.nba.NBAGameResp;
 import com.exfantasy.template.vo.response.nba.NBAScheduleResp;
 import com.exfantasy.utils.http.HttpUtil;
@@ -166,6 +168,20 @@ public class NBAService {
 		} catch (IOException e) {
 			logger.error("IOException raised while converting json data to NBADateGamesFromNBATw", e);
 		}
+	}
+	
+	public List<NBATeam> queryNBATeamByConference(NBAConference conference) {
+		NBATeamExample example = new NBATeamExample();
+		example.createCriteria().andConferenceEnEqualTo(conference.toString());
+		List<NBATeam> teams = nbaTeamMapper.selectByExample(example);
+		return teams;
+	}
+	
+	public List<NBATeam> queryNBATeamByDivision(NBADivision division) {
+		NBATeamExample example = new NBATeamExample();
+		example.createCriteria().andDivisionEnEqualTo(division.toString());
+		List<NBATeam> teams = nbaTeamMapper.selectByExample(example);
+		return teams;
 	}
 
 	public NBATeam queryNBATeamByAbbr(String abbr) {

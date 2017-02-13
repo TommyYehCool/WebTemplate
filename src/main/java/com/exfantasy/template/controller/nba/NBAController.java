@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.cnst.ResultCode;
+import com.exfantasy.template.cnst.nba.NBAConference;
+import com.exfantasy.template.cnst.nba.NBADivision;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.services.nba.NBAService;
 import com.exfantasy.template.vo.response.RespCommon;
@@ -38,6 +40,20 @@ public class NBAController {
 	
 	@Autowired
 	private NBAService nbaService;
+	
+	@RequestMapping(value = "/get_nba_team_conference/{conference}", method = RequestMethod.GET)
+	@ApiOperation(value = "查詢 NBA 東西區隊伍", notes = "查詢 NBA 東西區隊伍", responseContainer = "List", response = NBATeam.class)
+	public @ResponseBody List<NBATeam> getNBATeamsConference(
+			@ApiParam("東西區") @PathVariable(value = "conference", required = true) NBAConference conference) {
+		return nbaService.queryNBATeamByConference(conference);
+	}
+	
+	@RequestMapping(value = "/get_nba_team_division/{division}", method = RequestMethod.GET)
+	@ApiOperation(value = "查詢 NBA 組別隊伍", notes = "查詢 NBA 組別隊伍", responseContainer = "List", response = NBATeam.class)
+	public @ResponseBody List<NBATeam> getNBATeamsDivision(
+			@ApiParam("組別") @PathVariable(value = "division", required = true) NBADivision division) {
+		return nbaService.queryNBATeamByDivision(division);
+	}
 	
 	@RequestMapping(value = "/get_nba_team/{abbr}", method = RequestMethod.GET)
 	@ApiOperation(value = "使用簡稱查詢 NBA 隊伍", notes = "使用簡稱查詢 NBA 隊伍", response = NBATeam.class)

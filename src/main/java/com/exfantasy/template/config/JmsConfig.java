@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 
-import com.exfantasy.template.cnst.QueueName;
+import com.exfantasy.template.cnst.jms.QueueName;
 
 /**
  * <pre>

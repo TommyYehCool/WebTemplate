@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.exfantasy.template.cnst.CloudStorage;
 import com.exfantasy.template.cnst.ResultCode;
+import com.exfantasy.template.cnst.file.CloudStorage;
 import com.exfantasy.template.exception.OperationException;
 import com.exfantasy.template.mybatis.model.User;
 import com.exfantasy.template.services.file.FileService;

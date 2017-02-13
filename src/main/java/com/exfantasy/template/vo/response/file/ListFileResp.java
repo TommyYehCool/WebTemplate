@@ -2,7 +2,7 @@ package com.exfantasy.template.vo.response.file;
 
 import java.util.Date;
 
-import com.exfantasy.template.cnst.CloudStorage;
+import com.exfantasy.template.cnst.file.CloudStorage;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

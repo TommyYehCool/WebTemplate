@@ -1,4 +1,4 @@
-package com.exfantasy.template.cnst;
+package com.exfantasy.template.cnst.jms;
 
 /**
  * <pre>

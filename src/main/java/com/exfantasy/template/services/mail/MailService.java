@@ -14,7 +14,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.exfantasy.template.cnst.MailTemplateType;
+import com.exfantasy.template.cnst.mail.MailTemplateType;
 import com.exfantasy.template.mybatis.mapper.MailTemplateMapper;
 import com.exfantasy.template.mybatis.model.Consume;
 import com.exfantasy.template.mybatis.model.MailTemplateExample;

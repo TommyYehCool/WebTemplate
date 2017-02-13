@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Component;
 
-import com.exfantasy.template.cnst.QueueName;
+import com.exfantasy.template.cnst.jms.QueueName;
 
 /**
  * <pre>
