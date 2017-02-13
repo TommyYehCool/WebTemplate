@@ -45,13 +45,13 @@ public class NBAService {
 	
 	private Logger logger = LoggerFactory.getLogger(NBAService.class);
 
-	private final String URL_NBA_TEAM_NBA_TAIWAN = "http://tw.global.nba.com/stats2/league/divisionteamlist.json?locale=zh_TW";
+	private final String URL_NBA_TEAMS_FROM_NBA_TAIWAN = "http://tw.global.nba.com/stats2/league/divisionteamlist.json?locale=zh_TW";
 	
-	private final String URL_NBA_SCHEDULE_NBA_TAIWAN = "https://tw.global.nba.com/stats2/season/schedule.json?countryCode=TW&days=7&dst=0&locale=zh_TW&tz=%2B8";
+	private final String URL_NBA_SCHEDULES_FROM_NBA_TAIWAN = "https://tw.global.nba.com/stats2/season/schedule.json?countryCode=TW&days=7&dst=0&locale=zh_TW&tz=%2B8";
 	
-	private final String URL_NBA_TODAY_GAME_NBA_DATA = "http://data.nba.com/data/5s/v2015/json/mobile_teams/nba/2016/scores/00_todays_scores.json";
+	private final String URL_NBA_TODAY_GAMES_FROM_NBA_DATA = "http://data.nba.com/data/5s/v2015/json/mobile_teams/nba/2016/scores/00_todays_scores.json";
 	
-	private final String URL_NBA_DATE_GAME_NBA_DATE = "http://tw.global.nba.com/stats2/scores/daily.json?countryCode=TW&locale=zh_TW&gameDate={0}";
+	private final String URL_NBA_DATE_GAMES_FROM_NBA_TAIWAN = "http://tw.global.nba.com/stats2/scores/daily.json?countryCode=TW&locale=zh_TW&gameDate={0}";
 	
 	@Autowired
 	private CustomNBATeamMapper nbaTeamMapper;
@@ -66,7 +66,7 @@ public class NBAService {
 	public void fetchNewestNBATeamsInformation() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_TEAM_NBA_TAIWAN);
+			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_TEAMS_FROM_NBA_TAIWAN);
 			
 			NBATeamFromNBATw resp = mapper.readValue(jsonResp, NBATeamFromNBATw.class);
 			
@@ -78,10 +78,10 @@ public class NBAService {
 				upsertCnts += nbaTeamMapper.upsert(team);
 			}
 			
-			logger.info(">>>>> Upsert newest NBA Teams information done, counts: {} <<<<<", upsertCnts);
+			logger.info(">>>>> Upsert newest NBA Teams done, counts: {} <<<<<", upsertCnts);
 			
 		} catch (HttpUtilException e) {
-			logger.error("HttpUtilException raised while trying to get newest NBA Team information from url: <{}>", URL_NBA_TEAM_NBA_TAIWAN, e);
+			logger.error("HttpUtilException raised while trying to get newest NBA Teams from url: <{}>", URL_NBA_TEAMS_FROM_NBA_TAIWAN, e);
 		} catch (IOException e) {
 			logger.error("IOException raised while converting json data to NBATeamFromNBATw", e);
 		}
@@ -91,7 +91,7 @@ public class NBAService {
 	public void fetchNewestNBASchedules() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_SCHEDULE_NBA_TAIWAN);
+			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_SCHEDULES_FROM_NBA_TAIWAN);
 			
 			NBAScheduleFromNBATw resp = mapper.readValue(jsonResp, NBAScheduleFromNBATw.class);
 			
@@ -106,7 +106,7 @@ public class NBAService {
 			logger.info(">>>>> Upsert newest NBA Schedules done, counts: {} <<<<<", upsertCnts);
 			
 		} catch (HttpUtilException e) {
-			logger.error("HttpUtilException raised while trying to get newest NBA Schedules from url: <{}>", URL_NBA_SCHEDULE_NBA_TAIWAN, e);
+			logger.error("HttpUtilException raised while trying to get newest NBA Schedules from url: <{}>", URL_NBA_SCHEDULES_FROM_NBA_TAIWAN, e);
 		} catch (IOException e) {
 			logger.error("IOException raised while converting json data to NBAScheduleFromNBATw", e);
 		}
@@ -116,7 +116,7 @@ public class NBAService {
 	public void fetchTodayNBAGameResults() {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_TODAY_GAME_NBA_DATA);
+			String jsonResp = HttpUtil.sendGetRequest(URL_NBA_TODAY_GAMES_FROM_NBA_DATA);
 			
 			NBATodayGamesFromNBAData resp = mapper.readValue(jsonResp, NBATodayGamesFromNBAData.class);
 			
@@ -131,7 +131,7 @@ public class NBAService {
 			logger.info(">>>>> Upsert today NBA Game results done, counts: {} <<<<<", upsertCnts);
 			
 		} catch (HttpUtilException e) {
-			logger.error("HttpUtilException raised while trying to get today NBA Game resutls from url: <{}>", URL_NBA_TODAY_GAME_NBA_DATA, e);
+			logger.error("HttpUtilException raised while trying to get today NBA Game results from url: <{}>", URL_NBA_TODAY_GAMES_FROM_NBA_DATA, e);
 		} catch (IOException e) {
 			logger.error("IOException raised while converting json data to NBATodayGamesFromNBAData", e);
 		}
@@ -143,7 +143,7 @@ public class NBAService {
 		
 		String strDate = dateFormat.format(date);
 		
-		String requestUrl = MessageFormat.format(URL_NBA_DATE_GAME_NBA_DATE, strDate);
+		String requestUrl = MessageFormat.format(URL_NBA_DATE_GAMES_FROM_NBA_TAIWAN, strDate);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
@@ -162,7 +162,7 @@ public class NBAService {
 			logger.info(">>>>> Upsert date NBA Game results done, date: {}, counts: {} <<<<<", strDate, upsertCnts);
 			
 		} catch (HttpUtilException e) {
-			logger.error("HttpUtilException raised while trying to get date NBA Game results from url: <{}>", requestUrl, e);
+			logger.error("HttpUtilException raised while trying to get date: {} NBA Game results from url: <{}>", strDate, requestUrl, e);
 		} catch (IOException e) {
 			logger.error("IOException raised while converting json data to NBADateGamesFromNBAData", e);
 		}
