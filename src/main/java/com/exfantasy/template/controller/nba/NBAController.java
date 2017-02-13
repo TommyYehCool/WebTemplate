@@ -45,14 +45,14 @@ public class NBAController {
 	@ApiOperation(value = "查詢 NBA 東西區隊伍", notes = "查詢 NBA 東西區隊伍", responseContainer = "List", response = NBATeam.class)
 	public @ResponseBody List<NBATeam> getNBATeamsConference(
 			@ApiParam("東西區") @PathVariable(value = "conference", required = true) NBAConference conference) {
-		return nbaService.queryNBATeamByConference(conference);
+		return nbaService.queryNBATeamsByConference(conference);
 	}
 	
 	@RequestMapping(value = "/get_nba_team_division/{division}", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢 NBA 組別隊伍", notes = "查詢 NBA 組別隊伍", responseContainer = "List", response = NBATeam.class)
 	public @ResponseBody List<NBATeam> getNBATeamsDivision(
 			@ApiParam("組別") @PathVariable(value = "division", required = true) NBADivision division) {
-		return nbaService.queryNBATeamByDivision(division);
+		return nbaService.queryNBATeamsByDivision(division);
 	}
 	
 	@RequestMapping(value = "/get_nba_team/{abbr}", method = RequestMethod.GET)
@@ -89,7 +89,7 @@ public class NBAController {
 	@RequestMapping(value = "/get_game_results", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢目前所有比賽結果", notes = "查詢目前所有比賽結果", responseContainer = "List", response = NBAGameResp.class)
 	public @ResponseBody List<NBAGameResp> getNBAGameResults() {
-		return nbaService.queryNBAGamess();
+		return nbaService.queryNBAGames();
 	}
 	
 	@RequestMapping(value = "/get_game_result/{gameId}", method = RequestMethod.GET)

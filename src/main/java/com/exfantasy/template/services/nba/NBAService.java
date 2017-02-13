@@ -170,14 +170,14 @@ public class NBAService {
 		}
 	}
 	
-	public List<NBATeam> queryNBATeamByConference(NBAConference conference) {
+	public List<NBATeam> queryNBATeamsByConference(NBAConference conference) {
 		NBATeamExample example = new NBATeamExample();
 		example.createCriteria().andConferenceEnEqualTo(conference.toString());
 		List<NBATeam> teams = nbaTeamMapper.selectByExample(example);
 		return teams;
 	}
 	
-	public List<NBATeam> queryNBATeamByDivision(NBADivision division) {
+	public List<NBATeam> queryNBATeamsByDivision(NBADivision division) {
 		NBATeamExample example = new NBATeamExample();
 		example.createCriteria().andDivisionEnEqualTo(division.toString());
 		List<NBATeam> teams = nbaTeamMapper.selectByExample(example);
@@ -210,7 +210,7 @@ public class NBAService {
 		return nbaGameMapper.selectNBAGameByGameId(gameId);
 	}
 
-	public List<NBAGameResp> queryNBAGamess() {
+	public List<NBAGameResp> queryNBAGames() {
 		return nbaGameMapper.selectNBAGameResps();
 	}
 
