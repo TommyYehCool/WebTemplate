@@ -1,4 +1,4 @@
-package com.exfantasy.template.config;
+package com.exfantasy.template.config.file;
 
 import org.springframework.context.annotation.Configuration;
 

@@ -1,4 +1,4 @@
-package com.exfantasy.template.config;
+package com.exfantasy.template.config.jms;
 
 import javax.jms.Queue;
 

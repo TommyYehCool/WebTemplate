@@ -1,4 +1,4 @@
-package com.exfantasy.template.config;
+package com.exfantasy.template.config.mail;
 
 import java.util.Properties;
 

@@ -1,4 +1,4 @@
-package com.exfantasy.template.config;
+package com.exfantasy.template.config.cache;
 
 import java.lang.reflect.Method;
 
