@@ -164,7 +164,7 @@ public class NBAService {
 		} catch (HttpUtilException e) {
 			logger.error("HttpUtilException raised while trying to get date: {} NBA Game results from url: <{}>", strDate, requestUrl, e);
 		} catch (IOException e) {
-			logger.error("IOException raised while converting json data to NBADateGamesFromNBAData", e);
+			logger.error("IOException raised while converting json data to NBADateGamesFromNBATw", e);
 		}
 	}
 
