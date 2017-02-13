@@ -3,6 +3,8 @@ package com.exfantasy.template.vo.json.deserializer.nba;
 import java.io.IOException;
 import java.util.Iterator;
 
+import com.exfantasy.template.cnst.nba.NBAConference;
+import com.exfantasy.template.cnst.nba.NBADivision;
 import com.exfantasy.template.mybatis.model.NBATeam;
 import com.exfantasy.template.vo.json.nba.NBATeamFromNBATw;
 import com.fasterxml.jackson.core.JsonParser;
@@ -46,6 +48,9 @@ public class NBATeamFromNBATwDeserializer extends JsonDeserializer<NBATeamFromNB
 				JsonNode profileNode = teamNode.get("profile");
 				
 				// Data
+				Integer teamId = profileNode.get("id").asInt();
+
+				// Data
 				String abbr = profileNode.get("abbr").asText();
 				
 				// Data
@@ -58,66 +63,31 @@ public class NBATeamFromNBATwDeserializer extends JsonDeserializer<NBATeamFromNB
 				String code = profileNode.get("code").asText();
 				
 				// Data
-				Integer teamId = profileNode.get("id").asInt();
-				
-				// Data
 				String nameCh = profileNode.get("name").asText();
 				
 				// Data
 				String nameEn = profileNode.get("nameEn").asText();
 				
-				// 儲存每隊資料
+				// ----- 儲存每隊資料 -----
 				NBATeam team = new NBATeam();
+
+				// ----- 將資料塞進物件 -----
+				team.setTeamId(teamId);
 				team.setAbbr(abbr);
 				team.setCityCh(cityCh);
 				team.setCityEn(cityEn);
 				team.setCode(code);
-				team.setConferenceCh(getConferenceCh(conferenceEn));
+				team.setConferenceCh(NBAConference.getChinese(conferenceEn));
 				team.setConferenceEn(conferenceEn);
-				team.setDivisionCh(getDivisionCh(divisionEn));
+				team.setDivisionCh(NBADivision.getChinese(divisionEn));
 				team.setDivisionEn(divisionEn);
 				team.setNameCh(nameCh);
 				team.setNameEn(nameEn);
-				team.setTeamId(teamId);
 				
 				resp.addNBATeam(team);
 			}
 		}
 		return resp;
-	}
-	
-	private String getConferenceCh(String conferenceEn) {
-		switch (conferenceEn) {
-			case "Eastern":
-				return "東區聯盟";
-			
-			case "Western":
-				return "西區聯盟";
-		}
-		return "";
-	}
-	
-	private String getDivisionCh(String divisionEn) {
-		switch (divisionEn) {
-			case "Atlantic":
-				return "大西洋組";
-			
-			case "Central":
-				return "中央組";
-				
-			case "Southeast":
-				return "東南組";
-				
-			case "Northwest":
-				return "西北組";
-				
-			case "Pacific":
-				return "太平洋組";
-				
-			case "Southwest":
-				return "西南組";
-		}
-		return "";
 	}
 
 }

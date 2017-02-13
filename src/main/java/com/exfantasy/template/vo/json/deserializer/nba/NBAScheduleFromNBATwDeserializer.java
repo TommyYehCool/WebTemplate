@@ -62,9 +62,6 @@ public class NBAScheduleFromNBATwDeserializer extends JsonDeserializer<NBASchedu
 			Iterator<JsonNode> itGameNodes = gameNodes.iterator();
 			
 			while (itGameNodes.hasNext()) {
-				// 儲存每場比賽資訊
-				NBASchedule schedule = new NBASchedule();
-				
 				// 當天各場比賽資訊
 				JsonNode gameNode = itGameNodes.next();
 				
@@ -73,24 +70,27 @@ public class NBAScheduleFromNBATwDeserializer extends JsonDeserializer<NBASchedu
 				
 				// Data: 場次 ID
 				Integer gameId = profileNode.get("gameId").asInt();
+				
+				// Data: 場次時間
+				Long gameTimeInMillis = profileNode.get("utcMillis").asLong();
+				cal.setTimeInMillis(gameTimeInMillis);
+				Date gameTime = cal.getTime();
 
 				// Data: 主場隊伍 ID
 				Integer homeTeamId = profileNode.get("homeTeamId").asInt();
 
 				// Data: 客場隊伍 ID 
 				Integer awayTeamId = profileNode.get("awayTeamId").asInt();
-
-				// Data: 場次時間
-				Long gameTimeInMillis = profileNode.get("utcMillis").asLong();
-				cal.setTimeInMillis(gameTimeInMillis);
-				Date gameTime = cal.getTime();
 				
+				// ----- 儲存每場比賽資訊 -----
+				NBASchedule schedule = new NBASchedule();
+
 				// ----- 將資料塞進物件 -----
 				schedule.setGameId(gameId);
-				schedule.setHomeTeamId(homeTeamId);
-				schedule.setAwayTeamId(awayTeamId);
 				schedule.setGameTimeInMillis(gameTimeInMillis);
 				schedule.setGameTime(gameTime);
+				schedule.setHomeTeamId(homeTeamId);
+				schedule.setAwayTeamId(awayTeamId);
 				
 				resp.addNBASchedule(schedule);
 			}
