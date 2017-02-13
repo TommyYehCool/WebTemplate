@@ -47,7 +47,7 @@ public class NBAService {
 
 	private final String URL_NBA_TEAMS_FROM_NBA_TAIWAN = "http://tw.global.nba.com/stats2/league/divisionteamlist.json?locale=zh_TW";
 	
-	private final String URL_NBA_SCHEDULES_FROM_NBA_TAIWAN = "https://tw.global.nba.com/stats2/season/schedule.json?countryCode=TW&days=7&dst=0&locale=zh_TW&tz=%2B8";
+	private final String URL_NBA_SCHEDULES_FROM_NBA_TAIWAN = "https://tw.global.nba.com/stats2/season/schedule.json?countryCode=TW&locale=zh_TW&days=7";
 	
 	private final String URL_NBA_TODAY_GAMES_FROM_NBA_DATA = "http://data.nba.com/data/5s/v2015/json/mobile_teams/nba/2016/scores/00_todays_scores.json";
 	
