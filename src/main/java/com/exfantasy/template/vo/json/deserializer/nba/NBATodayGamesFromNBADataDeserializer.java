@@ -46,35 +46,50 @@ public class NBATodayGamesFromNBADataDeserializer extends JsonDeserializer<NBATo
 		while (itGameNodes.hasNext()) {
 			JsonNode gameNode = itGameNodes.next();
 
-			NBAGame nbaGame = new NBAGame();
-			
 			// Data: 場次編號
 			Integer gameId = gameNode.get("gid").asInt();
-			nbaGame.setGameId(gameId);
-			
-			JsonNode homeTeamNode = gameNode.get("h");
-			JsonNode awayTeamNode = gameNode.get("v");
 			
 			// Data: 主隊資訊
-			nbaGame.setHomeTeam1stScores(homeTeamNode.get("q1").asInt(0));
-			nbaGame.setHomeTeam2ndScores(homeTeamNode.get("q2").asInt(0));
-			nbaGame.setHomeTeam3rdScores(homeTeamNode.get("q3").asInt(0));
-			nbaGame.setHomeTeam4thScores(homeTeamNode.get("q4").asInt(0));
+			JsonNode homeTeamNode = gameNode.get("h");
+
+			int homeTeam1stScores = homeTeamNode.get("q1").asInt(0);
+			int homeTeam2ndScores = homeTeamNode.get("q2").asInt(0);
+			int homeTeam3rdScores = homeTeamNode.get("q3").asInt(0);
+			int homeTeam4thScores = homeTeamNode.get("q4").asInt(0);
 			int homeTeamScoreSum = homeTeamNode.get("s").asInt(0);
-			nbaGame.setHomeTeamScoresSum(homeTeamScoreSum);
 
 			// Data: 客隊資訊
-			nbaGame.setAwayTeam1stScores(awayTeamNode.get("q1").asInt(0));
-			nbaGame.setAwayTeam2ndScores(awayTeamNode.get("q2").asInt(0));
-			nbaGame.setAwayTeam3rdScores(awayTeamNode.get("q3").asInt(0));
-			nbaGame.setAwayTeam4thScores(awayTeamNode.get("q4").asInt(0));
+			JsonNode awayTeamNode = gameNode.get("v");
+
+			int awayTeam1stScores = awayTeamNode.get("q1").asInt(0);
+			int awayTeam2ndScores = awayTeamNode.get("q2").asInt(0);
+			int awayTeam3rdScores = awayTeamNode.get("q3").asInt(0);
+			int awayTeam4thScores = awayTeamNode.get("q4").asInt(0);
 			int awayTeamScoreSum = awayTeamNode.get("s").asInt(0);
-			nbaGame.setAwayTeamScoresSum(awayTeamScoreSum);
 			
 			// 兩隊總分加總
 			Integer totalScoresSum = homeTeamScoreSum + awayTeamScoreSum;
-			nbaGame.setTotalScoresSum(totalScoresSum);
 			
+			// ----- 儲存每場比賽資訊 -----
+			NBAGame nbaGame = new NBAGame();
+
+			// ----- 將資料塞進物件 -----
+			nbaGame.setGameId(gameId);
+
+			nbaGame.setHomeTeam1stScores(homeTeam1stScores);
+			nbaGame.setHomeTeam2ndScores(homeTeam2ndScores);
+			nbaGame.setHomeTeam3rdScores(homeTeam3rdScores);
+			nbaGame.setHomeTeam4thScores(homeTeam4thScores);
+			nbaGame.setHomeTeamScoresSum(homeTeamScoreSum);
+			
+			nbaGame.setAwayTeam1stScores(awayTeam1stScores);
+			nbaGame.setAwayTeam2ndScores(awayTeam2ndScores);
+			nbaGame.setAwayTeam3rdScores(awayTeam3rdScores);
+			nbaGame.setAwayTeam4thScores(awayTeam4thScores);
+			nbaGame.setAwayTeamScoresSum(awayTeamScoreSum);
+			
+			nbaGame.setTotalScoresSum(totalScoresSum);
+
 			resp.addNBAGame(nbaGame);
 		}
 		return resp;

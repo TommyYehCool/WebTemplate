@@ -28,32 +28,33 @@ public class NBADateGamesFromNBATwDeserializer extends JsonDeserializer<NBADateG
 		while (itGameNodes.hasNext()) {
 			JsonNode gameNode = itGameNodes.next();
 			
-			NBAGame nbaGame = new NBAGame();
-			
 			// Data: 場次編號
 			Integer gameId = gameNode.get("profile").get("gameId").asInt();
 			
 			// Data: 得分資訊
 			JsonNode boxScoreNode = gameNode.get("boxscore");
-			int homeTeamScoresSum = boxScoreNode.get("homeScore").asInt();
-			int awayTeamScoresSum = boxScoreNode.get("awayScore").asInt();
+			int homeTeamScoresSum = boxScoreNode.get("homeScore").asInt(0);
+			int awayTeamScoresSum = boxScoreNode.get("awayScore").asInt(0);
 			int totalScoresSum = homeTeamScoresSum + awayTeamScoresSum;
 
 			// Data: 主隊資訊
 			JsonNode homeTeamScoreNode = gameNode.get("homeTeam").get("score");
-			int homeTeam1stScores = homeTeamScoreNode.get("q1Score").asInt();
-			int homeTeam2ndScores = homeTeamScoreNode.get("q2Score").asInt();
-			int homeTeam3rdScores = homeTeamScoreNode.get("q3Score").asInt();
-			int homeTeam4thScores = homeTeamScoreNode.get("q4Score").asInt();
+			int homeTeam1stScores = homeTeamScoreNode.get("q1Score").asInt(0);
+			int homeTeam2ndScores = homeTeamScoreNode.get("q2Score").asInt(0);
+			int homeTeam3rdScores = homeTeamScoreNode.get("q3Score").asInt(0);
+			int homeTeam4thScores = homeTeamScoreNode.get("q4Score").asInt(0);
 			
 			// Data: 客隊資訊
 			JsonNode awayTeamScoreNode = gameNode.get("awayTeam").get("score");
-			int awayTeam1stScores = awayTeamScoreNode.get("q1Score").asInt();
-			int awayTeam2ndScores = awayTeamScoreNode.get("q2Score").asInt();
-			int awayTeam3rdScores = awayTeamScoreNode.get("q3Score").asInt();
-			int awayTeam4thScores = awayTeamScoreNode.get("q4Score").asInt();
+			int awayTeam1stScores = awayTeamScoreNode.get("q1Score").asInt(0);
+			int awayTeam2ndScores = awayTeamScoreNode.get("q2Score").asInt(0);
+			int awayTeam3rdScores = awayTeamScoreNode.get("q3Score").asInt(0);
+			int awayTeam4thScores = awayTeamScoreNode.get("q4Score").asInt(0);
 
-			// 將資料塞入物件
+			// ----- 儲存每場比賽資訊 -----
+			NBAGame nbaGame = new NBAGame();
+
+			// ----- 將資料塞入物件 -----
 			nbaGame.setGameId(gameId);
 			
 			nbaGame.setHomeTeam1stScores(homeTeam1stScores);
