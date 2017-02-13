@@ -15,7 +15,7 @@ public class NBAScheduleFromNBATw {
 
 	private List<NBASchedule> schedules = new ArrayList<>();
 	
-	public void addSchedule(NBASchedule schedule) {
+	public void addNBASchedule(NBASchedule schedule) {
 		schedules.add(schedule);
 	}
 }

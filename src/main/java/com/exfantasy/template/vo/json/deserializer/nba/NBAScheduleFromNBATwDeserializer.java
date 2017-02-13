@@ -92,7 +92,7 @@ public class NBAScheduleFromNBATwDeserializer extends JsonDeserializer<NBASchedu
 				schedule.setGameTimeInMillis(gameTimeInMillis);
 				schedule.setGameTime(gameTime);
 				
-				resp.addSchedule(schedule);
+				resp.addNBASchedule(schedule);
 			}
 		}
 		return resp;
