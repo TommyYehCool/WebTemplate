@@ -61,7 +61,7 @@ public class AccessMonitor {
         String uri = request.getRequestURI();
         String params = request.getQueryString();
         
-        logger.info("~~~~> Received request, method: <{}>, uri: <{}>, params: <{}>", method, uri, params);
+        logger.debug("~~~~> Received request, method: <{}>, uri: <{}>, params: <{}>", method, uri, params);
 		
 		Signature signature = pjp.getSignature();
 		// class
@@ -90,7 +90,7 @@ public class AccessMonitor {
 
 		String logStr = className + "." + methodName + "(" + args + ")";
 		
-		logger.info(">>>>> [Controller] Prepare to access: {}", logStr);
+		logger.debug(">>>>> [Controller] Prepare to access: {}", logStr);
 		
 		long startTime = -1;
 		long timeSpent = -1;
@@ -102,7 +102,7 @@ public class AccessMonitor {
 
 			timeSpent = System.currentTimeMillis() - startTime;
 
-			logger.info("<<<<< [Controller] Access completed: {}, result: <{}>, time-spent: <{} ms>", logStr, result, timeSpent);
+			logger.debug("<<<<< [Controller] Access completed: {}, result: <{}>, time-spent: <{} ms>", logStr, result, timeSpent);
 		} catch (Throwable t) {
 			timeSpent = System.currentTimeMillis() - startTime;
 
@@ -125,7 +125,7 @@ public class AccessMonitor {
 		
 		String logStr = className + "." + methodName + "(" + args + ")";
 				
-		logger.info("----> [Service] Prepare to access: {}", logStr);
+		logger.debug("----> [Service] Prepare to access: {}", logStr);
 	}
 	
 	@AfterReturning(pointcut = "serviceMethodPointcut()", returning = "ret")
@@ -140,6 +140,6 @@ public class AccessMonitor {
 		
 		String logStr = className + "." + methodName + "(" + args + ")";
 
-		logger.info("<---- [Service] Access completed: {}, return: <{}>", logStr, ret);
+		logger.debug("<---- [Service] Access completed: {}, return: <{}>", logStr, ret);
 	}
 }
