@@ -1,4 +1,4 @@
-package com.exfantasy.template.services.dropbox;
+package com.exfantasy.template.services.file.dropbox;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

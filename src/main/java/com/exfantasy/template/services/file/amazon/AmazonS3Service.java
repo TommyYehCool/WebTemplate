@@ -1,4 +1,4 @@
-package com.exfantasy.template.services.amazon;
+package com.exfantasy.template.services.file.amazon;
 
 import org.springframework.stereotype.Service;
 
