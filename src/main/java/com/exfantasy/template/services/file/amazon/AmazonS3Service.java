@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
  * <pre>
  * Amazon S3 服務
  * 
+ * PS: 因為被盜用刷了很多錢, 所以不想用了
+ * 
  * <a href="http://stackoverflow.com/questions/38578937/spring-boot-amazon-aws-s3-bucket-file-download-access-denied">此支 class 寫法參考</a>
  *
  * <a href="https://devcenter.heroku.com/articles/using-amazon-s3-for-file-uploads-with-java-and-play-2">Using Amazon S3 for file uploads</a>
