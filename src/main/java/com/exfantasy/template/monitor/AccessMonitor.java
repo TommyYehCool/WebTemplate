@@ -90,7 +90,7 @@ public class AccessMonitor {
 
 		String logStr = className + "." + methodName + "(" + args + ")";
 		
-		logger.info(">>>>> Prepare to access: {}", logStr);
+		logger.info(">>>>> [Controller] Prepare to access: {}", logStr);
 		
 		long startTime = -1;
 		long timeSpent = -1;
@@ -102,11 +102,11 @@ public class AccessMonitor {
 
 			timeSpent = System.currentTimeMillis() - startTime;
 
-			logger.info("<<<<< Access completed: {}, result: <{}>, time-spent: <{} ms>", logStr, result, timeSpent);
+			logger.info("<<<<< [Controller] Access completed: {}, result: <{}>, time-spent: <{} ms>", logStr, result, timeSpent);
 		} catch (Throwable t) {
 			timeSpent = System.currentTimeMillis() - startTime;
 
-			logger.error("<<<<< Access failed: {}, exception raised: <{}>, time-spent: <{} ms>", logStr, t, timeSpent);
+			logger.error("<<<<< [Controller] Access failed: {}, exception raised: <{}>, time-spent: <{} ms>", logStr, t, timeSpent);
 
 			throw t;
 		}
@@ -125,7 +125,7 @@ public class AccessMonitor {
 		
 		String logStr = className + "." + methodName + "(" + args + ")";
 				
-		logger.info("----> Prepare to access: {}", logStr);
+		logger.info("----> [Service] Prepare to access: {}", logStr);
 	}
 	
 	@AfterReturning(pointcut = "serviceMethodPointcut()", returning = "ret")
@@ -140,6 +140,6 @@ public class AccessMonitor {
 		
 		String logStr = className + "." + methodName + "(" + args + ")";
 
-		logger.info("<---- Access completed: {}, return: <{}>", logStr, ret);
+		logger.info("<---- [Service] Access completed: {}, return: <{}>", logStr, ret);
 	}
 }
