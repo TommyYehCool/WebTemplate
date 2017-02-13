@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.exfantasy.template.cnst.ResultCode;
 import com.exfantasy.template.cnst.user.Role;
-import com.exfantasy.template.services.dropbox.DropboxService;
+import com.exfantasy.template.services.file.dropbox.DropboxService;
 import com.exfantasy.template.services.jms.JmsService;
 import com.exfantasy.template.services.mail.MailService;
 import com.exfantasy.template.services.notification.WebNotifyService;
