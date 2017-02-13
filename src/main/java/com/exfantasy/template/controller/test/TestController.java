@@ -58,7 +58,7 @@ public class TestController {
 	 * 參考: <a href="http://blog.csdn.net/tzdwsy/article/details/50738043">使用 Spring Security 設定權限</a>
 	 * </pre>
 	 * 
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 統一回應格式
+	 * @return {@link ResoCommon} 統一回應格式
 	 */
 	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')") 
 	@RequestMapping(value = "/testAuthorities", method = RequestMethod.GET)

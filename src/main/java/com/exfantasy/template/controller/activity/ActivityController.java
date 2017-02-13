@@ -55,9 +55,9 @@ public class ActivityController {
 	 * 建立活動
 	 * </pre>
 	 * 
-	 * @param activityVo 前端發過來建立活動所需資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ActivityVo}</code>
-	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * @param activityVo 前端發過來建立活動所需資料, 參考物件: {@link ActivityVo}
+	 * @param result 綁定物件結果, 參考物件: {@link BindingResult}
+	 * @return {@link RespCommon} 回應操作結果
 	 */
 	@RequestMapping(value = "/create_activity", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "建立活動", notes = "建立活動", response = RespCommon.class)
@@ -82,7 +82,7 @@ public class ActivityController {
 	 * </pre>
 	 * 
 	 * @param activityId 欲參加的活動 ID
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * @return {@link RespCommon} 回應操作結果
 	 */
 	@RequestMapping(value = "/join_activity/{activityId}", method = RequestMethod.PUT)
 	@ApiOperation(value = "參加活動", notes = "參加活動", response = RespCommon.class)
@@ -99,7 +99,7 @@ public class ActivityController {
 	 * 查詢登入者所建立的活動
 	 * </pre>
 	 * 
-	 * @return <code>{@link com.exfantasy.template.mybatis.model.Activity}</code> 活動資訊
+	 * @return {@link Activity} 活動資訊
 	 */
 	@RequestMapping(value = "/get_created_activities", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢使用者所建立的活動", notes = "查詢使用者所建立的活動", responseContainer = "List", response = Activity.class)
@@ -116,7 +116,7 @@ public class ActivityController {
 	 * 查詢使用者所有參與的活動
 	 * </pre>
 	 * 
-	 * @return <code>{@link com.exfantasy.template.mybatis.model.Activity}</code> 活動資訊
+	 * @return {@link Activity} 活動資訊
 	 */
 	@RequestMapping(value = "/get_joined_activities", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢使用者參與的所有的活動", notes = "查詢使用者參與的所有的活動", responseContainer = "List", response = Activity.class)
@@ -134,7 +134,7 @@ public class ActivityController {
 	 * </pre>
 	 * 
 	 * @param activityId 欲查詢的活動 ID
-	 * @return <code>{@link com.exfantasy.template.mybatis.model.User}</code> 使用者資訊
+	 * @return {@link User} 使用者資訊
 	 */
 	@RequestMapping(value = "/get_joined_users/{activityId}", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢活動的所有參與者", notes = "查詢活動的所有參與者", responseContainer = "List", response = User.class)
@@ -149,9 +149,9 @@ public class ActivityController {
 	 * 新增活動留言
 	 * </pre>
 	 * 
-	 * @param activityMsgVo 前端發過來對活動留言所需資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ActivityMessageVo}</code>
-	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * @param activityMsgVo 前端發過來對活動留言所需資料, 參考物件: {@link ActivityMessageVo}
+	 * @param result 綁定物件結果, 參考物件: {@link BindingResult}
+	 * @return {@link RespCommon} 回應操作結果
 	 */
 	@RequestMapping(value = "/leave_message", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "對活動留言", notes = "對活動留言", response = RespCommon.class)
@@ -177,7 +177,7 @@ public class ActivityController {
 	 * </pre>
 	 * 
 	 * @param activityId 欲查詢的活動 ID
-	 * @return <code>{@link com.exfantasy.template.mybatis.model.ActivityMessages}</code> 活動的所有留言
+	 * @return {@link ActivityMessagesResp} 活動的所有留言
 	 */
 	@RequestMapping(value = "/get_activity_messages/{activityId}", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢活動的所有留言", notes = "查詢活動的所有留言", responseContainer = "List", response = ActivityMessagesResp.class)

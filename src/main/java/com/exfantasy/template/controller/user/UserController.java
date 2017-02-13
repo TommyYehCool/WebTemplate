@@ -64,10 +64,10 @@ public class UserController {
 	 * 用戶註冊 
 	 * </pre>
 	 * 
-	 * @param registerVo 前端發過來的資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.RegisterVo}</code>
-	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
+	 * @param registerVo 前端發過來的資料, 參考物件: {@link RegisterVo}
+	 * @param result 綁定物件結果, 參考物件: {@link BindingResult}
 	 * 
-	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
+	 * @return 回應操作結果, 參考物件: {@link RespCommon}
 	 */
 	@RequestMapping(value = "/do_register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "用戶註冊", notes = "給用戶輸入資料新增帳號用", response = RespCommon.class)
@@ -98,7 +98,7 @@ public class UserController {
 	 * 
 	 * @param email 用戶當初註冊的 email
 	 * 
-	 * @return <code>{@link com.exfantasy.template.mybatis.model.User}</code> 用戶資訊 
+	 * @return {@link User} 用戶資訊 
 	 */
 	@RequestMapping(value = "/get_user_by_email", method = RequestMethod.GET)
 	@ApiOperation(value = "使用 email 查詢用戶", notes = "使用 email 查詢用戶詳細資料", response = User.class)
@@ -146,7 +146,7 @@ public class UserController {
 	 * 
 	 * @param email 用戶當初註冊的 email
 	 *
-	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
+	 * @return 回應操作結果, 參考物件: {@link RespCommon}
 	 */
 	@PreAuthorize("hasAuthority('" + Role.ADMIN + "')")
 	@RequestMapping(value = "/change_user_enable_status", method = RequestMethod.PUT)
@@ -170,7 +170,7 @@ public class UserController {
 	 * 取得登入者的資訊
 	 * </pre>
 	 * 
-	 * @return 登入者資訊, 參考物件: {@link com.exfantasy.template.mybatis.model.User}
+	 * @return 登入者資訊, 參考物件: {@link User}
 	 */
 	@RequestMapping(value = "/get_my_information", method = RequestMethod.GET)
 	@ApiOperation(value = "取得我(登入者)的資訊", notes = "查詢我(登入者)的詳細資料", response = User.class)
@@ -186,7 +186,7 @@ public class UserController {
 	 * @param oldPassword 現有密碼
 	 * @param newPassword 欲修改成的密碼
 	 * 
-	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
+	 * @return 回應操作結果, 參考物件: {@link RespCommon}
 	 */
 	@RequestMapping(value = "/change_password", method = RequestMethod.POST)
 	@ApiOperation(value = "修改密碼", notes = "修改現有密碼", response = RespCommon.class)
@@ -204,7 +204,7 @@ public class UserController {
 	 * 
 	 * @param email 用戶當初註冊的 email
 	 * 
-	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
+	 * @return 回應操作結果, 參考物件: {@link RespCommon}
 	 */
 	@RequestMapping(value = "/forgot_password", method = RequestMethod.POST)
 	@ApiOperation(value = "忘記密碼", notes = "由系統產生新密碼並發信給使用者當時註冊的 email", response = RespCommon.class)
@@ -240,7 +240,7 @@ public class UserController {
 	 * 
 	 * @param multipartFile
 	 * 
-	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
+	 * @return 回應操作結果, 參考物件: {@link RespCommon}
 	 */
 	@RequestMapping(value = "/upload_profile_image", method = RequestMethod.POST)
 	@ApiOperation(value = "上傳大頭貼", notes = "上傳大頭照", response = RespCommon.class)
@@ -259,7 +259,7 @@ public class UserController {
 	 * 刪除大頭照
 	 * </pre>
 	 * 
-	 * @return 回應操作結果, 參考物件: <code>{@link com.exfantasy.template.vo.response.RespCommon}</code>
+	 * @return 回應操作結果, 參考物件: {@link RespCommon}
 	 */
 	@RequestMapping(value = "/delete_profile_image", method = RequestMethod.PUT)
 	@ApiOperation(value = "刪除大頭貼", notes = "刪除已上傳的大頭照", response = RespCommon.class)

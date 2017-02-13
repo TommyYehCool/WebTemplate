@@ -57,9 +57,9 @@ public class ConsumeController {
 	 * 新增記帳資料
 	 * </pre>
 	 * 
-	 * @param consumeVo 前端發過來的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
-	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * @param consumeVo 前端發過來的記帳資料, 參考物件: {@link ConsumeVo}
+	 * @param result 綁定物件結果, 參考物件: {@link BindingResult}
+	 * @return {@link RespCommon} 回應操作結果
 	 */
 	@RequestMapping(value = "/add_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "新增記帳資料", notes = "新增記帳資料", response = RespCommon.class)
@@ -83,9 +83,9 @@ public class ConsumeController {
 	 * 更新記帳資料
 	 * </pre>
 	 * 
-	 * @param consumeVo 前端發過來要更新的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
-	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * @param consumeVo 前端發過來要更新的記帳資料, 參考物件: {@link ConsumeVo}
+	 * @param result 綁定物件結果, 參考物件: {@link BindingResult}
+	 * @return {@link RespCommon} 回應操作結果
 	 */
 	@RequestMapping(value = "/upd_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "更新記帳資料", notes = "更新記帳資料", response = RespCommon.class)
@@ -109,9 +109,9 @@ public class ConsumeController {
 	 * 刪除記帳資料
 	 * </pre>
 	 * 
-	 * @param consumeVo 前端發過來要刪除的記帳資料, 參考物件: <code>{@link com.exfantasy.template.vo.request.ConsumeVo}</code>
-	 * @param result 綁定物件結果, 參考物件: <code>{@link org.springframework.validation.BindingResult}</code>
-	 * @return <code>{@link com.exfantasy.template.vo.response.RespCommon}</code> 回應操作結果
+	 * @param consumeVo 前端發過來要刪除的記帳資料, 參考物件: {@link ConsumeVo}
+	 * @param result 綁定物件結果, 參考物件: {@link BindingResult}
+	 * @return {@link RespCommon} 回應操作結果
 	 */
 	@RequestMapping(value = "/del_consume", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ApiOperation(value = "刪除記帳資料", notes = "刪除記帳資料", response = RespCommon.class)
@@ -141,7 +141,7 @@ public class ConsumeController {
 	 * @param type 分類
 	 * @param prodName 商品名稱
 	 * @param lotteryNo 發票號碼
-	 * @return List<<code>{@link com.exfantasy.template.mybatis.model.Consume}</code>> 記帳資訊
+	 * @return List<{@link Consume}> 記帳資訊
 	 */
 	@RequestMapping(value = "/get_consume", method = RequestMethod.GET)
 	@ApiOperation(value = "查詢記帳資料", notes = "查詢記帳資料", responseContainer = "List", response = Consume.class)
