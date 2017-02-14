@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Date;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -45,6 +46,20 @@ public class TestJava {
 
 		int foundIndex = binarySearch(a, searchTarget);
 		assertThat(index).isEqualTo(foundIndex);
+		
+		Arrays.binarySearch(a, searchTarget);
+	}
+	
+	@Test
+	public void testShift() {
+		int[] a = new int[] {2, 3, 5, 7, 41, 57, 91, 93};
+		
+		int low = 0;
+        int high = a.length - 1;
+
+        int mid = (low + high) >> 1;
+        
+        System.out.println("low: " + low + ", high: " + high + ", mid: " + mid);
 	}
 	
 	/**
