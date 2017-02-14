@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -14,6 +15,7 @@ import org.junit.runners.MethodSorters;
 public class TestJava {
 
 	@Test
+	@Ignore
 	public void testDate() {
 		Long timeInMillis = 1486783800000L;
 		Date date = new Date(timeInMillis);
@@ -26,10 +28,40 @@ public class TestJava {
 	}
 	
 	@Test
+	@Ignore
 	public void testStringFormat() {
 		String date = "2017-2-12";
 		String url = "http://tw.global.nba.com/stats2/scores/daily.json?countryCode=TW&locale=zh_TW&gameDate={0}";
 		String formattedUrl = MessageFormat.format(url, date);
 		System.out.println(formattedUrl);
 	}
+	
+	@Test
+	public void testBinarySearch() {
+		int[] a = new int[] {2, 3, 5, 7, 41, 55, 57, 73, 91, 93};
+
+		int index = 2;
+		int searchTarget = a[index];
+
+		int foundIndex = binarySearch(a, searchTarget);
+		assertThat(index).isEqualTo(foundIndex);
+	}
+	
+	public static int binarySearch(int[] a, int key) {
+        int lo = 0;
+        int hi = a.length - 1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            if (key < a[mid]) {
+            	hi = mid - 1;
+            }
+            else if (key > a[mid]) {
+            	lo = mid + 1;
+            }
+            else {
+            	return mid;
+            }
+        }
+        return -1;
+    }
 }
