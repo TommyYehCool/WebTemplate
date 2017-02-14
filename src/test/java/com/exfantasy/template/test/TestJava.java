@@ -46,8 +46,6 @@ public class TestJava {
 
 		int foundIndex = binarySearch(a, searchTarget);
 		assertThat(index).isEqualTo(foundIndex);
-		
-		Arrays.binarySearch(a, searchTarget);
 	}
 	
 	@Test
@@ -73,7 +71,7 @@ public class TestJava {
         int lo = 0;
         int hi = a.length - 1;
         while (lo <= hi) {
-            int mid = (lo + hi) / 2;
+            int mid = (lo + hi) >> 1;
             if (key < a[mid]) {
             	hi = mid - 1;
             }
