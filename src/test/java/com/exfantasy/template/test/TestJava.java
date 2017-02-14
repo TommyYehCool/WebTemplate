@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Date;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -13,7 +15,13 @@ import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestJava {
-
+	
+	@Test
+	public void test() {	
+		List<String> fizzBuzz = fizzBuzz(15);
+		System.out.println(fizzBuzz);
+	}
+	
 	@Test
 	@Ignore
 	public void testDate() {
@@ -59,6 +67,25 @@ public class TestJava {
         System.out.println("low: " + low + ", high: " + high + ", mid: " + mid);
 	}
 	
+	public List<String> fizzBuzz(int n) {
+	    List<String> numbers = new ArrayList<>();
+	    for (int i = 1; i <= n; i++) {
+	        if (i % 3 == 0) {
+	            numbers.add("Fizz");
+	        }
+	        else if (i % 5 == 0) {
+	            numbers.add("Buzz");
+	        }
+	        else if (i % 15 == 0) {
+	            numbers.add("FizzBuzz");
+	        }
+	        else {
+	            numbers.add(String.valueOf(i));
+	        }
+	    }
+	    return numbers;
+	}
+
 	/**
 	 * http://program-lover.blogspot.tw/2008/08/binary-search.html
 	 * 
