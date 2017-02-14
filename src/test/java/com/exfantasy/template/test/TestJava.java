@@ -47,6 +47,13 @@ public class TestJava {
 		assertThat(index).isEqualTo(foundIndex);
 	}
 	
+	/**
+	 * http://program-lover.blogspot.tw/2008/08/binary-search.html
+	 * 
+	 * @param a
+	 * @param key
+	 * @return
+	 */
 	public static int binarySearch(int[] a, int key) {
         int lo = 0;
         int hi = a.length - 1;
