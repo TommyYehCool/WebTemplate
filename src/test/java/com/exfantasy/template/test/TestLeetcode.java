@@ -86,8 +86,12 @@ public class TestLeetcode {
 	public void test_leetcode_4() {
 		int[] nums1 = new int[] { 4, 5, 6, 8, 9, 11 };
 		int[] nums2 = new int[] {};
+
+		double expectedOutput = (double) (6 + 8) / 2;
+
 		double median = findMedianSortedArrays(nums1, nums2);
-		assertThat(median).isEqualTo((6 + 8) / 2);
+
+		assertThat(median).isEqualTo(expectedOutput);
 	}
 
 	private double findMedianSortedArrays(int[] nums1, int[] nums2) {
@@ -147,8 +151,11 @@ public class TestLeetcode {
 	@Test
 	public void test_leetcode_516() {
 		String input = "bbbab";
+		int expectedOutput = 4;
+
 		int output = longestPalindromeSubseq(input);
-		assertThat(output).isEqualTo(4);
+
+		assertThat(output).isEqualTo(expectedOutput);
 	}
 
 	private int longestPalindromeSubseq(String s) {
