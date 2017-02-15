@@ -115,6 +115,73 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Implement regular expression matching with support for '.' and '*'.
+	 * 
+	 * '.' Matches any single character.
+	 * '*' Matches zero or more of the preceding element.
+	 * 
+	 * The matching should cover the entire input string (not partial).
+	 * 
+	 * The function prototype should be:
+	 * bool isMatch(const char *s, const char *p)
+	 * 
+	 * Some examples:
+	 * isMatch("aa","a") → false
+	 * isMatch("aa","aa") → true
+	 * isMatch("aaa","aa") → false
+	 * isMatch("aa", "a*") → true
+	 * isMatch("aa", ".*") → true
+	 * isMatch("ab", ".*") → true
+	 * isMatch("aab", "c*a*b") → true
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_10() {
+		String s1 = "aa";
+		String p1 = "a";
+		boolean expectedOutput1 = false;
+		boolean output1 = isMatch10(s1, p1);
+		assertThat(expectedOutput1).isEqualTo(output1);
+		
+		String s2 = "aa";
+		String p2 = ".*";
+		boolean expectedOutput2 = true;
+		boolean output2 = isMatch10(s2, p2);
+		assertThat(expectedOutput2).isEqualTo(output2);
+	}
+	
+	private boolean isMatch10(String s, String p) {
+		if (s == null || p == null) {
+            return false;
+        }
+        boolean[][] dp = new boolean[s.length()+1][p.length()+1];
+        dp[0][0] = true;
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) == '*' && dp[0][i-1]) {
+                dp[0][i+1] = true;
+            }
+        }
+        for (int i = 0 ; i < s.length(); i++) {
+            for (int j = 0; j < p.length(); j++) {
+                if (p.charAt(j) == '.') {
+                    dp[i+1][j+1] = dp[i][j];
+                }
+                if (p.charAt(j) == s.charAt(i)) {
+                    dp[i+1][j+1] = dp[i][j];
+                }
+                if (p.charAt(j) == '*') {
+                    if (p.charAt(j-1) != s.charAt(i) && p.charAt(j-1) != '.') {
+                        dp[i+1][j+1] = dp[i+1][j-1];
+                    } else {
+                        dp[i+1][j+1] = (dp[i+1][j] || dp[i][j+1] || dp[i+1][j-1]);
+                    }
+                }
+            }
+        }
+        return dp[s.length()][p.length()];
+    }
+	/**
+	 * <pre>
 	 * Implement wildcard pattern matching with support for '?' and '*'.
 	 * 
 	 * '?' Matches any single character.
@@ -140,17 +207,17 @@ public class TestLeetcode {
 		String s1 = "aa";
 		String p1 = "a";
 		boolean expectedResult1 = false;
-		boolean output1 = isMatch(s1, p1);
+		boolean output1 = isMatch44(s1, p1);
 		assertThat(expectedResult1).isEqualTo(output1);
 		
 		String s2 = "aa";
 		String p2 = "a*";
 		boolean expectedResult2 = true;
-		boolean output2 = isMatch(s2, p2);
+		boolean output2 = isMatch44(s2, p2);
 		assertThat(expectedResult2).isEqualTo(output2);
 	}
 	
-	private boolean isMatch(String s, String p) {
+	private boolean isMatch44(String s, String p) {
 		int sL = s.length(), pL = p.length();
 
 		boolean[][] dp = new boolean[pL + 1][sL + 1];
