@@ -170,6 +170,45 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Count the number of segments in a string, where a segment is defined to be a contiguous sequence of non-space characters.
+	 * 
+	 * Please note that the string does not contain any non-printable characters.
+	 * 
+	 * Example:
+	 * 
+	 * Input: "Hello, my name is John"
+	 * Output: 5
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_434() {
+		String input1 = ", , , ,        a, eaefa";
+		int expectedOutput1 = 6;
+		
+		int output1 = countSegments(input1);
+		
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String input2 = "                ";
+		int expectedOutput2 = 0;
+		
+		int output2 = countSegments(input2);
+		
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int countSegments(String s) {
+		int res = 0;
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) != ' ' && (i == 0 || s.charAt(i - 1) == ' ')) {
+				res++;
+			}
+		}
+		return res;
+    }
+	
+	/**
+	 * <pre>
 	 * Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
 	 * 
 	 * Example 1:
