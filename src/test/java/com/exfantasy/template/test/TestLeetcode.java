@@ -112,6 +112,68 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Implement wildcard pattern matching with support for '?' and '*'.
+	 * 
+	 * '?' Matches any single character.
+	 * '*' Matches any sequence of characters (including the empty sequence).
+	 * 
+	 * The matching should cover the entire input string (not partial).
+	 * 
+	 * The function prototype should be:
+	 * bool isMatch(const char *s, const char *p)
+	 * 
+	 * Some examples:
+	 * isMatch("aa","a") → false
+	 * isMatch("aa","aa") → true
+	 * isMatch("aaa","aa") → false
+	 * isMatch("aa", "*") → true
+	 * isMatch("aa", "a*") → true
+	 * isMatch("ab", "?*") → true
+	 * isMatch("aab", "c*a*b") → false
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_44() {
+		String s1 = "aa";
+		String p1 = "a";
+		boolean expectedResult1 = false;
+		boolean output1 = isMatch(s1, p1);
+		assertThat(expectedResult1).isEqualTo(output1);
+		
+		String s2 = "aa";
+		String p2 = "a*";
+		boolean expectedResult2 = true;
+		boolean output2 = isMatch(s2, p2);
+		assertThat(expectedResult2).isEqualTo(output2);
+	}
+	
+	private boolean isMatch(String s, String p) {
+		int sL = s.length(), pL = p.length();
+
+		boolean[][] dp = new boolean[pL + 1][sL + 1];
+		dp[0][0] = true;
+
+		for (int i = 1; i <= pL; i++) {
+			boolean flag = false; // The flag is moved here;
+
+			for (int j = 0; j <= sL; j++) {
+				flag = flag || dp[i - 1][j];
+				char c = p.charAt(i - 1);
+
+				if (c != '*') {
+					dp[i][j] = j > 0 && dp[i - 1][j - 1] && (c == '?' || c == s.charAt(j - 1));
+				} else {
+					// For k>=0 and k<=j, if any dp[i-1][k] is true,
+					// then '*' will match the rest sequence in s after index k;
+					dp[i][j] = i == 1 || flag;
+				}
+			}
+		}
+		return dp[pL][sL];
+	}
+	
+	/**
+	 * <pre>
 	 * The gray code is a binary numeral system where two successive values differ in only one bit.
 	 * 
 	 * Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
@@ -170,8 +232,6 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
-	 * [leetcode 173]
-	 * 
 	 * Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
 	 * 
 	 * Calling next() will return the next smallest number in the BST.
@@ -179,16 +239,7 @@ public class TestLeetcode {
 	 * Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
 	 * </pre>
 	 */
-//	public class TreeNode {
-//		int val;
-//		TreeNode left;
-//		TreeNode right;
-//
-//		TreeNode(int x) {
-//			val = x;
-//		}
-//	}
-//	
+	public void test_leetcode_173() {
 //	public class BSTIterator {
 //
 //	    Stack<TreeNode> stack =  null ;            
@@ -215,6 +266,59 @@ public class TestLeetcode {
 //	        return t.val ;
 //	    }
 //	}
+	}
+		
+	/**
+	 * <pre>
+	 * Write a SQL query to delete all duplicate email entries in a table named Person, keeping only unique emails based on its smallest Id.
+	 * 
+	 * +----+------------------+
+	 * | Id | Email            |
+	 * +----+------------------+
+	 * | 1  | john@example.com |
+	 * | 2  | bob@example.com  |
+	 * | 3  | john@example.com |
+	 * +----+------------------+
+	 * Id is the primary key column for this table.
+	 * For example, after running your query, the above Person table should have the following rows:
+	 * 
+	 * +----+------------------+
+	 * | Id | Email            |
+	 * +----+------------------+
+	 * | 1  | john@example.com |
+	 * | 2  | bob@example.com  |
+	 * +----+------------------+
+	 * </pre>
+	 */
+	public void test_leetcode_196() {
+		@SuppressWarnings("unused")
+		String result = "DELETE p1 FROM Person p1, Person p2 WHERE p1.Email = p2.Email AND p1.Id > p2.Id";
+	}
+
+	/**
+	 * <pre>
+	 * Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+	 * 
+	 * For example,
+	 * Given [3,2,1,5,6,4] and k = 2, return 5.
+	 * </pre>
+	 */
+	public void test_leetcode_215() {
+		int[] nums1 = new int[] {3,2,1,5,6,4};
+		int kth1 = 2;
+		int expectedOutput1 = 5;
+		
+		int output1 = findKthLargest(nums1, kth1);
+		
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+	}
+	
+	private int findKthLargest(int[] nums, int k) {
+		int allNumbersLength = nums.length;
+        Arrays.sort(nums);
+        return nums[allNumbersLength - k];
+	}
 	
 	/**
 	 * <pre>
