@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Stack;
 import java.util.stream.Stream;
 
 import org.junit.FixMethodOrder;
@@ -498,6 +499,111 @@ public class TestLeetcode {
 		
 		return a;
     }
+	
+	/**
+	 * <pre>
+	 * We are playing the Guess Game. The game is as follows:
+	 * 
+	 * I pick a number from 1 to n. You have to guess which number I picked.
+	 * 
+	 * Every time you guess wrong, I'll tell you whether the number is higher or lower.
+	 * 
+	 * You call a pre-defined API guess(int num) which returns 3 possible results (-1, 1, or 0):
+	 * 
+	 * -1 : My number is lower
+ 	 * 1 : My number is higher
+ 	 * 0 : Congrats! You got it!
+	 * 
+	 * Example:
+	 * n = 10, I pick 6.
+	 * 
+	 * Return 6.
+	 * </pre> 
+	 */
+	@Test
+	@Ignore
+	public void test_leetcode_374() {
+//		public int guessNumber(int n) {
+//	        return bsearch(1,n);
+//	    }
+//
+//	    private int bsearch(int start,int end){
+//	        if(start>end) return -1;//R u kidding me?
+//	        if(guess(start)==0) return start;
+//	        if(guess(end)==0) return end;
+//	        int mid = start+(end-start)/2;
+//	        if(guess(mid)==0) return mid;
+//	        else if(guess(mid)==-1) return bsearch(start+1,mid-1);
+//	        else return bsearch(mid+1,end-1);
+//	    }
+	}
+	
+	/**
+	 * <pre>
+	 * Given an encoded string, return it's decoded string.
+	 * 
+	 * The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
+	 * 
+	 * You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.
+	 * 
+	 * Furthermore, you may assume that the original data does not contain any digits and that digits are only for those repeat numbers, k. For example, there won't be input like 3a or 2[4].
+	 * 
+	 * Examples:
+	 * 
+	 * s = "3[a]2[bc]", return "aaabcbc".
+	 * s = "3[a2[c]]", return "accaccacc".
+	 * s = "2[abc]3[cd]ef", return "abcabccdcdcdef".
+	 * </pre> 
+	 */
+	@Test
+	public void test_leetcode_394() {
+		String s1 = "3[a]2[bc]";
+		String expectedOutput1 = "aaabcbc";
+		String output1 = decodeString(s1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String s2 = "3[a2[c]]";
+		String expectedOutput2 = "accaccacc";
+		String output2 = decodeString(s2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private String decodeString(String s) {
+		String res = "";
+
+        Stack<Integer> countStack = new Stack<>();
+        Stack<String> resStack = new Stack<>();
+        int idx = 0;
+        while (idx < s.length()) {
+            if (Character.isDigit(s.charAt(idx))) {
+                int count = 0;
+                while (Character.isDigit(s.charAt(idx))) {
+                    count = 10 * count + (s.charAt(idx) - '0');
+                    idx++;
+                }
+                countStack.push(count);
+            }
+            else if (s.charAt(idx) == '[') {
+                resStack.push(res);
+                res = "";
+                idx++;
+            }
+            else if (s.charAt(idx) == ']') {
+                StringBuilder temp = new StringBuilder (resStack.pop());
+                int repeatTimes = countStack.pop();
+                for (int i = 0; i < repeatTimes; i++) {
+                    temp.append(res);
+                }
+                res = temp.toString();
+                idx++;
+            }
+            else {
+                res += s.charAt(idx);
+                idx++;
+            }
+        }
+        return res;
+	}
 	
 	/**
 	 * <pre>
