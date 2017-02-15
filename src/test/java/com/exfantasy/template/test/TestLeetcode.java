@@ -399,13 +399,18 @@ public class TestLeetcode {
 	@Test
 	public void test_leetcode_232() {
 		MyQueue obj = new MyQueue();
-		obj.push(10);
+		obj.push(1);
+		System.out.println(">>> test_leetcode_232 --> Push 1 done");
+		obj.push(2);
+		System.out.println(">>> test_leetcode_232 --> Push 2 done");
 		int param_2 = obj.pop();
-		System.out.println("param_2: " + param_2);
+		System.out.println(">>> test_leetcode_232 --> Pop done, get " + param_2);
 		int param_3 = obj.peek();
-		System.out.println("param_3: " + param_3);
-		boolean param_4 = obj.empty();
-		assertThat(param_4).isTrue();
+		System.out.println(">>> test_leetcode_232 --> Peek result: " + param_3);
+		int param_4 = obj.pop();
+		System.out.println(">>> test_leetcode_232 --> Pop done, get " + param_4);
+		boolean param_5 = obj.empty();
+		assertThat(param_5).isTrue();
 	}
 	
 	private class MyQueue {
