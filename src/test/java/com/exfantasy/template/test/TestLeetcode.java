@@ -4,11 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.stream.Stream;
 
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -239,6 +242,8 @@ public class TestLeetcode {
 	 * Note: next() and hasNext() should run in average O(1) time and uses O(h) memory, where h is the height of the tree.
 	 * </pre>
 	 */
+	@Test
+	@Ignore
 	public void test_leetcode_173() {
 //	public class BSTIterator {
 //
@@ -267,6 +272,34 @@ public class TestLeetcode {
 //	    }
 //	}
 	}
+	
+	/**
+	 * <pre>
+	 * Write a SQL query to find all numbers that appear at least three times consecutively.
+	 * 
+	 * +----+-----+
+	 * | Id | Num |
+	 * +----+-----+
+	 * | 1  |  1  |
+	 * | 2  |  1  |
+	 * | 3  |  1  |
+	 * | 4  |  2  |
+	 * | 5  |  1  |
+	 * | 6  |  2  |
+	 * | 7  |  2  |
+	 * +----+-----+
+	 * For example, given the above Logs table, 1 is the only number that appears consecutively for at least three times.
+	 * </pre>
+	 */
+	@Test
+	@Ignore
+	public void test_leetcode_180() {
+		@SuppressWarnings("unused")
+		String result = 
+			"Select DISTINCT l1.Num ConsecutiveNums from Logs l1, Logs l2, Logs l3" +  
+			"where l1.Id=l2.Id-1 and l2.Id=l3.Id-1" +
+			"and l1.Num=l2.Num and l2.Num=l3.Num";
+	}
 		
 	/**
 	 * <pre>
@@ -290,6 +323,8 @@ public class TestLeetcode {
 	 * +----+------------------+
 	 * </pre>
 	 */
+	@Test
+	@Ignore
 	public void test_leetcode_196() {
 		@SuppressWarnings("unused")
 		String result = "DELETE p1 FROM Person p1, Person p2 WHERE p1.Email = p2.Email AND p1.Id > p2.Id";
@@ -303,6 +338,7 @@ public class TestLeetcode {
 	 * Given [3,2,1,5,6,4] and k = 2, return 5.
 	 * </pre>
 	 */
+	@Test
 	public void test_leetcode_215() {
 		int[] nums1 = new int[] {3,2,1,5,6,4};
 		int kth1 = 2;
@@ -318,6 +354,71 @@ public class TestLeetcode {
 		int allNumbersLength = nums.length;
         Arrays.sort(nums);
         return nums[allNumbersLength - k];
+	}
+	
+	/**
+	 * <pre>
+	 * Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
+	 * 
+	 * Examples: 
+	 * [2,3,4] , the median is 3
+	 * 
+	 * [2,3], the median is (2 + 3) / 2 = 2.5
+	 * 
+	 * Design a data structure that supports the following two operations:
+	 * 
+	 * void addNum(int num) - Add a integer number from the data stream to the data structure.
+	 * double findMedian() - Return the median of all elements so far.
+	 * For example:
+	 * 
+	 * addNum(1)
+	 * addNum(2)
+	 * findMedian() -> 1.5
+	 * addNum(3) 
+	 * findMedian() -> 2
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_295() {
+		MedianFinder obj = new MedianFinder();
+
+		obj.addNum(1);
+		obj.addNum(2);
+
+		double output1 = obj.findMedian();
+		double expectedOutuput1 = 1.5;
+		assertThat(output1).isEqualTo(expectedOutuput1);
+		
+		obj.addNum(3);
+		
+		double output2 = obj.findMedian();
+		double expectedOutuput2 = 2;
+		assertThat(output2).isEqualTo(expectedOutuput2);
+	}
+	
+	private class MedianFinder {
+	    // max queue is always larger or equal to min queue
+	    PriorityQueue<Integer> min = new PriorityQueue<Integer>();
+	    PriorityQueue<Integer> max = new PriorityQueue<Integer>(1000, Collections.reverseOrder());
+
+	    // Adds a number into the data structure.
+	    public void addNum(int num) {
+	        max.offer(num);
+	        min.offer(max.poll());
+	        if (max.size() < min.size()){
+	            max.offer(min.poll());
+	        }
+	    }
+
+	    // Returns the median of current data stream
+	    public double findMedian() {
+	        if (max.size() == min.size()) {
+	        	return (max.peek() + min.peek()) /  2.0;
+	        }
+	        else {
+	        	return max.peek();
+	        }
+	    }
 	}
 	
 	/**
