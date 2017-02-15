@@ -1038,7 +1038,52 @@ public class TestLeetcode {
 
 		return result;
 	}
+
+	/**
+	 * <pre>
+	 * Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
+	 * 
+	 * Find all the elements of [1, n] inclusive that do not appear in this array.
+	 * 
+	 * Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as extra space.
+	 * 
+	 * Example:
+	 * 
+	 * Input:
+	 * [4,3,2,7,8,2,3,1]
+	 * 
+	 * Output:
+	 * [5,6]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_448() {
+		int[] nums1 = new int[] {4,3,2,7,8,2,3,1};
+		List<Integer> expectedOutput1 = new ArrayList<>();
+		expectedOutput1.add(5);
+		expectedOutput1.add(6);
+		List<Integer> output1 = findDisappearedNumbers(nums1);
+		assertThat(output1).containsAll(expectedOutput1);
+	}
 	
+	private List<Integer> findDisappearedNumbers(int[] nums) {
+		List<Integer> res = new ArrayList<Integer>();
+
+		for (int i = 0; i < nums.length; i++) {
+			int val = Math.abs(nums[i]) - 1;
+			if (nums[val] > 0) {
+				nums[val] = -nums[val];
+			}
+		}
+
+		for (int i = 0; i < nums.length; i++) {
+			if (nums[i] > 0) {
+				res.add(i + 1);
+			}
+		}
+		return res;
+	}
+
 	/**
 	 * <pre>
 	 * Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie. Each child i has a greed factor gi, which is the minimum size of a cookie that the child will be content with; and each cookie j has a size sj. If sj >= gi, we can assign the cookie j to the child i, and the child i will be content. Your goal is to maximize the number of your content children and output the maximum number.
