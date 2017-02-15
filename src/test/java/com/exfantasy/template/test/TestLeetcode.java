@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -111,6 +112,41 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * The gray code is a binary numeral system where two successive values differ in only one bit.
+	 * 
+	 * Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
+	 * 
+	 * For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:
+	 * 
+	 * 00 - 0
+	 * 01 - 1
+	 * 11 - 3
+	 * 10 - 2
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_89() {
+		int input = 2;
+		
+		List<Integer> expectedOutput = new ArrayList<>();
+		expectedOutput.add(0);
+		expectedOutput.add(1);
+		expectedOutput.add(3);
+		expectedOutput.add(2);
+		
+		List<Integer> output = grayCode(input);
+		
+		assertThat(output).containsAll(expectedOutput);
+	}
+	
+	private List<Integer> grayCode(int n) {
+		List<Integer> result = new LinkedList<>();
+	    for (int i = 0; i < 1 << n; i++) result.add(i ^ i >> 1);
+	    return result;
+    }
+	
+	/**
+	 * <pre>
 	 * Given an integer n, return the number of trailing zeroes in n!.
 	 *
 	 * Note: Your solution should be in logarithmic time complexity.
@@ -130,34 +166,6 @@ public class TestLeetcode {
 	
 	private int trailingZeroes(int n) {
 		return n == 0 ? 0 : n / 5 + trailingZeroes(n / 5);
-    }
-	
-	/**
-	 * <pre>
-	 * Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
-     *
-     * Example:
-     * (1) Given nums = [1, 5, 1, 1, 6, 4], one possible answer is [1, 4, 1, 5, 1, 6]. 
-     * (2) Given nums = [1, 3, 2, 2, 3, 1], one possible answer is [2, 3, 1, 3, 1, 2].
-	 * </pre>
-	 */
-	@Test
-	public void test_leetcode_324() {
-		int[] input1 = new int[] {1, 5, 1, 1, 6, 4};
-		int[] expectedOutput1 = new int[] {1, 4, 1, 5, 1, 6};
-		int[] output1 = wiggleSort(input1);
-		assertThat(output1).isEqualTo(expectedOutput1);
-		
-		int[] input2 = new int[] {1, 3, 2, 2, 3, 1};
-		int[] expectedOutput2 = new int[] {2, 3, 1, 3, 1, 2};
-		int[] output2 = wiggleSort(input2);
-		assertThat(output2).isEqualTo(expectedOutput2);
-	}
-	
-	private int[] wiggleSort(int[] nums) {
-		int[] output = null;
-		
-        return output;
     }
 	
 	/**
