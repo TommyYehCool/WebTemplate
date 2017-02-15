@@ -1021,7 +1021,7 @@ public class TestLeetcode {
         return res;
 	}
 	
-	public List<Integer> findDuplicatesElegant(int[] nums) {
+	private List<Integer> findDuplicatesElegant(int[] nums) {
 		List<Integer> result = new ArrayList<Integer>();
 		if (nums == null)
 			return result;
