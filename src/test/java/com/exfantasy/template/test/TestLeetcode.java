@@ -917,10 +917,11 @@ public class TestLeetcode {
 		List<Integer> expectedOutput1 = new ArrayList<>();
 		expectedOutput1.add(2);
 		expectedOutput1.add(3);
-		List<Integer> output = findDuplicates(nums1);
+		List<Integer> output = findDuplicatesElegant(nums1);
 		assertThat(output).containsAll(expectedOutput1);
 	}
 	
+	@SuppressWarnings("unused")
 	private List<Integer> findDuplicates(int[] nums) {
 		List<Integer> res = new ArrayList<>();
         Map<Integer, Integer> digitCounts = new HashMap<>();
@@ -944,6 +945,24 @@ public class TestLeetcode {
         	}
         }
         return res;
+	}
+	
+	public List<Integer> findDuplicatesElegant(int[] nums) {
+		List<Integer> result = new ArrayList<Integer>();
+		if (nums == null)
+			return result;
+		for (int i = 0; i < nums.length; i++) {
+			int location = Math.abs(nums[i]) - 1;
+			if (nums[location] < 0) {
+				result.add(Math.abs(nums[i]));
+			} else {
+				nums[location] = -nums[location];
+			}
+		}
+		for (int i = 0; i < nums.length; i++)
+			nums[i] = Math.abs(nums[i]);
+
+		return result;
 	}
 	
 	/**
