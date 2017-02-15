@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.FixMethodOrder;
@@ -103,4 +104,21 @@ public class TestJava {
         
         System.out.println("low: " + low + ", high: " + high + ", mid: " + mid);
 	}
+	
+	@Test
+	public void testArray() {
+		int[] nums1 = new int[] {1, 3};
+		int[] nums2 = new int[] {2};
+		double median = findMedianSortedArrays(nums1, nums2);
+		System.out.println(median);
+	}
+	
+	private double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int[] nums = new int[nums1.length + nums2.length];
+        System.arraycopy(nums1, 0, nums, 0, nums1.length);
+        System.arraycopy(nums2, 0, nums, nums1.length, nums2.length);
+        Arrays.sort(nums);
+        double result = (double) (nums[0] + nums[nums.length - 1]) / 2;
+		return result;
+    }
 }
