@@ -450,6 +450,57 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.
+	 * 
+	 * Example:
+	 * Given a = 1 and b = 2, return 3.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_371() {
+		int a1 = 1;
+		int b1 = 2;
+		int expectedOutput1 = 3;
+		int output1 = getSum(a1, b1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int a2 = 3;
+		int b2 = 5;
+		int expectedOutput2 = 8;
+		int output2 = getSum(a2, b2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	/**
+	 * For this, problem, for example, we have a = 1, b = 3,
+	 * 
+	 * In bit representation, a = 0001, b = 0011,
+	 * 
+	 * First, we can use "and" ("&") operation between a and b to find a carry.
+	 * 
+	 * carry = a & b, then carry = 0001
+	 * 
+	 * Second, we can use "xor" ("^") operation between a and b to find the different bit, and assign it to a,
+	 * 
+	 * Then, we shift carry one position left and assign it to b, b = 0010.
+	 * 
+	 * Iterate until there is no carry (or b == 0)
+	 */
+	private int getSum(int a, int b) {
+		if (a == 0) return b;
+		if (b == 0) return a;
+
+		while (b != 0) {
+			int carry = a & b;
+			a = a ^ b;
+			b = carry << 1;
+		}
+		
+		return a;
+    }
+	
+	/**
+	 * <pre>
 	 * Write a program that outputs the string representation of numbers from 1 to n.
 	 * 
 	 * But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.
@@ -517,6 +568,74 @@ public class TestLeetcode {
 		}
 		return numbers;
 	}
+	
+	/**
+	 * <pre>
+	 * Given a non-empty string containing an out-of-order English representation of digits 0-9, output the digits in ascending order.
+	 * 
+	 * Note:
+	 * Input contains only lowercase English letters.
+	 * Input is guaranteed to be valid and can be transformed to its original digits. That means invalid inputs such as "abc" or "zerone" are not permitted.
+	 * Input length is less than 50,000.
+	 * 
+	 * Example 1:
+	 * Input: "owoztneoer"
+	 * Output: "012"
+	 * 
+	 * Example 2:
+	 * Input: "fviefuro"
+	 * Output: "45"
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_423() {
+		String input1 = "owoztneoer";
+		String expectedOutput1 = "012";
+		String output1 = originalDigits(input1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String input2 = "fviefuro";
+		String expectedOutput2 = "45";
+		String output2 = originalDigits(input2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	/**
+	 * The idea is:
+	 * 
+	 * for zero, it's the only word has letter 'z',
+	 * for two, it's the only word has letter 'w',
+	 * ......
+	 * so we only need to count the unique letter of each word, Coz the input is always valid.
+	 */
+	private String originalDigits(String s) {
+		int[] count = new int[10];
+	    for (int i = 0; i < s.length(); i++){
+	        char c = s.charAt(i);
+	        if (c == 'z') count[0]++;
+	        if (c == 'o') count[1]++; //1-0-2-4
+	        if (c == 'w') count[2]++;
+	        if (c == 'h') count[3]++; //3-8
+	        if (c == 'u') count[4]++; 
+	        if (c == 'f') count[5]++; //5-4
+	        if (c == 'x') count[6]++;
+	        if (c == 's') count[7]++; //7-6
+	        if (c == 'g') count[8]++;
+	        if (c == 'i') count[9]++; //9-8-5-6
+	    }
+	    count[1] = count[1] - count[0] - count[2] - count[4];
+	    count[3] -= count[8];
+	    count[5] -= count[4];
+	    count[7] -= count[6];
+	    count[9] = count[9] - count[8] - count[5] - count[6];
+	    StringBuilder sb = new StringBuilder();
+	    for (int i = 0; i <= 9; i++){
+	        for (int j = 0; j < count[i]; j++){
+	            sb.append(i);
+	        }
+	    }
+	    return sb.toString();
+    }
 
 	/**
 	 * <pre>
