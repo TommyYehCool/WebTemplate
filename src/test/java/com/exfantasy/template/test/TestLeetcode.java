@@ -19,46 +19,6 @@ import org.junit.runners.MethodSorters;
 public class TestLeetcode {
 
 	@Test
-	public void testFizzBuzz() {
-		List<String> fizzBuzz = fizzBuzz(15);
-		
-		List<String> expectedResult = new ArrayList<String>();
-		expectedResult.add("1");
-		expectedResult.add("2");
-		expectedResult.add("Fizz");
-		expectedResult.add("4");
-		expectedResult.add("Buzz");
-		expectedResult.add("Fizz");
-		expectedResult.add("7");
-		expectedResult.add("8");
-		expectedResult.add("Fizz");
-		expectedResult.add("Buzz");
-		expectedResult.add("11");
-		expectedResult.add("Fizz");
-		expectedResult.add("13");
-		expectedResult.add("14");
-		expectedResult.add("FizzBuzz");
-		
-		assertThat(fizzBuzz).isEqualTo(expectedResult);
-	}
-
-	private List<String> fizzBuzz(int n) {
-		List<String> numbers = new ArrayList<>();
-		for (int i = 1; i <= n; i++) {
-			if (i % 15 == 0) {
-				numbers.add("FizzBuzz");
-			} else if (i % 3 == 0) {
-				numbers.add("Fizz");
-			} else if (i % 5 == 0) {
-				numbers.add("Buzz");
-			} else {
-				numbers.add(String.valueOf(i));
-			}
-		}
-		return numbers;
-	}
-
-	@Test
 	public void testBinarySearch() {
 		int[] a = new int[] { 2, 3, 5, 7, 41, 55, 57, 73, 91, 93 };
 
@@ -490,6 +450,76 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Write a program that outputs the string representation of numbers from 1 to n.
+	 * 
+	 * But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.
+	 * 
+	 * Example:
+	 * 
+	 * n = 15,
+	 * 
+	 * Return:
+	 * [
+	 * "1",
+	 * "2",
+	 * "Fizz",
+	 * "4",
+	 * "Buzz",
+	 * "Fizz",
+	 * "7",
+	 * "8",
+	 * "Fizz",
+	 * "Buzz",
+	 * "11",
+	 * "Fizz",
+	 * "13",
+	 * "14",
+	 * "FizzBuzz"
+	 * ]
+	 * </pre> 
+	 */
+	@Test
+	public void test_leetcode_412() {
+		List<String> fizzBuzz = fizzBuzz(15);
+		
+		List<String> expectedResult = new ArrayList<String>();
+		expectedResult.add("1");
+		expectedResult.add("2");
+		expectedResult.add("Fizz");
+		expectedResult.add("4");
+		expectedResult.add("Buzz");
+		expectedResult.add("Fizz");
+		expectedResult.add("7");
+		expectedResult.add("8");
+		expectedResult.add("Fizz");
+		expectedResult.add("Buzz");
+		expectedResult.add("11");
+		expectedResult.add("Fizz");
+		expectedResult.add("13");
+		expectedResult.add("14");
+		expectedResult.add("FizzBuzz");
+		
+		assertThat(fizzBuzz).isEqualTo(expectedResult);
+	}
+
+	private List<String> fizzBuzz(int n) {
+		List<String> numbers = new ArrayList<>();
+		for (int i = 1; i <= n; i++) {
+			if (i % 15 == 0) {
+				numbers.add("FizzBuzz");
+			} else if (i % 3 == 0) {
+				numbers.add("Fizz");
+			} else if (i % 5 == 0) {
+				numbers.add("Buzz");
+			} else {
+				numbers.add(String.valueOf(i));
+			}
+		}
+		return numbers;
+	}
+
+	/**
+	 * <pre>
 	 * Count the number of segments in a string, where a segment is defined to be a contiguous sequence of non-space characters.
 	 * 
 	 * Please note that the string does not contain any non-printable characters.
@@ -526,6 +556,59 @@ public class TestLeetcode {
 		}
 		return res;
     }
+	
+	/**
+	 * <pre>
+	 * Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie. Each child i has a greed factor gi, which is the minimum size of a cookie that the child will be content with; and each cookie j has a size sj. If sj >= gi, we can assign the cookie j to the child i, and the child i will be content. Your goal is to maximize the number of your content children and output the maximum number.
+	 * 
+	 * Note:
+	 * You may assume the greed factor is always positive. 
+	 * You cannot assign more than one cookie to one child.
+	 * 
+	 * Example 1:
+	 * Input: [1,2,3], [1,1]
+	 * 
+	 * Output: 1
+	 * 
+	 * Explanation: You have 3 children and 2 cookies. The greed factors of 3 children are 1, 2, 3. 
+	 * And even though you have 2 cookies, since their size is both 1, you could only make the child whose greed factor is 1 content.
+	 * You need to output 1.
+	 * 
+	 * Example 2:
+	 * Input: [1,2], [1,2,3]
+	 * 
+	 * Output: 2
+	 * 
+	 * Explanation: You have 2 children and 3 cookies. The greed factors of 2 children are 1, 2. 
+	 * You have 3 cookies and their sizes are big enough to gratify all of the children, 
+	 * You need to output 2.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_455() {
+		int[] g1 = new int[] {1,2,3};
+		int[] s1 = new int[] {1,1};
+		int expectedOutput1 = 1;
+		int output1 = findContentChildren(g1, s1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[] g2 = new int[] {1,2};
+		int[] s2 = new int[] {1,2,3};
+		int expectedOutput2 = 2;
+		int output2 = findContentChildren(g2, s2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int findContentChildren(int[] g, int[] s) {
+		Arrays.sort(g);
+		Arrays.sort(s);
+		int i = 0;
+		for (int j = 0; i < g.length && j < s.length; j++) {
+			if (g[i] <= s[j])
+				i++;
+		}
+		return i;
+	}
 	
 	/**
 	 * <pre>
