@@ -509,6 +509,80 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+	 * 
+	 * Example:
+	 * Given nums = [-2, 0, 3, -5, 2, -1]
+	 * 
+	 * sumRange(0, 2) -> 1
+	 * sumRange(2, 5) -> -1
+	 * sumRange(0, 5) -> -3
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_303() {
+		int[] nums = new int[] {-2, 0, 3, -5, 2, -1};
+
+		MyNumArray obj = new MyNumArray(nums);
+
+		int param_1 = obj.sumRange(0, 2);
+		assertThat(param_1).isEqualTo(1);
+		
+		int param_2 = obj.sumRange(2, 5);
+		assertThat(param_2).isEqualTo(-1);
+		
+		int param_3 = obj.sumRange(0, 5);
+		assertThat(param_3).isEqualTo(-3);
+		
+		BetterNumArray better = new BetterNumArray(nums);
+		
+		int param_4 = better.sumRange(0, 2);
+		assertThat(param_4).isEqualTo(1);
+		
+		int param_5 = better.sumRange(2, 5);
+		assertThat(param_5).isEqualTo(-1);
+		
+		int param_6 = better.sumRange(0, 5);
+		assertThat(param_6).isEqualTo(-3);
+	}
+	
+	private class MyNumArray {
+		
+		private int[] nums;
+
+		public MyNumArray(int[] nums) {
+			this.nums = nums;
+		}
+
+		public int sumRange(int i, int j) {
+			int sum = 0;
+			for (int index = i; index <= j; index++) {
+				sum += nums[index];
+			}
+			return sum;
+		}
+	}
+	
+	private class BetterNumArray {
+		int[] nums;
+
+		public BetterNumArray(int[] nums) {
+		    for (int i = 1; i < nums.length; i++)
+		        nums[i] += nums[i - 1];
+		    
+		    this.nums = nums;
+		}
+
+		public int sumRange(int i, int j) {
+			if (i == 0)
+		        return nums[j];
+		    
+		    return nums[j] - nums[i - 1];
+		}
+	}
+	
+	/**
+	 * <pre>
 	 * Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.
 	 * 
 	 * Example:
