@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -16,7 +17,25 @@ public class TestLeetcode {
 	@Test
 	public void testFizzBuzz() {
 		List<String> fizzBuzz = fizzBuzz(15);
-		System.out.println(fizzBuzz);
+		
+		List<String> expectedResult = new ArrayList<String>();
+		expectedResult.add("1");
+		expectedResult.add("2");
+		expectedResult.add("Fizz");
+		expectedResult.add("4");
+		expectedResult.add("Buzz");
+		expectedResult.add("Fizz");
+		expectedResult.add("7");
+		expectedResult.add("8");
+		expectedResult.add("Fizz");
+		expectedResult.add("Buzz");
+		expectedResult.add("11");
+		expectedResult.add("Fizz");
+		expectedResult.add("13");
+		expectedResult.add("14");
+		expectedResult.add("FizzBuzz");
+		
+		assertThat(fizzBuzz).isEqualTo(expectedResult);
 	}
 
 	private List<String> fizzBuzz(int n) {
@@ -43,6 +62,7 @@ public class TestLeetcode {
 		int searchTarget = a[index];
 
 		int foundIndex = binarySearch(a, searchTarget);
+
 		assertThat(index).isEqualTo(foundIndex);
 	}
 
@@ -67,7 +87,7 @@ public class TestLeetcode {
 		int[] nums1 = new int[] { 4, 5, 6, 8, 9, 11 };
 		int[] nums2 = new int[] {};
 		double median = findMedianSortedArrays(nums1, nums2);
-		System.out.println(median);
+		assertThat(median).isEqualTo((6 + 8) / 2);
 	}
 
 	private double findMedianSortedArrays(int[] nums1, int[] nums2) {
@@ -84,6 +104,29 @@ public class TestLeetcode {
 			return nums[medianIndex];
 		}
 	}
+	
+	/**
+	 * <pre>
+	 * Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
+	 * 
+	 * Example 1:
+	 *		Input: ["Hello", "Alaska", "Dad", "Peace"]
+	 *		Output: ["Alaska", "Dad"]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_500() {
+		String[] input = new String[] {"Hello", "Alaska", "Dad", "Peace"};
+		String[] expectedOutput = new String[] {"Alaska", "Dad"};
+		
+		String[] output = findWords(input);
+		
+		assertThat(output).isEqualTo(expectedOutput);
+	}
+	
+	private String[] findWords(String[] words) {
+		return Stream.of(words).filter(s -> s.toLowerCase().matches("[qwertyuiop]*|[asdfghjkl]*|[zxcvbnm]*")).toArray(String[]::new);
+    }
 
 	/**
 	 * <pre>
@@ -103,8 +146,9 @@ public class TestLeetcode {
 	 */
 	@Test
 	public void test_leetcode_516() {
-		String test = "cbbd";
-		System.out.println(longestPalindromeSubseq(test));
+		String input = "bbbab";
+		int output = longestPalindromeSubseq(input);
+		assertThat(output).isEqualTo(4);
 	}
 
 	private int longestPalindromeSubseq(String s) {
