@@ -17,11 +17,30 @@ import org.junit.runners.MethodSorters;
 public class TestJava {
 	
 	@Test
-	public void test() {	
+	public void testFizzBuzz() {	
 		List<String> fizzBuzz = fizzBuzz(15);
 		System.out.println(fizzBuzz);
 	}
 	
+	private List<String> fizzBuzz(int n) {
+	    List<String> numbers = new ArrayList<>();
+	    for (int i = 1; i <= n; i++) {
+	    	if (i % 15 == 0) {
+	            numbers.add("FizzBuzz");
+	        }
+	    	else if (i % 3 == 0) {
+	            numbers.add("Fizz");
+	        }
+	        else if (i % 5 == 0) {
+	            numbers.add("Buzz");
+	        }
+	        else {
+	            numbers.add(String.valueOf(i));
+	        }
+	    }
+	    return numbers;
+	}
+
 	@Test
 	@Ignore
 	public void testDate() {
@@ -55,6 +74,24 @@ public class TestJava {
 		assertThat(index).isEqualTo(foundIndex);
 	}
 	
+	private int binarySearch(int[] a, int key) {
+	    int lo = 0;
+	    int hi = a.length - 1;
+	    while (lo <= hi) {
+	        int mid = (lo + hi) >> 1;
+	        if (key < a[mid]) {
+	        	hi = mid - 1;
+	        }
+	        else if (key > a[mid]) {
+	        	lo = mid + 1;
+	        }
+	        else {
+	        	return mid;
+	        }
+	    }
+	    return -1;
+	}
+
 	@Test
 	public void testShift() {
 		int[] a = new int[] {2, 3, 5, 7, 41, 57, 91, 93};
@@ -66,48 +103,4 @@ public class TestJava {
         
         System.out.println("low: " + low + ", high: " + high + ", mid: " + mid);
 	}
-	
-	public List<String> fizzBuzz(int n) {
-	    List<String> numbers = new ArrayList<>();
-	    for (int i = 1; i <= n; i++) {
-	        if (i % 3 == 0) {
-	            numbers.add("Fizz");
-	        }
-	        else if (i % 5 == 0) {
-	            numbers.add("Buzz");
-	        }
-	        else if (i % 15 == 0) {
-	            numbers.add("FizzBuzz");
-	        }
-	        else {
-	            numbers.add(String.valueOf(i));
-	        }
-	    }
-	    return numbers;
-	}
-
-	/**
-	 * http://program-lover.blogspot.tw/2008/08/binary-search.html
-	 * 
-	 * @param a
-	 * @param key
-	 * @return
-	 */
-	public static int binarySearch(int[] a, int key) {
-        int lo = 0;
-        int hi = a.length - 1;
-        while (lo <= hi) {
-            int mid = (lo + hi) >> 1;
-            if (key < a[mid]) {
-            	hi = mid - 1;
-            }
-            else if (key > a[mid]) {
-            	lo = mid + 1;
-            }
-            else {
-            	return mid;
-            }
-        }
-        return -1;
-    }
 }
