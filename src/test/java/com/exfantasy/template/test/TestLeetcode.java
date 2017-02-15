@@ -111,6 +111,57 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given an integer n, return the number of trailing zeroes in n!.
+	 *
+	 * Note: Your solution should be in logarithmic time complexity.
+	 * 
+	 * 詳解: https://skyyen999.gitbooks.io/-leetcode-with-javascript/content/questions/172md.html 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_172() {
+		int input = 20;
+		int expectedOutput = 4;
+
+		int output = trailingZeroes(input);
+		
+		assertThat(output).isEqualTo(expectedOutput);
+	}
+	
+	private int trailingZeroes(int n) {
+		return n == 0 ? 0 : n / 5 + trailingZeroes(n / 5);
+    }
+	
+	/**
+	 * <pre>
+	 * Given an unsorted array nums, reorder it such that nums[0] < nums[1] > nums[2] < nums[3]....
+     *
+     * Example:
+     * (1) Given nums = [1, 5, 1, 1, 6, 4], one possible answer is [1, 4, 1, 5, 1, 6]. 
+     * (2) Given nums = [1, 3, 2, 2, 3, 1], one possible answer is [2, 3, 1, 3, 1, 2].
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_324() {
+		int[] input1 = new int[] {1, 5, 1, 1, 6, 4};
+		int[] expectedOutput1 = new int[] {1, 4, 1, 5, 1, 6};
+		int[] output1 = wiggleSort(input1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[] input2 = new int[] {1, 3, 2, 2, 3, 1};
+		int[] expectedOutput2 = new int[] {2, 3, 1, 3, 1, 2};
+		int[] output2 = wiggleSort(input2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int[] wiggleSort(int[] nums) {
+		int[] output = null;
+		
+        return output;
+    }
+	
+	/**
+	 * <pre>
 	 * Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
 	 * 
 	 * Example 1:
