@@ -386,6 +386,56 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Implement the following operations of a queue using stacks.
+	 * 
+	 * push(x) -- Push element x to the back of queue.
+	 * pop() -- Removes the element from in front of queue.
+	 * peek() -- Get the front element.
+	 * empty() -- Return whether the queue is empty.
+	 * Notes:
+	 * You must use only standard operations of a stack -- which means only push to top, peek/pop from top, size, and is empty operations are valid.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_232() {
+		MyQueue obj = new MyQueue();
+		obj.push(10);
+		int param_2 = obj.pop();
+		System.out.println("param_2: " + param_2);
+		int param_3 = obj.peek();
+		System.out.println("param_3: " + param_3);
+		boolean param_4 = obj.empty();
+		assertThat(param_4).isTrue();
+	}
+	
+	private class MyQueue {
+
+	    Stack<Integer> input = new Stack<Integer>();
+	    Stack<Integer> output = new Stack<Integer>();
+	    
+	    public void push(int x) {
+	        input.push(x);
+	    }
+
+	    public Integer pop() {
+	        peek();
+	        return output.pop();
+	    }
+
+	    public int peek() {
+	        if (output.empty())
+	            while (!input.empty())
+	                output.push(input.pop());
+	        return output.peek();
+	    }
+
+	    public boolean empty() {
+	        return input.empty() && output.empty();
+	    }
+	}
+	
+	/**
+	 * <pre>
 	 * Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
 	 * 
 	 * Examples: 
@@ -835,6 +885,51 @@ public class TestLeetcode {
 		return i;
 	}
 	
+	/**
+	 * <pre>
+	 * You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.
+	 * 
+	 * Find out how many ways to assign symbols to make sum of integers equal to target S.
+	 * 
+	 * Example 1:
+	 * Input: nums is [1, 1, 1, 1, 1], S is 3. 
+	 * Output: 5
+	 * Explanation: 
+	 * 
+	 * -1+1+1+1+1 = 3
+	 * +1-1+1+1+1 = 3
+	 * +1+1-1+1+1 = 3
+	 * +1+1+1-1+1 = 3
+	 * +1+1+1+1-1 = 3
+	 * 
+	 * There are 5 ways to assign symbols to make the sum of nums be target 3.
+	 * </pre> 
+	 */
+	@Test
+	public void test_leetcode_494() {
+		int[] nums1 = new int[] {1,1,1,1,1};
+		int S1 = 3;
+		int expectedOutput1 = 5;
+		int output1 = findTargetSumWays(nums1, S1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int findTargetSumWays(int[] nums, int S) {
+		int sum = 0;
+        for (int n : nums)
+            sum += n;
+        return (sum < S || (S + sum) % 2 > 0) ? 0 : subsetSum(nums, (S + sum) >> 1); 
+	}
+	
+	private int subsetSum(int[] nums, int s) {
+        int[] dp = new int[s + 1]; 
+        dp[0] = 1;
+        for (int n : nums)
+            for (int i = s; i >= n; i--)
+                dp[i] += dp[i - n]; 
+        return dp[s];
+    } 
+
 	/**
 	 * <pre>
 	 * Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
