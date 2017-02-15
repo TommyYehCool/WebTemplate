@@ -5,8 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.stream.Stream;
@@ -35,7 +38,7 @@ public class TestLeetcode {
 		int lo = 0;
 		int hi = a.length - 1;
 		while (lo <= hi) {
-			int mid = (lo + hi) >> 1;
+			int mid = (lo + hi) >>> 1;
 			if (key < a[mid]) {
 				hi = mid - 1;
 			} else if (key > a[mid]) {
@@ -595,6 +598,61 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given an integer, write an algorithm to convert it to hexadecimal. For negative integer, two’s complement method is used.
+	 * 
+	 * Note:
+	 * 
+	 * All letters in hexadecimal (a-f) must be in lowercase.
+	 * The hexadecimal string must not contain extra leading 0s. If the number is zero, it is represented by a single zero character '0'; otherwise, the first character in the hexadecimal string will not be the zero character.
+	 * The given number is guaranteed to fit within the range of a 32-bit signed integer.
+	 * You must not use any method provided by the library which converts/formats the number to hex directly.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input:
+	 * 26
+	 * Output:
+	 * "1a"
+	 * 
+	 * Example 2:
+	 * 
+	 * Input:
+	 * -1
+	 * Output:
+	 * "ffffffff"
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_405() {
+		int num1 = 26;
+		String expectedOutput1 = "1a";
+		String outpu1 = toHex(num1);
+		assertThat(outpu1).isEqualTo(expectedOutput1);
+		
+		int num2 = -1;
+		String expectedOutput2 = "ffffffff";
+		String outpu2 = toHex(num2);
+		assertThat(outpu2).isEqualTo(expectedOutput2);
+	}
+	
+	private String toHex(int num) {
+		char[] map = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+
+		if (num == 0)
+			return "0";
+
+		String result = "";
+		while (num != 0) {
+			result = map[(num & 15)] + result;
+			num = (num >>> 4);
+		}
+
+		return result;
+	}
+
+	/**
+	 * <pre>
 	 * Given an encoded string, return it's decoded string.
 	 * 
 	 * The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
@@ -836,6 +894,57 @@ public class TestLeetcode {
 		}
 		return res;
     }
+	
+	/**
+	 * <pre>
+	 * Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
+	 * 
+	 * Find all the elements that appear twice in this array.
+	 * 
+	 * Could you do it without extra space and in O(n) runtime?
+	 * 
+	 * Example:
+	 * Input:
+	 * [4,3,2,7,8,2,3,1]
+	 * 
+	 * Output:
+	 * [2,3]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_442() {
+		int[] nums1 = new int[] {4,3,2,7,8,2,3,1};
+		List<Integer> expectedOutput1 = new ArrayList<>();
+		expectedOutput1.add(2);
+		expectedOutput1.add(3);
+		List<Integer> output = findDuplicates(nums1);
+		assertThat(output).containsAll(expectedOutput1);
+	}
+	
+	private List<Integer> findDuplicates(int[] nums) {
+		List<Integer> res = new ArrayList<>();
+        Map<Integer, Integer> digitCounts = new HashMap<>();
+        for (int num : nums) {
+        	if (!digitCounts.containsKey(num)) {
+        		digitCounts.put(num, 1);
+        	}
+        	else {
+        		Integer counts = digitCounts.get(num);
+        		counts++;
+        		digitCounts.put(num, counts);
+        	}
+        }
+        
+        Iterator<Integer> itKey = digitCounts.keySet().iterator();
+        while (itKey.hasNext()) {
+        	Integer key = itKey.next();
+        	Integer counts = digitCounts.get(key);
+        	if (counts == 2) {
+        		res.add(key);
+        	}
+        }
+        return res;
+	}
 	
 	/**
 	 * <pre>
