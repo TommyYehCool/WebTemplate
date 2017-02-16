@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Stream;
 
@@ -350,6 +352,68 @@ public class TestLeetcode {
 			"where l1.Id=l2.Id-1 and l2.Id=l3.Id-1" +
 			"and l1.Num=l2.Num and l2.Num=l3.Num";
 	}
+	
+	/**
+	 * <pre>
+	 * [IMPORTANT]
+	 * 
+	 * Say you have an array for which the ith element is the price of a given stock on day i.
+	 * 
+	 * Design an algorithm to find the maximum profit. You may complete at most k transactions.
+	 * 
+	 * Note:
+	 * You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_188() {
+		int k = 2;
+		int[] prices = new int[] {10,20,80};
+		int expectedOutput = 70;
+		int output = maxProfit(k, prices);
+		assertThat(output).isEqualTo(expectedOutput);
+
+		int k2 = 3;
+		int[] prices2 = new int[] {150,150,300,550,200,600,800};
+		int expectedOutput2 = 1000;
+		int output2 = maxProfit(k2, prices2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+		
+		int k3 = 3;
+		int[] prices3 = new int[] {150,150,300,550,200,600,800,1200};
+		int expectedOutput3 = 1400;
+		int output3 = maxProfit(k3, prices3);
+		assertThat(output3).isEqualTo(expectedOutput3);
+	}
+	
+	private int maxProfit(int k, int[] prices) {
+        int len = prices.length;
+        if (k >= len / 2) {
+        	return quickSolve(prices);
+        }
+        
+        int[][] t = new int[k + 1][len];
+        for (int i = 1; i <= k; i++) {
+            int tmpMax = -prices[0];
+            for (int j = 1; j < len; j++) {
+                t[i][j] = Math.max(t[i][j - 1], prices[j] + tmpMax);
+                tmpMax =  Math.max(tmpMax, t[i - 1][j - 1] - prices[j]);
+            }
+        }
+        return t[k][len - 1];
+    }
+    
+	private int quickSolve(int[] prices) {
+        int len = prices.length, profit = 0;
+        for (int i = 1; i < len; i++) {
+            // as long as there is a price gap, we gain a profit.
+            if (prices[i] > prices[i - 1]) {
+            	profit += prices[i] - prices[i - 1];
+            }
+        }
+        return profit;
+    }
 		
 	/**
 	 * <pre>
@@ -442,6 +506,34 @@ public class TestLeetcode {
 		int allNumbersLength = nums.length;
         Arrays.sort(nums);
         return nums[allNumbersLength - k];
+	}
+	
+	/**
+	 * <pre>
+	 * Given an array of integers, find if the array contains any duplicates. 
+	 * 
+	 * Your function should return true if any value appears at least twice in the array, 
+	 * 
+	 * and it should return false if every element is distinct.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_217() {
+		int[] nums1 = new int[] {1,2,3,4,5,5,5};
+		boolean expectedOutput1 = true;
+		boolean output1 = containsDuplicate(nums1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private boolean containsDuplicate(int[] nums) {
+		Set<Integer> distinctNums = new HashSet<>();
+		for (int num : nums) {
+			if (distinctNums.contains(num)) {
+				return true;
+			}
+			distinctNums.add(num);
+		}
+		return false;
 	}
 	
 	/**
@@ -1125,7 +1217,8 @@ public class TestLeetcode {
 		List<Integer> output1 = findDisappearedNumbers(nums1);
 		assertThat(output1).containsAll(expectedOutput1);
 		
-		System.out.println(Arrays.toString(nums1));
+		// make sure the values of source array aren't changed
+//		System.out.println(Arrays.toString(nums1));
 	}
 	
 	private List<Integer> findDisappearedNumbers(int[] nums) {
