@@ -364,6 +364,12 @@ public class TestLeetcode {
 	 * Note:
 	 * You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
 	 * 
+	 * Note:
+	 * buy and sell belong to one transaction.
+	 * 
+	 * Note:
+	 * 給予所有股票價格, 算出 k 次交易可得最大獲利, 一次交易 = 買了後賣, 不可同時擁有多張 
+	 * 
 	 * </pre>
 	 */
 	@Test
@@ -385,6 +391,18 @@ public class TestLeetcode {
 		int expectedOutput3 = 1400;
 		int output3 = maxProfit(k3, prices3);
 		assertThat(output3).isEqualTo(expectedOutput3);
+		
+		int k4 = 3;
+		int[] prices4 = new int[] {150,150,300,550,200,600,800,1200};
+		int expectedOutput4 = 1400;
+		int output4 = maxProfitUnderstood(k4, prices4);
+		assertThat(output4).isEqualTo(expectedOutput4);
+		
+		int k5 = 2;
+		int[] prices5 = new int[] {10,30,60,100,90,190};
+		int expectedOutput5 = 190;
+		int output5 = maxProfitUnderstood(k5, prices5);
+		assertThat(output5).isEqualTo(expectedOutput5);
 	}
 	
 	private int maxProfit(int k, int[] prices) {
@@ -414,6 +432,45 @@ public class TestLeetcode {
         }
         return profit;
     }
+	
+	private int maxProfitUnderstood(int k, int[] prices) {
+		if (k < 1) {
+			return 0;
+		}
+
+		if (prices == null || prices.length <= 1) {
+			return 0;
+		}
+
+		// fix for memory problem in frequent trades
+		if (k >= prices.length / 2) {
+			int profit = 0;
+			for (int i = 1; i < prices.length; i++) {
+				if (prices[i] > prices[i - 1]) {
+					profit += prices[i] - prices[i - 1];
+				}
+			}
+			return profit;
+		}
+
+		// DP for at most k trades
+		int[] buy = new int[k + 1];
+		int[] sell = new int[k + 1];
+
+		for (int i = 0; i <= k; i++) {
+			buy[i] = Integer.MIN_VALUE;
+			sell[i] = 0;
+		}
+
+		for (int i = 0; i < prices.length; i++) {
+			for (int j = k; j > 0; j--) {
+				sell[j] = Math.max(sell[j], prices[i] + buy[j]);
+				buy[j] = Math.max(buy[j], sell[j - 1] - prices[i]);
+			}
+		}
+
+		return sell[k];
+	}
 		
 	/**
 	 * <pre>
@@ -499,7 +556,6 @@ public class TestLeetcode {
 		int output1 = findKthLargest(nums1, kth1);
 		
 		assertThat(output1).isEqualTo(expectedOutput1);
-		
 	}
 	
 	private int findKthLargest(int[] nums, int k) {
