@@ -399,8 +399,8 @@ public class TestLeetcode {
 		assertThat(output4).isEqualTo(expectedOutput4);
 		
 		int k5 = 2;
-		int[] prices5 = new int[] {10,30,60,100,90,190};
-		int expectedOutput5 = 190;
+		int[] prices5 = new int[] {10,30,120,100,90,190};
+		int expectedOutput5 = 210;
 		int output5 = maxProfitUnderstood(k5, prices5);
 		assertThat(output5).isEqualTo(expectedOutput5);
 	}
@@ -434,15 +434,17 @@ public class TestLeetcode {
     }
 	
 	private int maxProfitUnderstood(int k, int[] prices) {
+		// means you can't do any transactions
 		if (k < 1) {
 			return 0;
 		}
 
+		// if there is only one price data point you can't make any transaction 
 		if (prices == null || prices.length <= 1) {
 			return 0;
 		}
 
-		// fix for memory problem in frequent trades
+		// if k >= prices.length / 2, then you can make maximum number of transactions
 		if (k >= prices.length / 2) {
 			int profit = 0;
 			for (int i = 1; i < prices.length; i++) {
