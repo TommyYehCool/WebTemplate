@@ -210,6 +210,41 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, 
+	 * find the area of largest rectangle in the histogram.
+	 * 
+	 * For example,
+	 * Given heights = [2,1,5,6,2,3],
+	 * return 10.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_84() {
+		int[] heights1 = new int[] {2,1,5,6,2,3};
+		int expectedOutput1 = 10;
+		int output1 = largestRectangleArea(heights1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int largestRectangleArea(int[] heights) {
+		int len = heights.length;
+        Stack<Integer> s = new Stack<Integer>();
+        int maxArea = 0;
+        for(int i = 0; i <= len; i++){
+            int h = (i == len ? 0 : heights[i]);
+            if(s.isEmpty() || h >= heights[s.peek()]){
+                s.push(i);
+            }else{
+                int tp = s.pop();
+                maxArea = Math.max(maxArea, heights[tp] * (s.isEmpty() ? i : i - 1 - s.peek()));
+                i--;
+            }
+        }
+        return maxArea;
+	}
+	
+	/**
+	 * <pre>
 	 * The gray code is a binary numeral system where two successive values differ in only one bit.
 	 * 
 	 * Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
@@ -388,8 +423,8 @@ public class TestLeetcode {
 		
 		int k3 = 3;
 		int[] prices3 = new int[] {150,150,300,550,200,600,800,1200};
-		int expectedOutput3 = 1400;
 		int output3 = maxProfit(k3, prices3);
+		int expectedOutput3 = 1400;
 		assertThat(output3).isEqualTo(expectedOutput3);
 		
 		int k4 = 3;
