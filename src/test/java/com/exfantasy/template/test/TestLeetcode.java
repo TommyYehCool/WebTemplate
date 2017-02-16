@@ -243,6 +243,25 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given two binary trees, write a function to check if they are equal or not.
+	 * 
+	 * Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
+	 * </pre>
+	 */
+	@Test
+	@Ignore
+	public void test_leetcode_100() {
+		/**
+		 * public boolean isSameTree(TreeNode p, TreeNode q) {
+		 * 		if(p == null && q == null) return true;
+         * 		if(p == null || q == null) return false;
+         * 		return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+         * }
+		 */
+	}
+	
+	/**
+	 * <pre>
 	 * Given an integer n, return the number of trailing zeroes in n!.
 	 *
 	 * Note: Your solution should be in logarithmic time complexity.
@@ -360,6 +379,40 @@ public class TestLeetcode {
 		@SuppressWarnings("unused")
 		String result = "DELETE p1 FROM Person p1, Person p2 WHERE p1.Email = p2.Email AND p1.Id > p2.Id";
 	}
+	
+	/**
+	 * <pre>
+	 * Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
+	 * 
+	 * For example:
+	 * 
+	 * Given "aacecaaa", return "aaacecaaa".
+	 * 
+	 * Given "abcd", return "dcbabcd".
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_214() {
+		String input1 = "aacecaaa";
+		String expectedOutput1 = "aaacecaaa";
+		String output1 = shortestPalindrome(input1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String input2 = "abcd";
+		String expectedOutput2 = "dcbabcd";
+		String output2 = shortestPalindrome(input2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private String shortestPalindrome(String s) {
+		int j = 0;
+	    for (int i = s.length() - 1; i >= 0; i--) {
+	        if (s.charAt(i) == s.charAt(j)) { j += 1; }
+	    }
+	    if (j == s.length()) { return s; }
+	    String suffix = s.substring(j);
+	    return new StringBuffer(suffix).reverse().toString() + shortestPalindrome(s.substring(0, j)) + suffix;
+    }
 
 	/**
 	 * <pre>
@@ -403,15 +456,18 @@ public class TestLeetcode {
 	public void test_leetcode_232() {
 		MyQueue obj = new MyQueue();
 		obj.push(1);
-		System.out.println(">>> test_leetcode_232 --> Push 1 done");
+//		System.out.println(">>> test_leetcode_232 --> Push 1 done");
 		obj.push(2);
-		System.out.println(">>> test_leetcode_232 --> Push 2 done");
+//		System.out.println(">>> test_leetcode_232 --> Push 2 done");
 		int param_2 = obj.pop();
-		System.out.println(">>> test_leetcode_232 --> Pop done, get " + param_2);
+		assertThat(param_2).isEqualTo(1);
+//		System.out.println(">>> test_leetcode_232 --> Pop done, get " + param_2);
 		int param_3 = obj.peek();
-		System.out.println(">>> test_leetcode_232 --> Peek result: " + param_3);
+		assertThat(param_3).isEqualTo(2);
+//		System.out.println(">>> test_leetcode_232 --> Peek result: " + param_3);
 		int param_4 = obj.pop();
-		System.out.println(">>> test_leetcode_232 --> Pop done, get " + param_4);
+		assertThat(param_4).isEqualTo(2);
+//		System.out.println(">>> test_leetcode_232 --> Pop done, get " + param_4);
 		boolean param_5 = obj.empty();
 		assertThat(param_5).isTrue();
 	}
