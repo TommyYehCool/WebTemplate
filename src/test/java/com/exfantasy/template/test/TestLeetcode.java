@@ -1124,6 +1124,8 @@ public class TestLeetcode {
 		expectedOutput1.add(6);
 		List<Integer> output1 = findDisappearedNumbers(nums1);
 		assertThat(output1).containsAll(expectedOutput1);
+		
+		System.out.println(Arrays.toString(nums1));
 	}
 	
 	private List<Integer> findDisappearedNumbers(int[] nums) {
@@ -1131,14 +1133,23 @@ public class TestLeetcode {
 
 		for (int i = 0; i < nums.length; i++) {
 			int val = Math.abs(nums[i]) - 1;
+			
+			// if nums[val] > 0 means the number never occurred
 			if (nums[val] > 0) {
+				// set it to negative represent occurred
 				nums[val] = -nums[val];
 			}
 		}
 
 		for (int i = 0; i < nums.length; i++) {
+			// if nums[val] > 0 means the number never occurred
 			if (nums[i] > 0) {
+				// add to result list
 				res.add(i + 1);
+			}
+			else {
+				// reset the source array value
+				nums[i] = Math.abs(nums[i]);
 			}
 		}
 		return res;
