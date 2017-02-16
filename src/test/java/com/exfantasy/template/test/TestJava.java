@@ -87,9 +87,13 @@ public class TestJava {
 		System.out.println("<<<< testMathAbs done");
 	}
 	
-//	@Test
-//	public void testStringBuilderReverse() {
-//		StringBuilder builder = new StringBuilder("TommyYeh");
-//		System.out.println(builder.reverse());
-//	}
+	@Test
+	public void testStringBuilderReverse() {
+		System.out.println(">>>> Starting to testStringBuilderReverse");
+		
+		StringBuilder builder = new StringBuilder("TommyYeh");
+		System.out.println(builder.reverse());
+		
+		System.out.println("<<<< testStringBuilderReverse done");
+	}
 }

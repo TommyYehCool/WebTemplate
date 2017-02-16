@@ -407,9 +407,13 @@ public class TestLeetcode {
 	private String shortestPalindrome(String s) {
 		int j = 0;
 	    for (int i = s.length() - 1; i >= 0; i--) {
-	        if (s.charAt(i) == s.charAt(j)) { j += 1; }
+	        if (s.charAt(i) == s.charAt(j)) {
+	        	j += 1;
+	        }
 	    }
-	    if (j == s.length()) { return s; }
+	    if (j == s.length()) {
+	    	return s;
+	    }
 	    String suffix = s.substring(j);
 	    return new StringBuffer(suffix).reverse().toString() + shortestPalindrome(s.substring(0, j)) + suffix;
     }
@@ -1192,6 +1196,63 @@ public class TestLeetcode {
 		}
 		return i;
 	}
+	
+	/**
+	 * <pre>
+	 * Given a non-empty string check if it can be constructed by taking a substring of it and appending multiple copies of the substring together. You may assume the given string consists of lowercase English letters only and its length will not exceed 10000.
+	 * 
+	 * Example 1:
+	 * Input: "abab"
+	 * Output: True
+	 * 
+	 * Explanation: It's the substring "ab" twice.
+	 * 
+	 * Example 2:
+	 * Input: "aba"
+	 * Output: False
+	 * 
+	 * Example 3:
+	 * Input: "abcabcabcabc"
+	 * Output: True
+	 * 
+	 * Explanation: It's the substring "abc" four times. (And the substring "abcabc" twice.)
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_459() {
+		String input1 = "abab";
+		boolean expectedOutput1 = true;
+		boolean output1 = repeatedSubstringPattern(input1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String input2 = "aba";
+		boolean expectedOutput2 = false;
+		boolean output2 = repeatedSubstringPattern(input2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+		
+		String input3 = "abcabcabcabc";
+		boolean expectedOutput3 = true;
+		boolean output3 = repeatedSubstringPattern(input3);
+		assertThat(output3).isEqualTo(expectedOutput3);
+	}
+	
+	private boolean repeatedSubstringPattern(String str) {
+		int len = str.length();
+		for (int i = len / 2; i >= 1; i--) {
+			if (len % i == 0) {
+				int m = len / i;
+				String subS = str.substring(0, i);
+				int j;
+				for (j = 1; j < m; j++) {
+					if (!subS.equals(str.substring(j * i, i + j * i)))
+						break;
+				}
+				if (j == m)
+					return true;
+			}
+		}
+		return false;
+    }
 	
 	/**
 	 * <pre>
