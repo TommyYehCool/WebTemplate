@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.junit.FixMethodOrder;
@@ -111,13 +112,16 @@ public class TestJava {
 		private int value;
 	}
 	
+	/**
+	 * Ref: <a href="http://javarevisited.blogspot.tw/2016/04/10-examples-of-converting-list-to-map.html">10-examples-of-converting-list-to-map</a>
+	 */
 	@Test
 	public void testStreamListToMap() {
 		List<MyObj> objs = new ArrayList<>();
 		objs.add(new MyObj("tommy", 37));
 		objs.add(new MyObj("alice", 31));
 		Map<String, MyObj> map 
-			= objs.stream().collect(Collectors.toMap(MyObj::getKey, myObj -> myObj));
+			= objs.stream().collect(Collectors.toMap(MyObj::getKey, Function.identity()));
 		System.out.println(map);
 	}
 }
