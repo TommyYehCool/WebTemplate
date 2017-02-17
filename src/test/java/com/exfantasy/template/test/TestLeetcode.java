@@ -287,6 +287,60 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given a set of distinct integers, nums, return all possible subsets.
+	 * 
+	 * Note: The solution set must not contain duplicate subsets.
+	 * 
+	 * For example,
+	 * If nums = [1,2,3], a solution is:
+	 * 
+	 * [
+  	 *  [3],
+  	 *  [1],
+  	 *  [2],
+  	 *  [1,2,3],
+  	 *  [1,3],
+  	 *  [2,3],
+  	 *  [1,2],
+  	 *  []
+	 * ]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_78() {
+		int[] nums1 = new int[] {1,2,3};
+		List<List<Integer>> expectedOutput1 = new ArrayList<>();
+		expectedOutput1.add(Arrays.asList(1));
+		expectedOutput1.add(Arrays.asList(2));
+		expectedOutput1.add(Arrays.asList(3));
+		expectedOutput1.add(Arrays.asList(1,3));
+		expectedOutput1.add(Arrays.asList(1,2));
+		expectedOutput1.add(Arrays.asList(2,3));
+		expectedOutput1.add(Arrays.asList(1,2,3));
+		expectedOutput1.add(Arrays.asList());
+		List<List<Integer>> output1 = subsets(nums1);
+		assertThat(output1).containsAll(expectedOutput1);
+	}
+	
+    private List<List<Integer>> subsets(int[] nums) {
+    	List<List<Integer>> res = new ArrayList<>();
+        res.add(new ArrayList<Integer>());
+        
+        Arrays.sort(nums);
+        for(int i : nums) {
+            List<List<Integer>> tmp = new ArrayList<>();
+            for(List<Integer> sub : res) {
+                List<Integer> a = new ArrayList<>(sub);
+                a.add(i);
+                tmp.add(a);
+            }
+            res.addAll(tmp);
+        }
+        return res;
+    }
+	
+	/**
+	 * <pre>
 	 * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, 
 	 * find the area of largest rectangle in the histogram.
 	 * 
