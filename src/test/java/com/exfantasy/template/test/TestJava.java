@@ -1,6 +1,7 @@
 package com.exfantasy.template.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.text.MessageFormat;
@@ -34,6 +35,9 @@ public class TestJava {
 		SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		assertThat(dateTimeFormat.format(date)).isEqualTo(timeStr);
+		
+		// 測試 JUnit 的 Assert
+		assertEquals(dateTimeFormat.format(date), timeStr);
 	}
 	
 	@Test
