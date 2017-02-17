@@ -117,11 +117,15 @@ public class TestJava {
 	 */
 	@Test
 	public void testStreamListToMap() {
+		System.out.println(">>>> Starting to testStreamListToMap");
+		
 		List<MyObj> objs = new ArrayList<>();
 		objs.add(new MyObj("tommy", 37));
 		objs.add(new MyObj("alice", 31));
 		Map<String, MyObj> map 
 			= objs.stream().collect(Collectors.toMap(MyObj::getKey, Function.identity()));
 		System.out.println(map);
+		
+		System.out.println("<<<< testStreamListToMap done");
 	}
 }
