@@ -66,6 +66,7 @@ public class TestAmazon {
 			return valueIndexes.containsKey(value);
 		}
 
+		@SuppressWarnings("unused")
 		public T getRandom() {
 			if (valueIndexes.isEmpty()) {
 				throw new NoSuchElementException();
