@@ -135,6 +135,17 @@ public class TestJava {
 			= objs.stream().collect(Collectors.toMap(MyObj::getKey, Function.identity()));
 		System.out.println(map);
 		
+		objs.clear();
+		
+		objs.add(new MyObj("benson", 37));
+		objs.add(new MyObj("ben", 31));
+		map 
+			= objs.stream().collect(Collectors.toMap(MyObj::getKey, Function.identity()));
+		System.out.println(map);
+		
+		assertEquals(map.size(), 2);
+		assertThat(map.values()).containsAll(objs);
+		
 		System.out.println("<<<< testStreamListToMap done");
 	}
 }
