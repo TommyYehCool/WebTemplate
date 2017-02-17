@@ -96,6 +96,8 @@ public class TestJava {
 		int aAbs = Math.abs(a);
 		System.out.println("a: " + a + ", Match.abs(a): " + aAbs);
 		
+		assertEquals(aAbs, 88);
+		
 		System.out.println("<<<< testMathAbs done");
 	}
 	
@@ -103,8 +105,11 @@ public class TestJava {
 	public void testStringBuilderReverse() {
 		System.out.println(">>>> Starting to testStringBuilderReverse");
 		
-		StringBuilder builder = new StringBuilder("TommyYeh");
-		System.out.println(builder.reverse());
+		String testStr = "TommyYeh";
+		StringBuilder builder = new StringBuilder(testStr);
+		StringBuilder reverseBuilder = builder.reverse();
+		String reverseStr = reverseBuilder.toString();
+		assertEquals(reverseStr, "heYymmoT");
 		
 		System.out.println("<<<< testStringBuilderReverse done");
 	}
