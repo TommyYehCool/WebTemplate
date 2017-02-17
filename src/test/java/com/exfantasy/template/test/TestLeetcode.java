@@ -51,7 +51,7 @@ public class TestLeetcode {
 		}
 		return -1;
 	}
-
+	
 	@Test
 	public void test_leetcode_4() {
 		int[] nums1 = new int[] { 4, 5, 6, 8, 9, 11 };
@@ -146,6 +146,83 @@ public class TestLeetcode {
         }
         return dp[s.length()][p.length()];
     }
+	/**
+	 * <pre>
+	 * Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
+	 * 
+	 * Do not allocate extra space for another array, you must do this in place with constant memory.
+	 * 
+	 * For example,
+	 * Given input array nums = [1,1,2],
+	 * 
+	 * Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_26() {
+		int[] nums1 = new int[] {1,1,2,3};
+		int expectedOutput1 = 3;
+		int output1 = removeDuplicates(nums1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[] nums2 = new int[] {1,1,2,2,3,4,4,4,5};
+		int expectedOutput2 = 5;
+		int output2 = removeDuplicates(nums2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+		
+		int[] nums3 = new int[] {8};
+		int expectedOutput3 = 1;
+		int output3 = removeDuplicates(nums3);
+		assertThat(output3).isEqualTo(expectedOutput3);
+		
+		int[] nums4 = new int[] {1,1};
+		int expectedOutput4 = 1;
+		int output4 = removeDuplicates(nums4);
+		assertThat(output4).isEqualTo(expectedOutput4);
+	}
+	
+	private int removeDuplicates(int[] nums) {
+		int i = nums.length > 0 ? 1 : 0;
+	    for (int n : nums)
+	        if (n > nums[i-1])
+	            nums[i++] = n;
+	    return i;
+    }
+	
+	/**
+	 * <pre>
+	 * Given an array and a value, remove all instances of that value in place and return the new length.
+	 * 
+	 * Do not allocate extra space for another array, you must do this in place with constant memory.
+	 * 
+	 * The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+	 * 
+	 * Example:
+	 * Given input array nums = [3,2,2,3], val = 3
+	 * 
+	 * Your function should return length = 2, with the first two elements of nums being 2.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_27() {
+		int[] nums1 = new int[] {3,2,2,3};
+		int val1 = 3;
+		int expectedOutput1 = 2;
+		int output1 = removeElement(nums1, val1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+    private int removeElement(int[] nums, int val) {
+		int m = 0;
+		for (int i = 0; i < nums.length; i++) {
+			if (nums[i] != val) {
+				nums[m] = nums[i];
+				m++;
+			}
+		}
+		return m;
+    }
+
 	/**
 	 * <pre>
 	 * Implement wildcard pattern matching with support for '?' and '*'.
