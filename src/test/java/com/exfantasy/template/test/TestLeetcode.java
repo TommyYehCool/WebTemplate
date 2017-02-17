@@ -323,20 +323,30 @@ public class TestLeetcode {
 	}
 	
     private List<List<Integer>> subsets(int[] nums) {
-    	List<List<Integer>> res = new ArrayList<>();
-        res.add(new ArrayList<Integer>());
-        
-        Arrays.sort(nums);
-        for(int i : nums) {
-            List<List<Integer>> tmp = new ArrayList<>();
-            for(List<Integer> sub : res) {
-                List<Integer> a = new ArrayList<>(sub);
-                a.add(i);
-                tmp.add(a);
-            }
-            res.addAll(tmp);
-        }
-        return res;
+		List<List<Integer>> res = new ArrayList<>();
+		
+		// add empty result
+		res.add(new ArrayList<Integer>());
+
+		Arrays.sort(nums);
+
+		for (int num : nums) {
+			List<List<Integer>> newResult = new ArrayList<>();
+
+			for (List<Integer> sub : res) {
+				// 取得目前已經有的結果
+				List<Integer> currentSubset = new ArrayList<>(sub);
+				
+				// 把目前的數字加入
+				currentSubset.add(num);
+				
+				// 加入新的結果
+				newResult.add(currentSubset);
+			}
+			// 加入最終結果
+			res.addAll(newResult);
+		}
+		return res;
     }
 	
 	/**
