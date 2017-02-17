@@ -440,6 +440,42 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+	 * 
+	 * For example, given the following triangle
+	 * [
+     * 		[2],
+     * 	   [3,4],
+   	 * 	  [6,5,7],
+  	 *   [4,1,8,3]
+	 * ]
+	 * The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_120() {
+		List<List<Integer>> triangle1 = new ArrayList<>();
+		triangle1.add(Arrays.asList(2));
+		triangle1.add(Arrays.asList(3,4));
+		triangle1.add(Arrays.asList(6,5,7));
+		triangle1.add(Arrays.asList(4,1,8,3));
+		int expectedOutput1 = 11;
+		int output1 = minimumTotal(triangle1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+    private int minimumTotal(List<List<Integer>> triangle) {
+		int[] A = new int[triangle.size() + 1];
+		for (int i = triangle.size() - 1; i >= 0; i--) {
+			for (int j = 0; j < triangle.get(i).size(); j++) {
+				A[j] = Math.min(A[j], A[j + 1]) + triangle.get(i).get(j);
+			}
+		}
+		return A[0];
+    }
+	
+	/**
+	 * <pre>
 	 * [IMPORTANT]
 	 * 
 	 * Say you have an array for which the ith element is the price of a given stock on day i.
