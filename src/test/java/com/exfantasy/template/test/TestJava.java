@@ -5,12 +5,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.sql.Date;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestJava {
@@ -95,5 +102,22 @@ public class TestJava {
 		System.out.println(builder.reverse());
 		
 		System.out.println("<<<< testStringBuilderReverse done");
+	}
+
+	@Data
+	@AllArgsConstructor
+	private class MyObj {
+		private String key;
+		private int value;
+	}
+	
+	@Test
+	public void testStreamListToMap() {
+		List<MyObj> objs = new ArrayList<>();
+		objs.add(new MyObj("tommy", 37));
+		objs.add(new MyObj("alice", 31));
+		Map<String, MyObj> map 
+			= objs.stream().collect(Collectors.toMap(MyObj::getKey, myObj -> myObj));
+		System.out.println(map);
 	}
 }
