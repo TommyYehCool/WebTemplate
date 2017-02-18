@@ -717,6 +717,41 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [IMPORTANT]
+	 * 
+	 * Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+	 * 
+	 * Note: Do not modify the linked list.
+	 * 
+	 */
+	@Test
+	@Ignore
+	public void test_leetcode_142() {
+//		ListNode cycleBeginNode = detectCycle(head);
+	}
+	
+//	private ListNode detectCycle(ListNode head) {
+//		ListNode slow = head;
+//		ListNode fast = head;
+//
+//		while (fast != null && fast.next != null) {
+//			fast = fast.next.next;
+//			slow = slow.next;
+//
+//			if (fast == slow) {
+//				ListNode slow2 = head;
+//				while (slow2 != slow) {
+//					slow = slow.next;
+//					slow2 = slow2.next;
+//				}
+//				return slow;
+//			}
+//		}
+//		return null;
+//	}
+	
+	/**
+	 * <pre>
 	 * Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
 	 * 
 	 * The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
@@ -1819,6 +1854,64 @@ public class TestLeetcode {
 			}
 		}
 		return numbers;
+	}
+	
+	/**
+	 * <pre>
+	 * Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).
+	 * 
+	 * Example 1:
+	 * Input: [3, 2, 1]
+	 * 
+	 * Output: 1
+	 * Explanation: The third maximum is 1.
+	 * 
+	 * Example 2:
+	 * Input: [1, 2]
+	 * 
+	 * Output: 2
+	 * Explanation: The third maximum does not exist, so the maximum (2) is returned instead.
+	 * 
+	 * Example 3:
+	 * Input: [2, 2, 3, 1]
+	 * 
+	 * Output: 1
+	 * Explanation: Note that the third maximum here means the third maximum distinct number.
+	 * 
+	 * Both numbers with value 2 are both considered as second maximum.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_414() {
+		int[] nums1 = new int[] {3,2,1};
+		int expectedOutput1 = 1;
+		int output1 = thirdMax(nums1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+	
+		int[] nums2 = new int[] {10,10,20,8,9,6};
+		int expectedOutput2 = 9;
+		int output2 = thirdMax(nums2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int thirdMax(int[] nums) {
+		Integer max1 = null;
+        Integer max2 = null;
+        Integer max3 = null;
+        for (Integer n : nums) {
+            if (n.equals(max1) || n.equals(max2) || n.equals(max3)) continue;
+            if (max1 == null || n > max1) {
+                max3 = max2;
+                max2 = max1;
+                max1 = n;
+            } else if (max2 == null || n > max2) {
+                max3 = max2;
+                max2 = n;
+            } else if (max3 == null || n > max3) {
+                max3 = n;
+            }
+        }
+        return max3 == null ? max1 : max3;
 	}
 	
 	/**
