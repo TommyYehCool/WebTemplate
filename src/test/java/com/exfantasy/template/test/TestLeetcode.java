@@ -339,6 +339,40 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given a list, rotate the list to the right by k places, where k is non-negative.
+	 * 
+	 * For example:
+	 * Given 1->2->3->4->5->NULL and k = 2,
+	 * return 4->5->1->2->3->NULL.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_61() {
+		// The answer is
+//		public ListNode rotateRight(ListNode head, int k) {
+//			if (head == null || head.next == null)
+//				return head;
+//			ListNode dummy = new ListNode(0);
+//			dummy.next = head;
+//			ListNode fast = dummy, slow = dummy;
+//
+//			int i;
+//			for (i = 0; fast.next != null; i++)// Get the total length
+//				fast = fast.next;
+//
+//			for (int j = i - k % i; j > 0; j--) // Get the i-n%i th node
+//				slow = slow.next;
+//
+//			fast.next = dummy.next; // Do the rotation
+//			dummy.next = slow.next;
+//			slow.next = null;
+//
+//			return dummy.next;
+//		}
+	}
+	
+	/**
+	 * <pre>
 	 * Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
 	 * 
 	 * You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' ' when necessary so that each line has exactly L characters.
@@ -1186,6 +1220,93 @@ public class TestLeetcode {
 	    public boolean empty() {
 	        return input.empty() && output.empty();
 	    }
+	}
+	
+	/**
+	 * <pre>
+	 * Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+	 * 
+	 * Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node with value 3, 
+	 * 
+	 * the linked list should become 1 -> 2 -> 4 after calling your function.
+	 * 
+	 * <a href="http://codereview.stackexchange.com/questions/82698/singly-linked-list-in-java">singly-linked-list-in-java</a>
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_237() {
+		// The answer is
+		/**
+		 * private void deleteNode(ListNode node) {
+		 *     	node.val = node.next.val;
+         * 		node.next = node.next.next;
+    	 * }
+		 */
+	}
+	
+	@Test
+	public void test_my_linkedlist() {
+		ListNode root = new ListNode(1);
+		System.out.println(root);
+		root.addLast(2);
+		System.out.println(root);
+		root.addLast(3);
+		System.out.println(root);
+		root.addLast(1);
+		System.out.println(root);
+		root.addLast(2);
+		System.out.println(root);
+		root.addLast(3);
+		System.out.println(root);
+		root.removeLast();
+		System.out.println(root);
+		root.removeLast();
+		System.out.println(root);
+		root.removeLast();
+		System.out.println(root);
+		root.removeLast();
+		System.out.println(root);
+		root.removeLast();
+		System.out.println(root);
+	}
+	
+	private class ListNode {
+		int val;
+		ListNode next;
+
+		ListNode(int x) {
+			val = x;
+		}
+		
+		public void addLast(int x) {
+			ListNode current = this;
+			while (current.next != null) {
+				current = current.next;
+			}
+			current.next = new ListNode(x);
+		}
+		
+		public void removeLast() {
+			ListNode previous = null;
+			ListNode current = this;
+			while (current.next != null) {
+				previous = current;
+				current = current.next;
+			}
+			previous.next = null;
+		}
+		
+		@Override
+		public String toString() {
+			ListNode current = this;
+			
+			String result = String.valueOf(current.val);
+            while (current.next != null) {
+                current = current.next;
+                result += " -> " + current.val;
+            }
+            return result;
+		}
 	}
 	
 	/**
