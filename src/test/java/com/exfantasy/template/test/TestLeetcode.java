@@ -1,6 +1,8 @@
 package com.exfantasy.template.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -478,15 +480,56 @@ public class TestLeetcode {
 	 * </pre>
 	 */
 	@Test
-	@Ignore
 	public void test_leetcode_100() {
-		/**
-		 * public boolean isSameTree(TreeNode p, TreeNode q) {
-		 * 		if(p == null && q == null) return true;
-         * 		if(p == null || q == null) return false;
-         * 		return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
-         * }
-		 */
+		int[] tree1Vals = new int[] {10, 30, 70, 80, 90};
+		int[] tree2Vals = tree1Vals;
+		TreeNode tree1Root = sortedArrayToBST(tree1Vals);
+//		System.out.println(binaryTreePaths(tree1Root));
+		TreeNode tree2Root = sortedArrayToBST(tree2Vals);
+//		System.out.println(binaryTreePaths(tree2Root));
+		boolean output1 = isSameTree(tree1Root, tree2Root);
+		assertThat(output1).isEqualTo(true);
+		
+		int[] tree3Vals = new int[] {10, 30, 70, 80, 90};
+		int[] tree4Vals = new int[] {10, 50, 60, 90, 100};
+		TreeNode tree3Root = sortedArrayToBST(tree3Vals);
+//		System.out.println(binaryTreePaths(tree3Root));
+		TreeNode tree4Root = sortedArrayToBST(tree4Vals);
+//		System.out.println(binaryTreePaths(tree4Root));
+		boolean output2 = isSameTree(tree3Root, tree4Root);
+		assertThat(output2).isEqualTo(false);
+	}
+	
+	private boolean isSameTree(TreeNode p, TreeNode q) {
+		if (p == null && q == null)
+			return true;
+		if (p == null || q == null)
+			return false;
+		return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+	}
+	
+	/**
+	 * <pre>
+	 * Given a binary tree, find its maximum depth.
+	 * 
+	 * The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_104() {
+		int[] tree1Vals = new int[] {10, 20, 30, 70, 80, 90, 120, 140, 160, 200, 210, 220, 230, 240, 250, 260};
+		TreeNode tree1Root = sortedArrayToBST(tree1Vals);
+//		System.out.println(binaryTreePaths(tree1Root));
+		int output1 = maxDepth(tree1Root);
+		int expectedOutput1 = 5;
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int maxDepth(TreeNode root) {
+		if (root == null) {
+			return 0;
+		}
+		return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
 	}
 	
 	/**
