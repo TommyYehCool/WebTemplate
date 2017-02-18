@@ -222,6 +222,57 @@ public class TestLeetcode {
 		}
 		return m;
     }
+    
+    /**
+     * <pre>
+     * Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+     * 
+     * You may assume no duplicates in the array.
+     * 
+     * Here are few examples.
+     * [1,3,5,6], 5 → 2
+     * [1,3,5,6], 2 → 1
+     * [1,3,5,6], 7 → 4
+     * [1,3,5,6], 0 → 0
+     * </pre>
+     */
+    @Test
+    public void test_leetcode_35() {
+    	int[] nums = new int[] {1,3,5,6};
+    	int target1 = 5;
+    	int expectedOutput1 = 2;
+    	int output1 = searchInsert(nums, target1);
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    	
+    	int target2 = 2;
+    	int expectedOutput2 = 1;
+    	int output2 = searchInsert(nums, target2);
+    	assertThat(output2).isEqualTo(expectedOutput2);
+    	
+    	int target3 = 7;
+    	int expectedOutput3 = 4;
+    	int output3 = searchInsert(nums, target3);
+    	assertThat(output3).isEqualTo(expectedOutput3);
+    	
+    	int target4 = 0;
+    	int expectedOutput4 = 0;
+    	int output4 = searchInsert(nums, target4);
+    	assertThat(output4).isEqualTo(expectedOutput4);
+    }
+    
+    private int searchInsert(int[] nums, int target) {
+		int low = 0, high = nums.length - 1;
+		while (low <= high) {
+			int mid = (low + high) / 2;
+			if (nums[mid] == target)
+				return mid;
+			else if (nums[mid] > target)
+				high = mid - 1;
+			else
+				low = mid + 1;
+		}
+		return low;
+    }
 
 	/**
 	 * <pre>
@@ -440,6 +491,41 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+	 * 
+	 * reference: 257
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_108() {
+		int[] nums = new int[] { 1, 3, 4, 6, 7, 8, 9 };
+		TreeNode root = sortedArrayToBST(nums);
+		List<String> output = binaryTreePaths(root);
+		List<String> expectedOutput = Arrays.asList("6->3->1", "6->3->4", "6->8->7", "6->8->9");
+		assertThat(expectedOutput).containsAll(output);
+	}
+
+	private TreeNode sortedArrayToBST(int[] nums) {
+		if (nums.length == 0) {
+			return null;
+		}
+		TreeNode head = createTreeNode(nums, 0, nums.length - 1);
+		return head;
+	}
+
+	private TreeNode createTreeNode(int[] num, int low, int high) {
+		if (low > high) { // Done
+			return null;
+		}
+		int mid = (low + high) >>> 1;
+		TreeNode node = new TreeNode(num[mid]);
+		node.left = createTreeNode(num, low, mid - 1);
+		node.right = createTreeNode(num, mid + 1, high);
+		return node;
+	}
+	
+	/**
+	 * <pre>
 	 * Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
 	 * 
 	 * For example, given the following triangle
@@ -510,6 +596,54 @@ public class TestLeetcode {
         }
         return profit;
 	}
+	
+	/**
+	 * <pre>
+	 * Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
+	 * 
+	 * The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+	 * 
+	 * You may assume that each input would have exactly one solution and you may not use the same element twice.
+	 * 
+	 * Input: numbers={2, 7, 11, 15}, target=9
+	 * Output: index1=1, index2=2
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_167() {
+		int[] numbers1 = new int[] {2, 7, 11, 15};
+		int target1 = 9;
+		int[] output1 = twoSum(numbers1, target1);
+		int[] expectedOutput1 = new int[] {1, 2};
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[] numbers2 = new int[] {2, 7, 9, 11, 15, 23};
+		int target2 = 24;
+		int[] output2 = twoSum(numbers2, target2);
+		int[] expectedOutput2 = new int[] {3, 5};
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int[] twoSum(int[] numbers, int target) {
+		int[] indice = new int[2];
+		if (numbers == null || numbers.length < 2)
+			return indice;
+
+		int left = 0, right = numbers.length - 1;
+		while (left < right) {
+			int v = numbers[left] + numbers[right];
+			if (v == target) {
+				indice[0] = left + 1;
+				indice[1] = right + 1;
+				break;
+			} else if (v > target) {
+				right--;
+			} else {
+				left++;
+			}
+		}
+		return indice;
+    }
 	
 	/**
 	 * <pre>
@@ -900,6 +1034,76 @@ public class TestLeetcode {
 	        return input.empty() && output.empty();
 	    }
 	}
+	
+	/**
+	 * <pre>
+	 * Given a binary tree, return all root-to-leaf paths.
+	 * 
+	 * For example, given the following binary tree:
+	 * 
+   	 *    1
+ 	 *  /   \
+	 * 2     3
+ 	 *  \
+  	 *   5
+	 * All root-to-leaf paths are:
+	 * 
+	 * ["1->2->5", "1->3"]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_257() {
+		TreeNode root = new TreeNode(1);
+		root.addLeft(2);
+		root.addRight(3);
+		
+		root.getLeftNode().addLeft(4);
+		root.getLeftNode().addRight(5);
+		
+		List<String> output = binaryTreePaths(root);
+		
+		List<String> expectedOutput = Arrays.asList("1->2->4", "1->2->5", "1->3");
+		
+		assertThat(expectedOutput).containsAll(output);
+	}
+		
+	private class TreeNode {
+		int val;
+		TreeNode left;
+		TreeNode right;
+
+		public TreeNode(int x) {
+			val = x;
+		}
+		
+		public void addLeft(int val) {
+			left = new TreeNode(val);
+		}
+		
+		public void addRight(int val) {
+			right = new TreeNode(val);
+		}
+		
+		public TreeNode getLeftNode() {
+			return left;
+		}
+		
+		public TreeNode getRightNode() {
+			return right;
+		}
+	}
+	
+	private List<String> binaryTreePaths(TreeNode root) {
+        List<String> answer = new ArrayList<String>();
+        if (root != null) searchBT(root, "", answer);
+        return answer;
+    }
+	
+    private void searchBT(TreeNode node, String path, List<String> answer) {
+        if (node.left == null && node.right == null) answer.add(path + node.val);
+        if (node.left != null) searchBT(node.left, path + node.val + "->", answer);
+        if (node.right != null) searchBT(node.right, path + node.val + "->", answer);
+    }
 	
 	/**
 	 * <pre>
