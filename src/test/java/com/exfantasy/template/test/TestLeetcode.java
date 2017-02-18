@@ -1,8 +1,6 @@
 package com.exfantasy.template.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Stream;
@@ -337,6 +336,82 @@ public class TestLeetcode {
 		}
 		return dp[pL][sL];
 	}
+	
+	/**
+	 * <pre>
+	 * Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
+	 * 
+	 * You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' ' when necessary so that each line has exactly L characters.
+	 * 
+	 * Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+	 * 
+	 * For the last line of text, it should be left justified and no extra space is inserted between words.
+	 * 
+	 * For example,
+	 * words: ["This", "is", "an", "example", "of", "text", "justification."]
+	 * L: 16.
+	 * 
+	 * Return the formatted lines as:
+	 * [
+   	 *   "This    is    an",
+   	 *   "example  of text",
+   	 *   "justification.  "
+	 * ]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_68() {
+		String[] words = new String[] {"This", "is", "an", "example", "of", "text", "justification."};
+		int maxWidth = 16;
+		List<String> output1 = fullJustify(words, maxWidth);
+		List<String> expectedOutput1 = Arrays.asList("This    is    an", 
+													 "example  of text", 
+													 "justification.  ");
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private List<String> fullJustify(String[] words, int maxWidth) {
+		List<String> lines = new ArrayList<String>();
+        
+        int index = 0;
+        while (index < words.length) {
+            int count = words[index].length();
+            int last = index + 1;
+            while (last < words.length) {
+                if (words[last].length() + count + 1 > maxWidth) break;
+                count += words[last].length() + 1;
+                last++;
+            }
+            
+            StringBuilder builder = new StringBuilder();
+            int diff = last - index - 1;
+            // if last line or number of words in the line is 1, left-justified
+            if (last == words.length || diff == 0) {
+                for (int i = index; i < last; i++) {
+                    builder.append(words[i] + " ");
+                }
+                builder.deleteCharAt(builder.length() - 1);
+                for (int i = builder.length(); i < maxWidth; i++) {
+                    builder.append(" ");
+                }
+            } else {
+                // middle justified
+                int spaces = (maxWidth - count) / diff;
+                int r = (maxWidth - count) % diff;
+                for (int i = index; i < last; i++) {
+                    builder.append(words[i]);
+                    if (i < last - 1) {
+                        for (int j = 0; j <= (spaces + ((i - index) < r ? 1 : 0)); j++) {
+                            builder.append(" ");
+                        }
+                    }
+                }
+            }
+            lines.add(builder.toString());
+            index = last;
+        }
+        return lines;
+    }
 	
 	/**
 	 * <pre>
@@ -2156,6 +2231,59 @@ public class TestLeetcode {
 	
 	private String[] findWords(String[] words) {
 		return Stream.of(words).filter(s -> s.toLowerCase().matches("[qwertyuiop]*|[asdfghjkl]*|[zxcvbnm]*")).toArray(String[]::new);
+    }
+	
+	/**
+	 * <pre>
+	 * You need to find the largest value in each row of a binary tree.
+	 * 
+	 * Example:
+	 * Input: 
+	 * 
+     * 		1
+     * 	   / \
+     *    3   2
+     *   / \   \  
+     *  5   3   9 
+	 * 
+	 * Output: [1, 3, 9]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_515() {
+		int[] tree1Vals = new int[] {1, 2, 3, 3, 5, 9};
+		TreeNode tree1Root = sortedArrayToBST(tree1Vals);
+//		System.out.println(binaryTreePaths(tree1Root));
+		List<Integer> output1 = largestValues(tree1Root);
+		List<Integer> expectedOutput1 = Arrays.asList(3, 5, 9);
+		assertThat(expectedOutput1).isEqualTo(output1);
+	}
+	
+    private List<Integer> largestValues(TreeNode root) {
+    	List<Integer> res = new ArrayList<>();
+        if (root == null) return res;
+        
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            int max = Integer.MIN_VALUE;
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                max = Math.max(max, node.val);
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
+            }
+            res.add(max);
+        }
+        
+        Integer[] result = new Integer[res.size()];
+        for (int i = 0; i < res.size(); i++) {
+            result[i] = res.get(i);
+        }
+        
+        return Arrays.asList(result);
     }
 
 	/**
