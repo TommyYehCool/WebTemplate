@@ -373,6 +373,53 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+	 * 
+	 * Note: You can only move either down or right at any point in time.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_64() {
+		int[][] grid1 = new int[][] {
+			new int[] {1,2,3}, 
+			new int[] {4,5,6}, 
+			new int[] {7,8,9}
+		};
+		int output1 = minPathSum(grid1);
+		int expectedOutput1 = 21;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[][] grid2 = new int[][] {
+			new int[] {1,7,4}, 
+			new int[] {3,8,2}, 
+			new int[] {9,5,6}
+		};
+		int output2 = minPathSum(grid2);
+		int expectedOutput2 = 20;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+    private int minPathSum(int[][] grid) {
+    	int m = grid.length;// row
+    	int n = grid[0].length; // column
+    	for (int i = 0; i < m; i++) {
+    		for (int j = 0; j < n; j++) {
+    			if (i == 0 && j != 0) {
+    				grid[i][j] = grid[i][j] + grid[i][j - 1];
+    			} else if (i != 0 && j == 0) {
+    				grid[i][j] = grid[i][j] + grid[i - 1][j];
+    			} else if (i == 0 && j == 0) {
+    				grid[i][j] = grid[i][j];
+    			} else {
+    				grid[i][j] = Math.min(grid[i][j - 1], grid[i - 1][j]) + grid[i][j];
+    			}
+    		}
+    	}
+    	return grid[m - 1][n - 1];
+    }
+	
+	/**
+	 * <pre>
 	 * Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
 	 * 
 	 * You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' ' when necessary so that each line has exactly L characters.
@@ -619,6 +666,60 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+	 * 
+	 * For example:
+	 * Given binary tree [3,7,9,15,20],
+     * 		9
+   	 * 	   / \
+  	 *    3  15
+     *     \   \
+   	 *      7  20
+	 * return its level order traversal as:
+	 * [
+  	 * 	[9],
+  	 * 	[3,15],
+  	 * 	[7,20]
+	 * ]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_102() {
+		int[] nums = new int[] {3,7,9,15,20};
+		TreeNode root = sortedArrayToBST(nums);
+		List<String> treePaths = binaryTreePaths(root);
+		List<List<Integer>> expectedOutput = new ArrayList<>();
+		expectedOutput.add(Arrays.asList(9));
+		expectedOutput.add(Arrays.asList(3,15));
+		expectedOutput.add(Arrays.asList(7,20));
+		List<List<Integer>> output = levelOrder(root);
+	}
+	
+	private List<List<Integer>> levelOrder(TreeNode root) {
+		Queue<TreeNode> queue = new LinkedList<TreeNode>();
+		List<List<Integer>> wrapList = new LinkedList<List<Integer>>();
+
+		if (root == null)
+			return wrapList;
+
+		queue.offer(root);
+		while (!queue.isEmpty()) {
+			int levelNum = queue.size();
+			List<Integer> subList = new LinkedList<Integer>();
+			for (int i = 0; i < levelNum; i++) {
+				if (queue.peek().left != null)
+					queue.offer(queue.peek().left);
+				if (queue.peek().right != null)
+					queue.offer(queue.peek().right);
+				subList.add(queue.poll().val);
+			}
+			wrapList.add(subList);
+		}
+		return wrapList;
+	}
+
+	/**
+	 * <pre>
 	 * Given a binary tree, find its maximum depth.
 	 * 
 	 * The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
@@ -747,6 +848,57 @@ public class TestLeetcode {
             }
         }
         return profit;
+	}
+	
+	/**
+	 * <pre>
+	 * Given a binary tree, find the maximum path sum.
+	 * 
+	 * For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
+	 * 
+	 * For example:
+	 * Given the below binary tree,
+	 * 
+	 *    1
+     * 	 / \
+     *  2   3
+     *  
+	 * Return 6.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_124() {
+		TreeNode root1 = new TreeNode(1);
+		root1.addLeft(2);
+		root1.addRight(3);
+		int output1 = maxPathSum(root1);
+		int expectedOutput1 = 6;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[] nums = new int[] { 1, 3, 4, 6, 7, 8, 9 };
+		TreeNode root2 = sortedArrayToBST(nums);
+//		List<String> treePaths = binaryTreePaths(root2);
+//		System.out.println(treePaths);
+		int output2 = maxPathSum(root2);
+		int expectedOutput2 = 30;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int maxPathSum(TreeNode root) {
+		int[] max = new int[1];
+		max[0] = Integer.MIN_VALUE;
+		maxPathSum(max, root);
+		return max[0];
+	}
+
+	private int maxPathSum(int[] max, TreeNode root) {
+		if (root == null) {
+			return 0;
+		}
+		int leftMax = Math.max(0, maxPathSum(max, root.left));
+		int rightMax = Math.max(0, maxPathSum(max, root.right));
+		max[0] = Math.max(max[0], root.val + leftMax + rightMax);
+		return root.val + Math.max(leftMax, rightMax);
 	}
 	
 	/**
@@ -1166,6 +1318,46 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+	 * 
+	 * Note: 
+	 * You may assume k is always valid, 1 ≤ k ≤ BST's total elements.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_230() {
+		int[] nums1 = new int[] {1,4,7,9,12,20};
+		TreeNode root1 = sortedArrayToBST(nums1);
+		int k1 = 3;
+		int output1 = kthSmallest(root1, k1);
+		int expectedOutput1 = 7;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int k2 = 5;
+		int output2 = kthSmallest(root1, k2);
+		int expectedOutput2 = 12;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int kthSmallest(TreeNode root, int k) {
+		int count = countNodes(root.left);
+		if (k <= count) {
+			return kthSmallest(root.left, k);
+		} else if (k > count + 1) {
+			return kthSmallest(root.right, k - 1 - count); // 1 is counted as current node
+		}
+		return root.val;
+	}
+
+	private int countNodes(TreeNode n) {
+		if (n == null)
+			return 0;
+
+		return 1 + countNodes(n.left) + countNodes(n.right);
+	}
+	
+	/**
+	 * <pre>
 	 * Implement the following operations of a queue using stacks.
 	 * 
 	 * push(x) -- Push element x to the back of queue.
@@ -1245,6 +1437,7 @@ public class TestLeetcode {
 	}
 	
 	@Test
+	@Ignore
 	public void test_my_linkedlist() {
 		ListNode root = new ListNode(1);
 		System.out.println(root);
@@ -1338,7 +1531,7 @@ public class TestLeetcode {
 		
 		List<String> expectedOutput = Arrays.asList("1->2->4", "1->2->5", "1->3");
 		
-		assertThat(expectedOutput).containsAll(output);
+		assertThat(expectedOutput).containsExactlyElementsOf(output);
 	}
 		
 	private class TreeNode {
@@ -1377,6 +1570,28 @@ public class TestLeetcode {
         if (node.left == null && node.right == null) answer.add(path + node.val);
         if (node.left != null) searchBT(node.left, path + node.val + "->", answer);
         if (node.right != null) searchBT(node.right, path + node.val + "->", answer);
+    }
+    
+    /**
+     * <pre>
+     * Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
+     * 
+     * For example:
+     * 
+     * Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.</pre>
+     * 
+     * <a href="https://discuss.leetcode.com/topic/21588/1-line-java-solution/8">Java Solution</a>
+     */
+    @Test
+    public void test_leecode_258() {
+    	int num1 = 38;
+    	int output1 = addDigits(num1);
+    	int expectedOutput1 = 2;
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    }
+    
+    private int addDigits(int num) {
+		return num == 0 ? 0 : (num % 9 == 0 ? 9 : (num % 9));
     }
 	
 	/**
@@ -1746,6 +1961,69 @@ public class TestLeetcode {
 		
 		return a;
     }
+	
+	/**
+	 * <pre>
+	 * You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k.
+	 * 
+	 * Define a pair (u,v) which consists of one element from the first array and one element from the second array.
+	 * 
+	 * Find the k pairs (u1,v1),(u2,v2) ...(uk,vk) with the smallest sums.
+	 * 
+	 * Example 1:
+	 * Given nums1 = [1,7,11], nums2 = [2,4,6],  k = 3
+	 * 
+	 * Return: [1,2],[1,4],[1,6]
+	 * 
+	 * The first 3 pairs are returned from the sequence:
+	 * [1,2],[1,4],[1,6],[7,2],[7,4],[11,2],[7,6],[11,4],[11,6]
+	 * 
+	 * Example 2:
+	 * Given nums1 = [1,1,2], nums2 = [1,2,3],  k = 2
+	 * 
+	 * Return: [1,1],[1,1]
+	 * 
+	 * The first 2 pairs are returned from the sequence:
+	 * [1,1],[1,1],[1,2],[2,1],[1,2],[2,2],[1,3],[1,3],[2,3]
+	 * 
+	 * Example 3:
+	 * Given nums1 = [1,2], nums2 = [3],  k = 3 
+	 * 
+	 * Return: [1,3],[2,3]
+	 * 
+	 * All possible pairs are returned from the sequence:
+	 * [1,3],[2,3]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_373() {
+		int[] firstNums1 = new int[] {1,7,11};
+		int[] firstNums2 = new int[] {2,4,6};
+		int firstK = 3;
+		List<int[]> firstExpectedOuptut = Arrays.asList(new int[] {1,2}, new int[] {1,4}, new int[] {1,6});
+		List<int[]> firstOutput = kSmallestPairs(firstNums1, firstNums2, firstK);
+		assertThat(firstExpectedOuptut).containsExactlyElementsOf(firstOutput);
+	}
+	
+	private List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
+		PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[0] + a[1] - b[0] - b[1]);
+		List<int[]> res = new ArrayList<>();
+
+		if (nums1.length == 0 || nums2.length == 0 || k == 0)
+			return res;
+
+		for (int i = 0; i < nums1.length && i < k; i++)
+			queue.offer(new int[] { nums1[i], nums2[0], 0 });
+
+		while (k-- > 0 && !queue.isEmpty()) {
+			int[] cur = queue.poll();
+			res.add(new int[] { cur[0], cur[1] });
+			if (cur[2] == nums2.length - 1)
+				continue;
+			queue.offer(new int[] { cur[0], nums2[cur[2] + 1], cur[2] + 1 });
+		}
+		return res;
+	}
 	
 	/**
 	 * <pre>
@@ -2165,7 +2443,7 @@ public class TestLeetcode {
 		expectedOutput1.add(2);
 		expectedOutput1.add(3);
 		List<Integer> output = findDuplicatesElegant(nums1);
-		assertThat(output).containsAll(expectedOutput1);
+		assertThat(expectedOutput1).containsExactlyElementsOf(output);
 	}
 	
 	@SuppressWarnings("unused")
