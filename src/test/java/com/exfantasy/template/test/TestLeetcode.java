@@ -17,8 +17,6 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Stream;
 
-import javax.validation.constraints.AssertTrue;
-
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -559,6 +557,78 @@ public class TestLeetcode {
 		}
 		return res;
     }
+    
+    /**
+     * <pre>
+     * Given a 2D board and a word, find if the word exists in the grid.
+     * 
+     * The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+     * 
+     * For example,
+     * Given board =
+     * 
+     * [
+     * 		['A','B','C','E'],
+     *		['S','F','C','S'],
+     * 		['A','D','E','E']
+     * ]
+     * word = "ABCCED", -> returns true,
+     * word = "SEE", -> returns true,
+     * word = "ABCB", -> returns false.
+     * </pre>
+     */
+    @Test
+    public void test_leetcode_79() {
+    	char[][] board = new char[][] {
+    		{'A','B','C','E'},
+    		{'S','F','C','S'},
+    		{'A','D','E','E'}
+    	};
+
+    	String word1 = "ABCCED";
+    	boolean output1 = exist(board, word1);
+    	boolean expectedOutput1 = true;
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    	
+    	String word2 = "SEE";
+    	boolean output2 = exist(board, word2);
+    	boolean expectedOutput2 = true;
+    	assertThat(output2).isEqualTo(expectedOutput2);
+    	
+    	String word3 = "ABCB";
+    	boolean output3 = exist(board, word3);
+    	boolean expectedOutput3 = false;
+    	assertThat(output3).isEqualTo(expectedOutput3);
+	}
+    
+	private boolean exist(char[][] board, String word) {
+		for (int i = 0; i < board.length; i++)
+			for (int j = 0; j < board[0].length; j++) {
+				if (exist(board, i, j, word, 0))
+					return true;
+			}
+		return false;
+	}
+
+	private boolean exist(char[][] board, int i, int j, String word, int ind) {
+		if (ind == word.length())
+			return true;
+
+		if (i > board.length - 1 || i < 0 || j < 0 || j > board[0].length - 1 || board[i][j] != word.charAt(ind))
+			return false;
+
+		board[i][j] = '*';
+
+		boolean result = 
+				exist(board, i - 1, j, word, ind + 1) || 
+				exist(board, i, j - 1, word, ind + 1) || 
+				exist(board, i, j + 1, word, ind + 1) || 
+				exist(board, i + 1, j, word, ind + 1);
+
+		board[i][j] = word.charAt(ind);
+
+		return result;
+	}
 	
 	/**
 	 * <pre>
@@ -2522,6 +2592,66 @@ public class TestLeetcode {
 		}
 		return res;
     }
+	
+	/**
+	 * <pre>
+	 * You have a total of n coins that you want to form in a staircase shape, where every k-th row must have exactly k coins.
+	 * 
+	 * Given n, find the total number of full staircase rows that can be formed.
+	 * 
+	 * n is a non-negative integer and fits within the range of a 32-bit signed integer.
+	 * 
+	 * Example 1:
+	 * 
+	 * n = 5
+	 * 
+	 * The coins can form the following rows:
+	 * ¤
+	 * ¤ ¤
+	 * ¤ ¤
+	 * 
+	 * Because the 3rd row is incomplete, we return 2.
+	 * 
+	 * Example 2:
+	 * 
+	 * n = 8
+	 * 
+	 * The coins can form the following rows:
+	 * ¤
+	 * ¤ ¤
+	 * ¤ ¤ ¤
+	 * ¤ ¤
+	 * 
+	 * Because the 4th row is incomplete, we return 3.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_441() {
+		int n1 = 5;
+		int output1 = arrangeCoins(n1);
+		int expectedOutput1 = 2;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int n2 = 8;
+		int output2 = arrangeCoins(n2);
+		int expectedOutput2 = 3;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int arrangeCoins(int n) {
+		int start = 0;
+		int end = n;
+		int mid = 0;
+		while (start <= end) {
+			mid = (start + end) >>> 1;
+			if ((0.5 * mid * mid + 0.5 * mid) <= n) {
+				start = mid + 1;
+			} else {
+				end = mid - 1;
+			}
+		}
+		return start - 1;
+	}
 	
 	/**
 	 * <pre>
