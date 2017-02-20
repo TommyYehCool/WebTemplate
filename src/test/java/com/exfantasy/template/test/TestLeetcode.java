@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Stream;
 
+import javax.validation.constraints.AssertTrue;
+
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -666,6 +668,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Reference 107]
+	 * 
 	 * Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
 	 * 
 	 * For example:
@@ -685,14 +689,16 @@ public class TestLeetcode {
 	 */
 	@Test
 	public void test_leetcode_102() {
+		System.out.println(">>>> test leetcode 102 starting...");
 		int[] nums = new int[] {3,7,9,15,20};
 		TreeNode root = sortedArrayToBST(nums);
 		List<String> treePaths = binaryTreePaths(root);
-		List<List<Integer>> expectedOutput = new ArrayList<>();
-		expectedOutput.add(Arrays.asList(9));
-		expectedOutput.add(Arrays.asList(3,15));
-		expectedOutput.add(Arrays.asList(7,20));
+		System.out.println("All tree paths: " + treePaths);
 		List<List<Integer>> output = levelOrder(root);
+		for (List<Integer> out : output) {
+			System.out.println(out);
+		}
+		System.out.println(">>>> test leetcode 102 done");
 	}
 	
 	private List<List<Integer>> levelOrder(TreeNode root) {
@@ -744,6 +750,61 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Reference 102]
+	 * 
+	 * Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
+	 * 
+	 * For example:
+	 * Given binary tree [3,9,20,null,null,15,7],
+     * 		3
+   	 * 	   / \
+  	 *    9  20
+     *       / \
+   	 *      15  7
+	 * return its bottom-up level order traversal as:
+	 * [
+  	 * 	[15,7],
+  	 * 	[9,20],
+  	 * 	[3]
+	 * ]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_107() {
+		System.out.println(">>>> test leetcode 107 starting...");
+		int[] nums = new int[] {3,7,9,15,20};
+		TreeNode root = sortedArrayToBST(nums);
+		List<String> treePaths = binaryTreePaths(root);
+		System.out.println("All tree paths: " + treePaths);
+		List<List<Integer>> output = levelOrderBottom(root);
+		for (List<Integer> out : output) {
+			System.out.println(out);
+		}
+		System.out.println("<<<< test leetcode 107 done");
+	}
+
+	private List<List<Integer>> levelOrderBottom(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        List<List<Integer>> wrapList = new LinkedList<List<Integer>>();
+        
+        if(root == null) return wrapList;
+        
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            int levelNum = queue.size();
+            List<Integer> subList = new LinkedList<Integer>();
+            for(int i=0; i<levelNum; i++) {
+                if(queue.peek().left != null) queue.offer(queue.peek().left);
+                if(queue.peek().right != null) queue.offer(queue.peek().right);
+                subList.add(queue.poll().val);
+            }
+            wrapList.add(0, subList);
+        }
+        return wrapList;
+    }
+	
+	/**
+	 * <pre>
 	 * Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
 	 * 
 	 * reference: 257
@@ -775,6 +836,48 @@ public class TestLeetcode {
 		node.left = createTreeNode(num, low, mid - 1);
 		node.right = createTreeNode(num, mid + 1, high);
 		return node;
+	}
+	
+	/**
+	 * <pre>
+	 * Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+	 * 
+	 * For example:
+	 * Given the below binary tree and sum = 22,
+	 *               5
+	 *              / \
+	 *             4   8
+	 *            /   / \
+	 *           11  13  4
+	 *          /  \      \
+	 *         7    2      1
+	 * return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_112() {
+		System.out.println(">>>> test leecode 112 starting...");
+		int nums[] = new int[] {1,2,3,4,5,7,8,11,13};
+		TreeNode root = sortedArrayToBST(nums);
+		List<String> treePaths = binaryTreePaths(root);
+		System.out.println(treePaths);
+	    boolean output1 = hasPathSum(root, 37);
+	    assertThat(output1).isTrue();
+	    boolean output2 = hasPathSum(root, 14);
+	    assertThat(output2).isTrue();
+	    boolean output3 = hasPathSum(root, 13);
+	    assertThat(output3).isFalse();
+		System.out.println("<<<< test leecode 112 done");
+	}
+	
+	private boolean hasPathSum(TreeNode root, int sum) {
+		if (root == null)
+			return false;
+
+		if (root.left == null && root.right == null && sum - root.val == 0)
+			return true;
+
+		return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
 	}
 	
 	/**
