@@ -148,6 +148,101 @@ public class TestLeetcode {
         }
         return dp[s.length()][p.length()];
     }
+	
+	/**
+	 * <pre>
+	 * Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
+	 * 
+     * For example, given array S = {-1 2 1 -4}, and target = 1.
+	 * 
+     * The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_16() {
+		int[] nums1 = new int[] {-1, 2, 1, -4};
+		int target1 = 1;
+		int output1 = threeSumClosest(nums1, target1);
+		int expectedOutput1 = 2;
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int threeSumClosest(int[] nums, int target) {
+		Arrays.sort(nums);
+
+		int len = nums.length;
+		int res = 0;
+
+		if (len <= 3) {
+			for (int num : nums)
+				res += num;
+			return res;
+		}
+
+		res = nums[0] + nums[1] + nums[2];
+
+		for (int i = 0; i <= len - 3; i++) {
+			int j = i + 1;
+			int k = len - 1;
+			while (j < k) {
+				int sum = nums[i] + nums[j] + nums[k];
+				if (Math.abs(target - res) >= Math.abs(target - sum)) {
+					res = sum;
+					if (res == target)
+						return res;
+				}
+				if (sum > target)
+					k--;
+				else if (sum < target)
+					j++;
+			}
+		}
+		return res;
+	}
+	
+	/**
+	 * <pre>
+	 * Given a digit string, return all possible letter combinations that the number could represent.
+	 * 
+	 * A mapping of digit to letters (just like on the telephone buttons) is given below.
+	 * 
+	 * <a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/?tab=Description">letter-combinations-of-a-phone-number</a>
+	 * 
+	 * Input:Digit string "23"
+	 * Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_17() {
+		String digits1 = "23";
+		List<String> output1 = letterCombinations(digits1);
+		List<String> expectedOutput1 = Arrays.asList("ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf");
+		assertThat(output1).containsExactlyElementsOf(expectedOutput1);
+		
+		String digits2 = "58";
+		List<String> output2 = letterCombinations(digits2);
+		List<String> expectedOutput2 = Arrays.asList("jt", "ju", "jv", "kt", "ku", "kv", "lt", "lu", "lv");
+		assertThat(output2).containsExactlyElementsOf(expectedOutput2);
+	}
+	
+	private List<String> letterCombinations(String digits) {
+		LinkedList<String> ans = new LinkedList<String>();
+		if (digits.length() == 0) {
+			return ans;
+		}
+		String[] mapping = new String[] { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+		ans.add("");
+		for (int i = 0; i < digits.length(); i++) {
+			int x = Character.getNumericValue(digits.charAt(i));
+			while (ans.peek().length() == i) {
+				String t = ans.remove();
+				for (char s : mapping[x].toCharArray())
+					ans.add(t + s);
+			}
+		}
+		return ans;
+	}
+	
 	/**
 	 * <pre>
 	 * Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
