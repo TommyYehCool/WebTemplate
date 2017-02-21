@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1254,6 +1255,55 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given a list of non negative integers, arrange them such that they form the largest number.
+	 * 
+	 * For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+	 * 
+	 * Note: The result may be very large, so you need to return a string instead of an integer.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_179() {
+		int[] num1 = new int[] {3, 30, 34, 5, 9};
+		String output1 = largestNumber(num1);
+		String expectedOutput1 = "9534330";
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+    private String largestNumber(int[] nums) {
+		if (nums == null || nums.length == 0)
+			return "";
+
+		// Convert int array to String array, so we can sort later on
+		String[] s_num = new String[nums.length];
+		for (int i = 0; i < nums.length; i++)
+			s_num[i] = String.valueOf(nums[i]);
+
+		// Comparator to decide which string should come first in concatenation
+		Comparator<String> comp = new Comparator<String>() {
+			@Override
+			public int compare(String str1, String str2) {
+				String s1 = str1 + str2;
+				String s2 = str2 + str1;
+				return s2.compareTo(s1); // reverse order here, so we can do append() later
+			}
+		};
+
+		Arrays.sort(s_num, comp);
+
+		// An extreme edge case by lc, say you have only a bunch of 0 in your int array
+		if (s_num[0].charAt(0) == '0')
+			return "0";
+
+		StringBuilder sb = new StringBuilder();
+		for (String s : s_num)
+			sb.append(s);
+
+		return sb.toString();
+    }
+	
+	/**
+	 * <pre>
 	 * Write a SQL query to find all numbers that appear at least three times consecutively.
 	 * 
 	 * +----+-----+
@@ -2326,6 +2376,56 @@ public class TestLeetcode {
 //	        else if(guess(mid)==-1) return bsearch(start+1,mid-1);
 //	        else return bsearch(mid+1,end-1);
 //	    }
+	}
+	
+	/**
+	 * <pre>
+	 * Given a n x n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix.
+	 * 
+	 * Note that it is the kth smallest element in the sorted order, not the kth distinct element.
+	 * 
+	 * Example:
+	 * 
+	 * matrix = [
+   	 * 	  [ 1,  5,  9],
+   	 * 	  [10, 11, 13],
+   	 *    [12, 13, 15]
+	 * ],
+	 * k = 8,
+	 * 
+	 * return 13.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_378() {
+		int[][] matrix1 = new int[][] {
+			new int[] {1, 5, 9},
+			new int[] {10, 11, 13},
+			new int[] {12, 13, 15}
+		};
+		int k1 = 8;
+		int output1 = kthSmallest(matrix1, k1);
+		int expectedOutput1 = 13;
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int kthSmallest(int[][] matrix, int k) {
+		int lo = matrix[0][0];
+		int hi = matrix[matrix.length - 1][matrix[0].length - 1] + 1;
+		while (lo < hi) {
+			int mid = lo + (hi - lo) / 2;
+			int count = 0, j = matrix[0].length - 1;
+			for (int i = 0; i < matrix.length; i++) {
+				while (j >= 0 && matrix[i][j] > mid)
+					j--;
+				count += (j + 1);
+			}
+			if (count < k)
+				lo = mid + 1;
+			else
+				hi = mid;
+		}
+		return lo;
 	}
 	
 	/**
