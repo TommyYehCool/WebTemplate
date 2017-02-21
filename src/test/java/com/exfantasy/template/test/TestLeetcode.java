@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -535,6 +536,104 @@ public class TestLeetcode {
 			}
 		}
 		return dp[pL][sL];
+	}
+	
+	/**
+	 * <pre>
+	 * Given a collection of intervals, merge all overlapping intervals.
+	 * 
+	 * For example,
+	 * Given [1,3],[2,6],[8,10],[15,18],
+	 * return [1,6],[8,10],[15,18].
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_56() {
+		List<Interval> intervals1 = Arrays.asList(
+			new Interval(2, 6),
+			new Interval(1, 3),
+			new Interval(8, 10),
+			new Interval(15, 18)
+		);
+		
+		List<Interval> output1 = merge(intervals1);
+		
+		List<Interval> expectedOutput1 = Arrays.asList(
+			new Interval(1, 6),
+			new Interval(8, 10),
+			new Interval(15, 18)
+		);
+		
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private List<Interval> merge(List<Interval> intervals) {
+		intervals.sort((i1, i2) -> (Integer.compare(i1.start, i2.start)));
+        List<Interval> result = new ArrayList<>();
+        for (Interval interval : intervals) {
+            if (!result.isEmpty() && result.get(result.size() - 1).end >= interval.start) {
+                Interval prev = result.get(result.size() - 1);
+                prev.start = Math.min(prev.start, interval.start);
+                prev.end = Math.max(prev.end, interval.end);
+            } else {
+                result.add(interval);
+            }
+        }
+        return result;
+	}
+	
+	public class Interval {
+		int start;
+		int end;
+
+		Interval() {
+			start = 0;
+			end = 0;
+		}
+
+		Interval(int s, int e) {
+			start = s;
+			end = e;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + end;
+			result = prime * result + start;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Interval other = (Interval) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (end != other.end)
+				return false;
+			if (start != other.start)
+				return false;
+			return true;
+		}
+
+		private TestLeetcode getOuterType() {
+			return TestLeetcode.this;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("Interval [start=").append(start).append(", end=").append(end).append("]");
+			return builder.toString();
+		}
 	}
 	
 	/**
