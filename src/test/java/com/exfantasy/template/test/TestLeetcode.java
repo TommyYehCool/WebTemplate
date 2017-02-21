@@ -184,11 +184,11 @@ public class TestLeetcode {
 	
 	private int removeDuplicates(int[] nums) {
 		int i = nums.length > 0 ? 1 : 0;
-	    for (int n : nums)
-	        if (n > nums[i-1])
-	            nums[i++] = n;
-	    return i;
-    }
+		for (int n : nums)
+			if (n > nums[i - 1])
+				nums[i++] = n;
+		return i;
+	}
 	
 	/**
 	 * <pre>
@@ -632,6 +632,38 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Follow up for "Remove Duplicates":
+	 * What if duplicates are allowed at most twice?
+	 * 
+	 * For example,
+	 * Given sorted array nums = [1,1,1,2,2,3],
+	 * 
+	 * Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn't matter what you leave beyond the new length.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_80() {
+		int[] nums1 = new int[] {1,1,1,2,2,3};
+		int output1 = removeDuplicatesAtMostTwice(nums1);
+		int expectedOutput1 = 5;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[] nums2 = new int[] {1,1,1,2};
+		int output2 = removeDuplicatesAtMostTwice(nums2);
+		int expectedOutput2 = 3;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int removeDuplicatesAtMostTwice(int[] nums) {
+		int i = 0;
+		for (int n : nums)
+			if (i < 2 || n > nums[i - 2])
+				nums[i++] = n;
+		return i;
+	}
+	
+	/**
+	 * <pre>
 	 * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, 
 	 * find the area of largest rectangle in the histogram.
 	 * 
@@ -768,7 +800,7 @@ public class TestLeetcode {
 		for (List<Integer> out : output) {
 			System.out.println(out);
 		}
-		System.out.println(">>>> test leetcode 102 done");
+		System.out.println("<<<< test leetcode 102 done");
 	}
 	
 	private List<List<Integer>> levelOrder(TreeNode root) {
@@ -2614,6 +2646,94 @@ public class TestLeetcode {
             }
         }
         return max3 == null ? max1 : max3;
+	}
+	
+	/**
+	 * <pre>
+	 * A password is considered strong if below conditions are all met:
+	 * 
+	 * It has at least 6 characters and at most 20 characters.
+	 * It must contain at least one lowercase letter, at least one uppercase letter, and at least one digit.
+	 * It must NOT contain three repeating characters in a row ("...aaa..." is weak, but "...aa...a..." is strong, assuming other conditions are met).
+	 * 
+	 * Write a function strongPasswordChecker(s), that takes a string s as input, and return the MINIMUM change required to make s a strong password. If s is already strong, return 0.
+	 * 
+	 * Insertion, deletion or replace of any one character are all considered as one change.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_420() {
+		String s1 = "7Kaf41n5";
+		int output1 = strongPasswordChecker(s1);
+		int expectedOutput1 = 0;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String s2 = "7kfn5";
+		int output2 = strongPasswordChecker(s2);
+		int expectedOutput2 = 1;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int strongPasswordChecker(String s) {
+		if (s.length() < 2)
+			return 6 - s.length();
+
+		/**
+		 * Initialize the states, including current ending character(end),
+		 * existence of lowercase letter(lower), uppercase letter(upper),
+		 * digit(digit) and number of replicates for ending character(end_rep)
+		 */
+		char end = s.charAt(0);
+		boolean upper = end >= 'A' && end <= 'Z', lower = end >= 'a' && end <= 'z', digit = end >= '0' && end <= '9';
+
+		/**
+		 * Also initialize the number of modification for repeated characters,
+		 * total number needed for eliminate all consequnce 3 same character by
+		 * replacement(change), and potential maximun operation of deleting
+		 * characters(delete). Note delete[0] means maximum number of reduce 1
+		 * replacement operation by 1 deletion operation, delete[1] means
+		 * maximun number of reduce 1 replacement by 2 deletion operation,
+		 * delete[2] is no use here.
+		 */
+		int end_rep = 1, change = 0;
+		int[] delete = new int[3];
+
+		for (int i = 1; i < s.length(); ++i) {
+			if (s.charAt(i) == end)
+				++end_rep;
+			else {
+				change += end_rep / 3;
+				if (end_rep / 3 > 0)
+					++delete[end_rep % 3];
+				// updating the states
+				end = s.charAt(i);
+				upper = upper || end >= 'A' && end <= 'Z';
+				lower = lower || end >= 'a' && end <= 'z';
+				digit = digit || end >= '0' && end <= '9';
+				end_rep = 1;
+			}
+		}
+		change += end_rep / 3;
+		if (end_rep / 3 > 0)
+			++delete[end_rep % 3];
+
+		// The number of replcement needed for missing of specific character(lower/upper/digit)
+		int check_req = (upper ? 0 : 1) + (lower ? 0 : 1) + (digit ? 0 : 1);
+
+		if (s.length() > 20) {
+			int del = s.length() - 20;
+
+			// Reduce the number of replacement operation by deletion
+			if (del <= delete[0])
+				change -= del;
+			else if (del - delete[0] <= 2 * delete[1])
+				change -= delete[0] + (del - delete[0]) / 2;
+			else
+				change -= delete[0] + delete[1] + (del - delete[0] - 2 * delete[1]) / 3;
+
+			return del + Math.max(check_req, change);
+		} else
+			return Math.max(6 - s.length(), Math.max(check_req, change));
 	}
 	
 	/**
