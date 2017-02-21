@@ -151,6 +151,56 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+	 * 
+	 * Note: The solution set must not contain duplicate triplets.
+	 * 
+	 * For example, given array S = [-1, 0, 1, 2, -1, -4],
+	 * 
+	 * A solution set is:
+	 * [
+  	 * 		[-1, 0, 1],
+  	 * 		[-1, -1, 2]
+	 * ]
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_15() {
+		int[] nums1 = new int[] {-1, 0, 1, 2, -1, -4};
+		List<List<Integer>> output1 = threeSum(nums1);
+		List<List<Integer>> expectedOutput1 = new ArrayList<>();
+		expectedOutput1.add(Arrays.asList(-1, 0, 1));
+		expectedOutput1.add(Arrays.asList(-1, -1, 2));
+		assertThat(output1).containsAll(expectedOutput1);
+	}
+	
+	private List<List<Integer>> threeSum(int[] nums) {
+		Arrays.sort(nums);
+		List<List<Integer>> res = new LinkedList<>();
+		for (int i = 0; i < nums.length - 2; i++) {
+			if (i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
+				int lo = i + 1, hi = nums.length - 1, sum = 0 - nums[i];
+				while (lo < hi) {
+					if (nums[lo] + nums[hi] == sum) {
+						res.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
+						while (lo < hi && nums[lo] == nums[lo + 1])
+							lo++;
+						while (lo < hi && nums[hi] == nums[hi - 1])
+							hi--;
+						lo++;
+						hi--;
+					} else if (nums[lo] + nums[hi] < sum)
+						lo++;
+					else
+						hi--;
+				}
+			}
+		}
+		return res;
+	}
+	
+	/**
+	 * <pre>
 	 * Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
 	 * 
      * For example, given array S = {-1 2 1 -4}, and target = 1.
@@ -1599,7 +1649,7 @@ public class TestLeetcode {
 
 		return sell[k];
 	}
-		
+	
 	/**
 	 * <pre>
 	 * Write a SQL query to delete all duplicate email entries in a table named Person, keeping only unique emails based on its smallest Id.
@@ -1718,6 +1768,46 @@ public class TestLeetcode {
 			distinctNums.add(num);
 		}
 		return false;
+	}
+	
+	/**
+	 * <pre>
+	 * Given a sorted integer array without duplicates, return the summary of its ranges.
+	 * 
+	 * For example, given [0,1,2,4,5,7], return ["0->2","4->5","7"].
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_228() {
+		int[] nums1 = new int[] {0,1,2,4,5,7};
+		List<String> output1 = summaryRanges(nums1);
+		List<String> expectedOutput1 = Arrays.asList("0->2", "4->5", "7");
+		assertThat(output1).containsExactlyElementsOf(expectedOutput1);
+		
+		int[] nums2 = new int[] {0,2,4,5,6,8,9,10};
+		List<String> output2 = summaryRanges(nums2);
+		List<String> expectedOutput2 = Arrays.asList("0", "2", "4->6", "8->10");
+		assertThat(output2).containsExactlyElementsOf(expectedOutput2);
+	}
+	
+	private List<String> summaryRanges(int[] nums) {
+		List<String> list = new ArrayList<>();
+		if (nums.length == 1) {
+			list.add(nums[0] + "");
+			return list;
+		}
+		for (int i = 0; i < nums.length; i++) {
+			int a = nums[i];
+			while (i + 1 < nums.length && (nums[i + 1] - nums[i]) == 1) {
+				i++;
+			}
+			if (a != nums[i]) {
+				list.add(a + "->" + nums[i]);
+			} else {
+				list.add(a + "");
+			}
+		}
+		return list;
 	}
 	
 	/**
