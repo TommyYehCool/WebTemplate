@@ -322,6 +322,60 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.
+     * 
+     * Your algorithm's runtime complexity must be in the order of O(log n).
+     * 
+     * If the target is not found in the array, return [-1, -1].
+     * 
+     * For example,
+     * Given [5, 7, 7, 8, 8, 10] and target value 8,
+     * return [3, 4].
+     * </pre>
+     */
+    @Test
+    public void test_leetcode_34() {
+    	int[] nums1 = new int[] {1};
+    	int target1 = 1;
+    	int[] output1 = searchRange(nums1, target1);
+    	int[] expectedOutput1 = new int[] {0,0};
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    	
+    	int[] nums2 = new int[] {5, 7, 7, 8, 8, 10};
+    	int target2 = 8;
+    	int[] output2 = searchRange(nums2, target2);
+    	int[] expectedOutput2 = new int[] {3,4};
+    	assertThat(output2).isEqualTo(expectedOutput2);
+    }
+    
+	public int[] searchRange(int[] nums, int target) {
+		int start = firstGreaterEqual(nums, target);
+		if (start == nums.length || nums[start] != target) {
+			return new int[] { -1, -1 };
+		}
+		return new int[] { start, firstGreaterEqual(nums, target + 1) - 1 };
+	}
+
+	// find the first number that is greater than or equal to target.
+	// could return A.length if target is greater than A[A.length-1].
+	// actually this is the same as lower_bound in C++ STL.
+	private int firstGreaterEqual(int[] A, int target) {
+		int low = 0, high = A.length;
+		while (low < high) {
+			int mid = low + ((high - low) >> 1);
+			if (A[mid] < target) {
+				low = mid + 1;
+			} else {
+				//should not be mid-1 when A[mid]==target.
+				//could be mid even if A[mid]>target because mid<high.
+				high = mid;
+			}
+		}
+		return low;
+	}
+    
+    /**
+     * <pre>
      * Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
      * 
      * You may assume no duplicates in the array.
