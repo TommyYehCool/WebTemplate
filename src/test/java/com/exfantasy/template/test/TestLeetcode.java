@@ -1943,6 +1943,67 @@ public class TestLeetcode {
     private int addDigits(int num) {
 		return num == 0 ? 0 : (num % 9 == 0 ? 9 : (num % 9));
     }
+    
+    /**
+     * <pre>
+     * Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
+     * 
+     * For example,
+     * 123 -> "One Hundred Twenty Three"
+     * 12345 -> "Twelve Thousand Three Hundred Forty Five"
+     * 1234567 -> "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+     * </pre>
+     */
+    @Test
+    public void test_leetcode_372() {
+    	int num1 = 123;
+    	String output1 = numberToWords(num1);
+    	String expectedOutput1 = "One Hundred Twenty Three";
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    	
+    	int num2 = 12345;
+    	String output2 = numberToWords(num2);
+    	String expectedOutput2 = "Twelve Thousand Three Hundred Forty Five";
+    	assertThat(output2).isEqualTo(expectedOutput2);
+    	
+    	int num3 = 1234567;
+    	String output3 = numberToWords(num3);
+    	String expectedOutput3 = "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven";
+    	assertThat(output3).isEqualTo(expectedOutput3);
+    }
+    
+	private String numberToWords(int num) {
+		if (num == 0)
+			return "Zero";
+
+		String[] lessThan20Words 
+			= { "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen" };
+		String[] tyWords 
+			= { "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety" };
+		String[] dexWords 
+			= { "Billion", "Million", "Thousand", "Hundred" };
+		int[] radix = { 1000000000, 1000000, 1000, 100 };
+
+		StringBuffer sb = new StringBuffer();
+
+		int count = 0;
+		for (int i = 0; i < radix.length; ++i) {
+			count = num / radix[i];
+			if (count == 0)
+				continue;
+			sb.append(numberToWords(count) + " ");
+			sb.append(dexWords[i] + " ");
+			num %= radix[i];
+		}
+
+		if (num < 20) {
+			sb.append(lessThan20Words[num]);
+		} else {
+			sb.append(tyWords[num / 10 - 2] + " ");
+			sb.append(lessThan20Words[num % 10]);
+		}
+		return sb.toString().trim();
+	}
 	
 	/**
 	 * <pre>
