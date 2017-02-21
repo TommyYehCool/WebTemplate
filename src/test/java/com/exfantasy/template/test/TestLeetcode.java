@@ -2090,6 +2090,55 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+     * 
+     * For example,
+     * Given nums = [0, 1, 3] return 2.
+     * </pre>
+     */
+    @Test
+    public void test_leetcode_268() {
+    	int[] nums1 = new int[] {1, 0};
+    	int output1 = myMissingNumber(nums1);
+    	int expectedOutput1 = 2;
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    	
+    	int[] nums2 = new int[] {1, 0};
+    	int output2 = betterMissingNumber(nums2);
+    	int expectedOutput2 = 2;
+    	assertThat(output2).isEqualTo(expectedOutput2);
+    }
+    
+    private int myMissingNumber(int[] nums) {
+    	Arrays.sort(nums);
+    	
+        if (nums[0] != 0) {
+            return 0;
+        }
+        
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i - 1] != nums[i] - 1) {
+                return nums[i] - 1;
+            }
+        }
+        return nums[nums.length - 1] + 1;
+    }
+    
+    /**
+     * Pretty simple since we are told that we are missing only one number in [1,n], 
+     * 
+     * we just need to look at the difference between the sum([1,n]) = n * (n+1) / 2 and the sum of nums in our array.
+     */
+	private int betterMissingNumber(int[] nums) {
+		int sum = 0;
+		for (int num : nums)
+			sum += num;
+
+		return (nums.length * (nums.length + 1)) / 2 - sum;
+	}
+    
+    /**
+     * <pre>
      * Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
      * 
      * For example,
