@@ -1955,7 +1955,7 @@ public class TestLeetcode {
      * </pre>
      */
     @Test
-    public void test_leetcode_372() {
+    public void test_leetcode_273() {
     	int num1 = 123;
     	String output1 = numberToWords(num1);
     	String expectedOutput1 = "One Hundred Twenty Three";
