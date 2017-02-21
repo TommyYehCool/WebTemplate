@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -2673,6 +2672,53 @@ public class TestLeetcode {
 		    return nums[j] - nums[i - 1];
 		}
 	}
+	
+	/**
+	 * <pre>
+	 * Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
+	 * 
+	 * You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
+	 * 
+	 * Example:
+	 * Given 1->2->3->4->5->NULL,
+	 * return 1->3->5->2->4->NULL.
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_328() {
+		ListNode head1 = new ListNode(1);
+		head1.addLast(2);
+		head1.addLast(3);
+		head1.addLast(4);
+		head1.addLast(5);
+		ListNode output1 = oddEvenList(head1);
+		assertThat("1 -> 3 -> 5 -> 2 -> 4").isEqualTo(output1.toString());
+		
+		ListNode head2 = new ListNode(9);
+		head2.addLast(10);
+		head2.addLast(11);
+		head2.addLast(12);
+		head2.addLast(13);
+		head2.addLast(14);
+		ListNode output2 = oddEvenList(head2);
+		assertThat("9 -> 11 -> 13 -> 10 -> 12 -> 14").isEqualTo(output2.toString());
+	}
+	
+	private ListNode oddEvenList(ListNode head) {
+        if (head != null) {
+            ListNode odd = head, even = head.next, evenHead = even; 
+    
+            while (even != null && even.next != null) {
+                odd.next = odd.next.next; 
+                even.next = even.next.next; 
+                odd = odd.next;
+                even = even.next;
+            }
+            odd.next = evenHead; 
+        }
+        return head;
+    }
 	
 	/**
 	 * <pre>
