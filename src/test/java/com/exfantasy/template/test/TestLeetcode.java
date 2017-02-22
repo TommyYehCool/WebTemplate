@@ -54,6 +54,63 @@ public class TestLeetcode {
 		return -1;
 	}
 	
+	/**
+	 * <pre>
+	 * 1. Two Sum
+	 * 
+	 * Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+	 * 
+	 * You may assume that each input would have exactly one solution, and you may not use the same element twice.
+	 * 
+	 * Example:
+	 * Given nums = [2, 7, 11, 15], target = 9,
+	 * 
+	 * Because nums[0] + nums[1] = 2 + 7 = 9,
+	 * return [0, 1].
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_1() {
+		int[] nums1 = new int[] {2, 7, 11, 15};
+		int target1 = 9;
+		int[] output1 = twoSum1(nums1, target1);
+		int[] expectedOutput1 = new int[] {0, 1};
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int[] twoSum1(int[] nums, int target) {
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		for (int i = 0; i < nums.length; i++) {
+			if (map.containsKey(nums[i])) {
+				return new int[] { map.get(nums[i]) + 1, i + 1 };
+			} else {
+				map.put(target - nums[i], i);
+			}
+		}
+		return new int[] { 0, 0 };
+	}
+	
+	/**
+	 * <pre>
+	 * 4. Median of Two Sorted Arrays
+	 * 
+	 * There are two sorted arrays nums1 and nums2 of size m and n respectively.
+	 * 
+	 * Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+	 * 
+	 * Example 1:
+	 * nums1 = [1, 3]
+	 * nums2 = [2]
+	 * 
+	 * The median is 2.0
+	 * 
+	 * Example 2:
+	 * nums1 = [1, 2]
+	 * nums2 = [3, 4]
+	 * 
+	 * The median is (2 + 3)/2 = 2.5
+	 * </pre>
+	 */
 	@Test
 	public void test_leetcode_4() {
 		int[] nums1 = new int[] { 4, 5, 6, 8, 9, 11 };
@@ -83,6 +140,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 10. Regular Expression Matching
+	 * 
 	 * Implement regular expression matching with support for '.' and '*'.
 	 * 
 	 * '.' Matches any single character.
@@ -151,6 +210,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 15. 3Sum
+	 * 
 	 * Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
 	 * 
 	 * Note: The solution set must not contain duplicate triplets.
@@ -201,6 +262,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 16. 3Sum Closest
+	 * 
 	 * Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
 	 * 
      * For example, given array S = {-1 2 1 -4}, and target = 1.
@@ -252,6 +315,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 17. Letter Combinations of a Phone Number
+	 * 
 	 * Given a digit string, return all possible letter combinations that the number could represent.
 	 * 
 	 * A mapping of digit to letters (just like on the telephone buttons) is given below.
@@ -295,6 +360,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 26. Remove Duplicates from Sorted Array
+	 * 
 	 * Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
 	 * 
 	 * Do not allocate extra space for another array, you must do this in place with constant memory.
@@ -338,6 +405,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 27. Remove Element
+	 * 
 	 * Given an array and a value, remove all instances of that value in place and return the new length.
 	 * 
 	 * Do not allocate extra space for another array, you must do this in place with constant memory.
@@ -372,6 +441,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 32. Longest Valid Parentheses
+     * 
      * Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
      * 
      * For "(()", the longest valid parentheses substring is "()", which has length = 2.
@@ -461,6 +532,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 34. Search for a Range
+     * 
      * Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.
      * 
      * Your algorithm's runtime complexity must be in the order of O(log n).
@@ -515,6 +588,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 35. Search Insert Position
+     * 
      * Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
      * 
      * You may assume no duplicates in the array.
@@ -566,6 +641,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 44. Wildcard Matching
+	 * 
 	 * Implement wildcard pattern matching with support for '?' and '*'.
 	 * 
 	 * '?' Matches any single character.
@@ -628,6 +705,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 56. Merge Intervals
+	 * 
 	 * Given a collection of intervals, merge all overlapping intervals.
 	 * 
 	 * For example,
@@ -673,11 +752,6 @@ public class TestLeetcode {
 	private class Interval {
 		int start;
 		int end;
-
-		Interval() {
-			start = 0;
-			end = 0;
-		}
 
 		Interval(int s, int e) {
 			start = s;
@@ -726,6 +800,35 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 58. Length of Last Word
+	 * 
+	 * Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+	 * 
+	 * If the last word does not exist, return 0.
+	 * 
+	 * Note: A word is defined as a character sequence consists of non-space characters only.
+	 * 
+	 * For example, 
+	 * Given s = "Hello World",
+	 * return 5.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_58() {
+		String s1 = "Hello World";
+		int output1 = lengthOfLastWord(s1);
+		int expectedOutput1 = 5;
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int lengthOfLastWord(String s) {
+		return s.trim().length() - s.trim().lastIndexOf(" ") - 1;
+	}
+	
+	/**
+	 * <pre>
+	 * 61. Rotate List
+	 * 
 	 * Given a list, rotate the list to the right by k places, where k is non-negative.
 	 * 
 	 * For example:
@@ -735,31 +838,43 @@ public class TestLeetcode {
 	 */
 	@Test
 	public void test_leetcode_61() {
-		// The answer is
-//		public ListNode rotateRight(ListNode head, int k) {
-//			if (head == null || head.next == null)
-//				return head;
-//			ListNode dummy = new ListNode(0);
-//			dummy.next = head;
-//			ListNode fast = dummy, slow = dummy;
-//
-//			int i;
-//			for (i = 0; fast.next != null; i++)// Get the total length
-//				fast = fast.next;
-//
-//			for (int j = i - k % i; j > 0; j--) // Get the i-n%i th node
-//				slow = slow.next;
-//
-//			fast.next = dummy.next; // Do the rotation
-//			dummy.next = slow.next;
-//			slow.next = null;
-//
-//			return dummy.next;
-//		}
+		ListNode head1 = new ListNode(1);
+		head1.addLast(2);
+		head1.addLast(3);
+		head1.addLast(4);
+		head1.addLast(5);
+		int k1 = 2;
+		ListNode output1 = rotateRight(head1, k1);
+		String expectedOutput1 = "4 -> 5 -> 1 -> 2 -> 3";
+		assertThat(output1.toString()).isEqualTo(expectedOutput1);
+	}
+	
+	private ListNode rotateRight(ListNode head, int k) {
+		if (head == null || head.next == null)
+			return head;
+
+		ListNode dummy = new ListNode(0);
+		dummy.next = head;
+		ListNode fast = dummy, slow = dummy;
+
+		int i;
+		for (i = 0; fast.next != null; i++) // Get the total length
+			fast = fast.next;
+
+		for (int j = i - k % i; j > 0; j--) // Get the i-n%i th node
+			slow = slow.next;
+
+		fast.next = dummy.next; // Do the rotation
+		dummy.next = slow.next;
+		slow.next = null;
+
+		return dummy.next;
 	}
 	
 	/**
 	 * <pre>
+	 * 64. Minimum Path Sum
+	 * 
 	 * Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.
 	 * 
 	 * Note: You can only move either down or right at any point in time.
@@ -807,6 +922,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 68. Text Justification
+	 * 
 	 * Given an array of words and a length L, format the text such that each line has exactly L characters and is fully (left and right) justified.
 	 * 
 	 * You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces ' ' when necessary so that each line has exactly L characters.
@@ -883,6 +1000,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 78. Subsets
+	 * 
 	 * Given a set of distinct integers, nums, return all possible subsets.
 	 * 
 	 * Note: The solution set must not contain duplicate subsets.
@@ -947,6 +1066,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 79. Word Search
+     * 
      * Given a 2D board and a word, find if the word exists in the grid.
      * 
      * The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
@@ -1019,6 +1140,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 80. Remove Duplicates from Sorted Array II
+	 * 
 	 * Follow up for "Remove Duplicates":
 	 * What if duplicates are allowed at most twice?
 	 * 
@@ -1051,6 +1174,36 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 83. Remove Duplicates from Sorted List
+	 * 
+	 * Given a sorted linked list, delete all duplicates such that each element appear only once.
+	 * 
+	 * For example,
+	 * Given 1->1->2, return 1->2.
+	 * Given 1->1->2->3->3, return 1->2->3.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_83() {
+		ListNode head1 = new ListNode(1);
+		head1.addLast(1);
+		head1.addLast(2);
+		ListNode output1 = deleteDuplicates(head1);
+		String expectedOutput1 = "1 -> 2";
+		assertThat(output1.toString()).isEqualTo(expectedOutput1);
+	}
+	
+    private ListNode deleteDuplicates(ListNode head) {
+		if (head == null || head.next == null)
+			return head;
+		head.next = deleteDuplicates(head.next);
+		return head.val == head.next.val ? head.next : head;
+    }
+	
+	/**
+	 * <pre>
+	 * 84. Largest Rectangle in Histogram
+	 * 
 	 * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, 
 	 * find the area of largest rectangle in the histogram.
 	 * 
@@ -1086,6 +1239,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 89. Gray Code
+	 * 
 	 * The gray code is a binary numeral system where two successive values differ in only one bit.
 	 * 
 	 * Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
@@ -1121,6 +1276,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 100. Same Tree
+	 * 
 	 * Given two binary trees, write a function to check if they are equal or not.
 	 * 
 	 * Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
@@ -1157,6 +1314,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 102. Binary Tree Level Order Traversal
+	 * 
 	 * [Reference 107]
 	 * 
 	 * Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
@@ -1215,6 +1374,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 104. Maximum Depth of Binary Tree
+	 * 
 	 * Given a binary tree, find its maximum depth.
 	 * 
 	 * The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
@@ -1239,6 +1400,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 107. Binary Tree Level Order Traversal II
+	 * 
 	 * [Reference 102]
 	 * 
 	 * Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
@@ -1294,6 +1457,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 108. Convert Sorted Array to Binary Search Tree
+	 * 
 	 * Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
 	 * 
 	 * reference: 257
@@ -1329,6 +1494,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 112. Path Sum
+	 * 
 	 * Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
 	 * 
 	 * For example:
@@ -1371,6 +1538,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 120. Triangle
+	 * 
 	 * Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
 	 * 
 	 * For example, given the following triangle
@@ -1407,6 +1576,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 121. Best Time to Buy and Sell Stock
+     * 
      * [IMPORTANT]
      * 
      * Say you have an array for which the ith element is the price of a given stock on day i.
@@ -1450,6 +1621,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 122. Best Time to Buy and Sell Stock II
+	 * 
 	 * [IMPORTANT]
 	 * 
 	 * Say you have an array for which the ith element is the price of a given stock on day i.
@@ -1538,6 +1711,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 142. Linked List Cycle II
+	 * 
 	 * [IMPORTANT]
 	 * 
 	 * Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
@@ -1573,6 +1748,55 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 160. Intersection of Two Linked Lists
+	 * 
+	 * Write a program to find the node at which the intersection of two singly linked lists begins.
+	 * 
+	 * 
+	 * For example, the following two linked lists:
+	 * 
+	 * A:      a1 → a2
+     *			                   ↘
+     * 				    c1 → c2 → c3
+     * 				       ↗            
+	 * B: b1 → b2 → b3
+	 * begin to intersect at node c1.
+	 * 
+	 * 
+	 * Notes:
+	 * 
+	 * If the two linked lists have no intersection at all, return null.
+	 * The linked lists must retain their original structure after the function returns.
+	 * You may assume there are no cycles anywhere in the entire linked structure.
+	 * Your code should preferably run in O(n) time and use only O(1) memory.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_160() {
+		// TODO testing case
+	}
+	
+	private ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        //boundary check
+        if(headA == null || headB == null) return null;
+        
+        ListNode a = headA;
+        ListNode b = headB;
+        
+        //if a & b have different len, then we will stop the loop after second iteration
+        while( a != b){
+        	//for the end of first iteration, we just reset the pointer to the head of another linkedlist
+            a = a == null? headB : a.next;
+            b = b == null? headA : b.next;    
+        }
+        
+        return a;
+    }
+	
+	/**
+	 * <pre>
+	 * 167. Two Sum II - Input array is sorted
+	 * 
 	 * Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
 	 * 
 	 * The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
@@ -1587,18 +1811,18 @@ public class TestLeetcode {
 	public void test_leetcode_167() {
 		int[] numbers1 = new int[] {2, 7, 11, 15};
 		int target1 = 9;
-		int[] output1 = twoSum(numbers1, target1);
+		int[] output1 = twoSum167(numbers1, target1);
 		int[] expectedOutput1 = new int[] {1, 2};
 		assertThat(output1).isEqualTo(expectedOutput1);
 		
 		int[] numbers2 = new int[] {2, 7, 9, 11, 15, 23};
 		int target2 = 24;
-		int[] output2 = twoSum(numbers2, target2);
+		int[] output2 = twoSum167(numbers2, target2);
 		int[] expectedOutput2 = new int[] {3, 5};
 		assertThat(output2).isEqualTo(expectedOutput2);
 	}
 	
-	private int[] twoSum(int[] numbers, int target) {
+	private int[] twoSum167(int[] numbers, int target) {
 		int[] indice = new int[2];
 		if (numbers == null || numbers.length < 2)
 			return indice;
@@ -1621,6 +1845,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 172. Factorial Trailing Zeroes
+	 * 
 	 * Given an integer n, return the number of trailing zeroes in n!.
 	 *
 	 * Note: Your solution should be in logarithmic time complexity.
@@ -1644,6 +1870,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 173. Binary Search Tree Iterator
+	 * 
 	 * Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.
 	 * 
 	 * Calling next() will return the next smallest number in the BST.
@@ -1684,6 +1912,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 176. Second Highest Salary
+	 * 
 	 * Write a SQL query to get the second highest salary from the Employee table.
 	 * 
 	 * +----+--------+
@@ -1707,6 +1937,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 179. Largest Number
+	 * 
 	 * Given a list of non negative integers, arrange them such that they form the largest number.
 	 * 
 	 * For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
@@ -1784,6 +2016,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 188. Best Time to Buy and Sell Stock IV
+	 * 
 	 * [IMPORTANT]
 	 * 
 	 * Say you have an array for which the ith element is the price of a given stock on day i.
@@ -1934,6 +2168,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 205. Isomorphic Strings
+	 * 
 	 * Given two strings s and t, determine if they are isomorphic.
 	 * 
 	 * Two strings are isomorphic if the characters in s can be replaced to get t.
@@ -1971,6 +2207,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 214. Shortest Palindrome
+	 * 
 	 * Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
 	 * 
 	 * For example:
@@ -2009,6 +2247,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 215. Kth Largest Element in an Array
+	 * 
 	 * Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
 	 * 
 	 * For example,
@@ -2034,6 +2274,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 217. Contains Duplicate
+	 * 
 	 * Given an array of integers, find if the array contains any duplicates. 
 	 * 
 	 * Your function should return true if any value appears at least twice in the array, 
@@ -2062,6 +2304,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 228. Summary Ranges
+	 * 
 	 * Given a sorted integer array without duplicates, return the summary of its ranges.
 	 * 
 	 * For example, given [0,1,2,4,5,7], return ["0->2","4->5","7"].
@@ -2102,6 +2346,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 230. Kth Smallest Element in a BST
+	 * 
 	 * Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
 	 * 
 	 * Note: 
@@ -2142,6 +2388,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 232. Implement Queue using Stacks
+	 * 
 	 * Implement the following operations of a queue using stacks.
 	 * 
 	 * push(x) -- Push element x to the back of queue.
@@ -2200,6 +2448,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 234. Palindrome Linked List
+	 * 
 	 * Given a singly linked list, determine if it is a palindrome.
 	 * </pre>
 	 */
@@ -2268,6 +2518,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 237. Delete Node in a Linked List
+	 * 
 	 * Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
 	 * 
 	 * Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node with value 3, 
@@ -2356,6 +2608,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 257. Binary Tree Paths
+	 * 
 	 * Given a binary tree, return all root-to-leaf paths.
 	 * 
 	 * For example, given the following binary tree:
@@ -2426,6 +2680,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 258. Add Digits
+     * 
      * Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
      * 
      * For example:
@@ -2448,6 +2704,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 268. Missing Number
+     * 
      * Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
      * 
      * For example,
@@ -2497,6 +2755,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 273. Integer to English Words
+     * 
      * Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
      * 
      * For example,
@@ -2558,6 +2818,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 295. Find Median from Data Stream
+	 * 
 	 * Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
 	 * 
 	 * Examples: 
@@ -2623,6 +2885,70 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 299. Bulls and Cows
+	 * 
+	 * You are playing the following Bulls and Cows game with your friend: You write down a number and ask your friend to guess what the number is. Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called "bulls") and how many digits match the secret number but locate in the wrong position (called "cows"). Your friend will use successive guesses and hints to eventually derive the secret number.
+	 * 
+	 * For example:
+	 * 
+	 * Secret number:  "1807"
+	 * Friend's guess: "7810"
+	 * Hint: 1 bull and 3 cows. (The bull is 8, the cows are 0, 1 and 7.)
+	 * 
+	 * Write a function to return a hint according to the secret number and friend's guess, use A to indicate the bulls and B to indicate the cows. In the above example, your function should return "1A3B".
+	 * 
+	 * Please note that both secret number and friend's guess may contain duplicate digits, for example:
+	 * 
+	 * Secret number:  "1123"
+	 * Friend's guess: "0111"
+	 * In this case, the 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow, and your function should return "1A1B".
+	 * 
+	 * You may assume that the secret number and your friend's guess only contain digits, and their lengths are always equal.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_299() {
+		String secret1 = "1807";
+		String guess1 = "7810";
+		String output1 = getHint(secret1, guess1);
+		String expectedOutput1 = "1A3B";
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String secret2 = "1123";
+		String guess2 = "0111";
+		String output2 = getHint(secret2, guess2);
+		String expectedOutput2 = "1A1B";
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private String getHint(String secret, String guess) {
+		int bulls = 0;
+	    int cows = 0;
+	    int[] numbers = new int[10];
+	    for (int i = 0; i<secret.length(); i++) {
+	        int s = Character.getNumericValue(secret.charAt(i));
+	        int g = Character.getNumericValue(guess.charAt(i));
+	        if (s == g) {
+	        	bulls++;
+	        }
+	        else {
+	            if (numbers[s] < 0) {
+	            	cows++;
+	            }
+	            if (numbers[g] > 0) {
+	            	cows++;
+	            }
+	            numbers[s]++;
+	            numbers[g]--;
+	        }
+	    }
+	    return bulls + "A" + cows + "B";
+    }
+	
+	/**
+	 * <pre>
+	 * 300. Longest Increasing Subsequence
+	 * 
 	 * Given an unsorted array of integers, find the length of longest increasing subsequence.
 	 * 
 	 * For example,
@@ -2666,6 +2992,172 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 303. Range Sum Query - Immutable
+	 * 
+	 * Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+	 * 
+	 * Example:
+	 * Given nums = [-2, 0, 3, -5, 2, -1]
+	 * 
+	 * sumRange(0, 2) -> 1
+	 * sumRange(2, 5) -> -1
+	 * sumRange(0, 5) -> -3
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_303() {
+		int[] nums = new int[] {-2, 0, 3, -5, 2, -1};
+
+		MyNumArray obj = new MyNumArray(nums);
+
+		int param_1 = obj.sumRange(0, 2);
+		assertThat(param_1).isEqualTo(1);
+		
+		int param_2 = obj.sumRange(2, 5);
+		assertThat(param_2).isEqualTo(-1);
+		
+		int param_3 = obj.sumRange(0, 5);
+		assertThat(param_3).isEqualTo(-3);
+		
+		BetterNumArray better = new BetterNumArray(nums);
+		
+		int param_4 = better.sumRange(0, 2);
+		assertThat(param_4).isEqualTo(1);
+		
+		int param_5 = better.sumRange(2, 5);
+		assertThat(param_5).isEqualTo(-1);
+		
+		int param_6 = better.sumRange(0, 5);
+		assertThat(param_6).isEqualTo(-3);
+	}
+	
+	private class MyNumArray {
+		
+		private int[] nums;
+
+		public MyNumArray(int[] nums) {
+			this.nums = nums;
+		}
+
+		public int sumRange(int i, int j) {
+			int sum = 0;
+			for (int index = i; index <= j; index++) {
+				sum += nums[index];
+			}
+			return sum;
+		}
+	}
+	
+	private class BetterNumArray {
+		int[] nums;
+
+		public BetterNumArray(int[] nums) {
+		    for (int i = 1; i < nums.length; i++)
+		        nums[i] += nums[i - 1];
+		    
+		    this.nums = nums;
+		}
+
+		public int sumRange(int i, int j) {
+			if (i == 0)
+		        return nums[j];
+		    
+		    return nums[j] - nums[i - 1];
+		}
+	}
+	
+	/**
+	 * <pre>
+	 * 328. Odd Even Linked List
+	 * 
+	 * Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
+	 * 
+	 * You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
+	 * 
+	 * Example:
+	 * Given 1->2->3->4->5->NULL,
+	 * return 1->3->5->2->4->NULL.
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_328() {
+		ListNode head1 = new ListNode(1);
+		head1.addLast(2);
+		head1.addLast(3);
+		head1.addLast(4);
+		head1.addLast(5);
+		ListNode output1 = oddEvenList(head1);
+		assertThat("1 -> 3 -> 5 -> 2 -> 4").isEqualTo(output1.toString());
+		
+		ListNode head2 = new ListNode(9);
+		head2.addLast(10);
+		head2.addLast(11);
+		head2.addLast(12);
+		head2.addLast(13);
+		head2.addLast(14);
+		ListNode output2 = oddEvenList(head2);
+		assertThat("9 -> 11 -> 13 -> 10 -> 12 -> 14").isEqualTo(output2.toString());
+	}
+	
+	private ListNode oddEvenList(ListNode head) {
+        if (head != null) {
+            ListNode odd = head, even = head.next, evenHead = even; 
+    
+            while (even != null && even.next != null) {
+                odd.next = odd.next.next; 
+                even.next = even.next.next; 
+                odd = odd.next;
+                even = even.next;
+            }
+            odd.next = evenHead; 
+        }
+        return head;
+    }
+	
+	/**
+	 * <pre>
+	 * 344. Reverse String
+	 * 
+	 * Write a function that takes a string as input and returns the string reversed.
+	 * 
+	 * Example:
+	 * Given s = "hello", return "olleh".
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_344() {
+		String s1 = "hello";
+		String output1 = reverseString(s1);
+		String expectedOutput1 = "olleh";
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String output2 = betterReverseString(s1);
+		assertThat(output2).isEqualTo(expectedOutput1);
+	}
+	
+    private String reverseString(String s) {
+        return new StringBuilder(s).reverse().toString();
+    }
+    
+    private String betterReverseString(String s) {
+        byte[] bytes = s.getBytes();
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            byte temp = bytes[i];
+            bytes[i] = bytes[j];
+            bytes[j] = temp;
+            i++;
+            j--;
+        }
+        return new String(bytes);
+    }
+    
+    /**
+	 * <pre>
+	 * 355. Design Twitter
+	 * 
 	 * Design a simplified version of Twitter where users can post tweets, 
 	 * 
 	 * follow/unfollow another user and is able to see the 10 most recent tweets in the user's news feed. 
@@ -2844,224 +3336,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
-	 * You are playing the following Bulls and Cows game with your friend: You write down a number and ask your friend to guess what the number is. Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called "bulls") and how many digits match the secret number but locate in the wrong position (called "cows"). Your friend will use successive guesses and hints to eventually derive the secret number.
+	 * 371. Sum of Two Integers
 	 * 
-	 * For example:
-	 * 
-	 * Secret number:  "1807"
-	 * Friend's guess: "7810"
-	 * Hint: 1 bull and 3 cows. (The bull is 8, the cows are 0, 1 and 7.)
-	 * 
-	 * Write a function to return a hint according to the secret number and friend's guess, use A to indicate the bulls and B to indicate the cows. In the above example, your function should return "1A3B".
-	 * 
-	 * Please note that both secret number and friend's guess may contain duplicate digits, for example:
-	 * 
-	 * Secret number:  "1123"
-	 * Friend's guess: "0111"
-	 * In this case, the 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow, and your function should return "1A1B".
-	 * 
-	 * You may assume that the secret number and your friend's guess only contain digits, and their lengths are always equal.
-	 * </pre>
-	 */
-	@Test
-	public void test_leetcode_299() {
-		String secret1 = "1807";
-		String guess1 = "7810";
-		String output1 = getHint(secret1, guess1);
-		String expectedOutput1 = "1A3B";
-		assertThat(output1).isEqualTo(expectedOutput1);
-		
-		String secret2 = "1123";
-		String guess2 = "0111";
-		String output2 = getHint(secret2, guess2);
-		String expectedOutput2 = "1A1B";
-		assertThat(output2).isEqualTo(expectedOutput2);
-	}
-	
-	private String getHint(String secret, String guess) {
-		int bulls = 0;
-	    int cows = 0;
-	    int[] numbers = new int[10];
-	    for (int i = 0; i<secret.length(); i++) {
-	        int s = Character.getNumericValue(secret.charAt(i));
-	        int g = Character.getNumericValue(guess.charAt(i));
-	        if (s == g) {
-	        	bulls++;
-	        }
-	        else {
-	            if (numbers[s] < 0) {
-	            	cows++;
-	            }
-	            if (numbers[g] > 0) {
-	            	cows++;
-	            }
-	            numbers[s]++;
-	            numbers[g]--;
-	        }
-	    }
-	    return bulls + "A" + cows + "B";
-    }
-
-	/**
-	 * <pre>
-	 * Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
-	 * 
-	 * Example:
-	 * Given nums = [-2, 0, 3, -5, 2, -1]
-	 * 
-	 * sumRange(0, 2) -> 1
-	 * sumRange(2, 5) -> -1
-	 * sumRange(0, 5) -> -3
-	 * </pre>
-	 */
-	@Test
-	public void test_leetcode_303() {
-		int[] nums = new int[] {-2, 0, 3, -5, 2, -1};
-
-		MyNumArray obj = new MyNumArray(nums);
-
-		int param_1 = obj.sumRange(0, 2);
-		assertThat(param_1).isEqualTo(1);
-		
-		int param_2 = obj.sumRange(2, 5);
-		assertThat(param_2).isEqualTo(-1);
-		
-		int param_3 = obj.sumRange(0, 5);
-		assertThat(param_3).isEqualTo(-3);
-		
-		BetterNumArray better = new BetterNumArray(nums);
-		
-		int param_4 = better.sumRange(0, 2);
-		assertThat(param_4).isEqualTo(1);
-		
-		int param_5 = better.sumRange(2, 5);
-		assertThat(param_5).isEqualTo(-1);
-		
-		int param_6 = better.sumRange(0, 5);
-		assertThat(param_6).isEqualTo(-3);
-	}
-	
-	private class MyNumArray {
-		
-		private int[] nums;
-
-		public MyNumArray(int[] nums) {
-			this.nums = nums;
-		}
-
-		public int sumRange(int i, int j) {
-			int sum = 0;
-			for (int index = i; index <= j; index++) {
-				sum += nums[index];
-			}
-			return sum;
-		}
-	}
-	
-	private class BetterNumArray {
-		int[] nums;
-
-		public BetterNumArray(int[] nums) {
-		    for (int i = 1; i < nums.length; i++)
-		        nums[i] += nums[i - 1];
-		    
-		    this.nums = nums;
-		}
-
-		public int sumRange(int i, int j) {
-			if (i == 0)
-		        return nums[j];
-		    
-		    return nums[j] - nums[i - 1];
-		}
-	}
-	
-	/**
-	 * <pre>
-	 * Given a singly linked list, group all odd nodes together followed by the even nodes. Please note here we are talking about the node number and not the value in the nodes.
-	 * 
-	 * You should try to do it in place. The program should run in O(1) space complexity and O(nodes) time complexity.
-	 * 
-	 * Example:
-	 * Given 1->2->3->4->5->NULL,
-	 * return 1->3->5->2->4->NULL.
-	 * 
-	 * </pre>
-	 */
-	@Test
-	public void test_leetcode_328() {
-		ListNode head1 = new ListNode(1);
-		head1.addLast(2);
-		head1.addLast(3);
-		head1.addLast(4);
-		head1.addLast(5);
-		ListNode output1 = oddEvenList(head1);
-		assertThat("1 -> 3 -> 5 -> 2 -> 4").isEqualTo(output1.toString());
-		
-		ListNode head2 = new ListNode(9);
-		head2.addLast(10);
-		head2.addLast(11);
-		head2.addLast(12);
-		head2.addLast(13);
-		head2.addLast(14);
-		ListNode output2 = oddEvenList(head2);
-		assertThat("9 -> 11 -> 13 -> 10 -> 12 -> 14").isEqualTo(output2.toString());
-	}
-	
-	private ListNode oddEvenList(ListNode head) {
-        if (head != null) {
-            ListNode odd = head, even = head.next, evenHead = even; 
-    
-            while (even != null && even.next != null) {
-                odd.next = odd.next.next; 
-                even.next = even.next.next; 
-                odd = odd.next;
-                even = even.next;
-            }
-            odd.next = evenHead; 
-        }
-        return head;
-    }
-	
-	/**
-	 * <pre>
-	 * Write a function that takes a string as input and returns the string reversed.
-	 * 
-	 * Example:
-	 * Given s = "hello", return "olleh".
-	 * </pre>
-	 */
-	@Test
-	public void test_leetcode_344() {
-		String s1 = "hello";
-		String output1 = reverseString(s1);
-		String expectedOutput1 = "olleh";
-		assertThat(output1).isEqualTo(expectedOutput1);
-		
-		String output2 = betterReverseString(s1);
-		assertThat(output2).isEqualTo(expectedOutput1);
-	}
-	
-    private String reverseString(String s) {
-        return new StringBuilder(s).reverse().toString();
-    }
-    
-    private String betterReverseString(String s) {
-        byte[] bytes = s.getBytes();
-        int i = 0;
-        int j = s.length() - 1;
-        while (i < j) {
-            byte temp = bytes[i];
-            bytes[i] = bytes[j];
-            bytes[j] = temp;
-            i++;
-            j--;
-        }
-        return new String(bytes);
-    }
-	
-	/**
-	 * <pre>
 	 * Calculate the sum of two integers a and b, but you are not allowed to use the operator + and -.
 	 * 
 	 * Example:
@@ -3113,6 +3389,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 373. Find K Pairs with Smallest Sums
+	 * 
 	 * You are given two integer arrays nums1 and nums2 sorted in ascending order and an integer k.
 	 * 
 	 * Define a pair (u,v) which consists of one element from the first array and one element from the second array.
@@ -3176,6 +3454,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 374. Guess Number Higher or Lower
+	 * 
 	 * We are playing the Guess Game. The game is as follows:
 	 * 
 	 * I pick a number from 1 to n. You have to guess which number I picked.
@@ -3214,6 +3494,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 378. Kth Smallest Element in a Sorted Matrix
+	 * 
 	 * Given a n x n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix.
 	 * 
 	 * Note that it is the kth smallest element in the sorted order, not the kth distinct element.
@@ -3264,6 +3546,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 389. Find the Difference
+	 * 
 	 * Given two strings s and t which consist of only lowercase letters.
 	 * 
 	 * String t is generated by random shuffling string s and then add one more letter at a random position.
@@ -3334,6 +3618,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 394. Decode String
+	 * 
 	 * Given an encoded string, return it's decoded string.
 	 * 
 	 * The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times. Note that k is guaranteed to be a positive integer.
@@ -3401,6 +3687,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 402. Remove K Digits
+	 * 
 	 * Given a non-negative integer num represented as a string, remove k digits from the number so that the new number is the smallest possible.
 	 * 
 	 * Note:
@@ -3488,6 +3776,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 405. Convert a Number to Hexadecimal
+	 * 
 	 * Given an integer, write an algorithm to convert it to hexadecimal. For negative integer, two’s complement method is used.
 	 * 
 	 * Note:
@@ -3543,6 +3833,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 412. Fizz Buzz
+	 * 
 	 * Write a program that outputs the string representation of numbers from 1 to n.
 	 * 
 	 * But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.
@@ -3612,7 +3904,34 @@ public class TestLeetcode {
 	}
 	
 	/**
+	 * Java 4ms solution , Not using "%" operation
+	 */
+	private List<String> betterFizzBuzz(int n) {
+		List<String> ret = new ArrayList<String>(n);
+		for (int i = 1, fizz = 0, buzz = 0; i <= n; i++) {
+			fizz++;
+			buzz++;
+			if (fizz == 3 && buzz == 5) {
+				ret.add("FizzBuzz");
+				fizz = 0;
+				buzz = 0;
+			} else if (fizz == 3) {
+				ret.add("Fizz");
+				fizz = 0;
+			} else if (buzz == 5) {
+				ret.add("Buzz");
+				buzz = 0;
+			} else {
+				ret.add(String.valueOf(i));
+			}
+		}
+		return ret;
+	}
+	
+	/**
 	 * <pre>
+	 * 414. Third Maximum Number
+	 * 
 	 * Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).
 	 * 
 	 * Example 1:
@@ -3671,6 +3990,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 420. Strong Password Checker
+	 * 
 	 * A password is considered strong if below conditions are all met:
 	 * 
 	 * It has at least 6 characters and at most 20 characters.
@@ -3759,6 +4080,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 423. Reconstruct Original Digits from English
+	 * 
 	 * Given a non-empty string containing an out-of-order English representation of digits 0-9, output the digits in ascending order.
 	 * 
 	 * Note:
@@ -3827,6 +4150,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 434. Number of Segments in a String
+	 * 
 	 * Count the number of segments in a string, where a segment is defined to be a contiguous sequence of non-space characters.
 	 * 
 	 * Please note that the string does not contain any non-printable characters.
@@ -3866,6 +4191,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 441. Arranging Coins
+	 * 
 	 * You have a total of n coins that you want to form in a staircase shape, where every k-th row must have exactly k coins.
 	 * 
 	 * Given n, find the total number of full staircase rows that can be formed.
@@ -3926,6 +4253,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 442. Find All Duplicates in an Array
+	 * 
 	 * Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
 	 * 
 	 * Find all the elements that appear twice in this array.
@@ -3946,12 +4275,11 @@ public class TestLeetcode {
 		List<Integer> expectedOutput1 = new ArrayList<>();
 		expectedOutput1.add(2);
 		expectedOutput1.add(3);
-		List<Integer> output = findDuplicatesElegant(nums1);
+		List<Integer> output = betterFindDuplicates(nums1);
 		assertThat(expectedOutput1).containsExactlyElementsOf(output);
 	}
 	
-	@SuppressWarnings("unused")
-	private List<Integer> findDuplicates(int[] nums) {
+	private List<Integer> myFindDuplicates(int[] nums) {
 		List<Integer> res = new ArrayList<>();
         Map<Integer, Integer> digitCounts = new HashMap<>();
         for (int num : nums) {
@@ -3976,7 +4304,7 @@ public class TestLeetcode {
         return res;
 	}
 	
-	private List<Integer> findDuplicatesElegant(int[] nums) {
+	private List<Integer> betterFindDuplicates(int[] nums) {
 		List<Integer> result = new ArrayList<Integer>();
 		if (nums == null)
 			return result;
@@ -3996,6 +4324,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 448. Find All Numbers Disappeared in an Array
+	 * 
 	 * Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
 	 * 
 	 * Find all the elements of [1, n] inclusive that do not appear in this array.
@@ -4053,6 +4383,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 455. Assign Cookies
+	 * 
 	 * Assume you are an awesome parent and want to give your children some cookies. But, you should give each child at most one cookie. Each child i has a greed factor gi, which is the minimum size of a cookie that the child will be content with; and each cookie j has a size sj. If sj >= gi, we can assign the cookie j to the child i, and the child i will be content. Your goal is to maximize the number of your content children and output the maximum number.
 	 * 
 	 * Note:
@@ -4106,6 +4438,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 459. Repeated Substring Pattern
+	 * 
 	 * Given a non-empty string check if it can be constructed by taking a substring of it and appending multiple copies of the substring together. You may assume the given string consists of lowercase English letters only and its length will not exceed 10000.
 	 * 
 	 * Example 1:
@@ -4163,6 +4497,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 494. Target Sum
+	 * 
 	 * You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.
 	 * 
 	 * Find out how many ways to assign symbols to make sum of integers equal to target S.
@@ -4208,6 +4544,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 500. Keyboard Row
+	 * 
 	 * Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
 	 * 
 	 * Example 1:
@@ -4231,6 +4569,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 503. Next Greater Element II
+	 * 
 	 * Given a circular array (the next element of the last element is the first element of the array), print the Next Greater Number for every element. The Next Greater Number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn't exist, output -1 for this number.
 	 * 
 	 * Example 1:
@@ -4276,6 +4616,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * 513. Find Bottom Left Tree Value
+     * 
      * Given a binary tree, find the leftmost value in the last row of the tree.
      * 
      * Example 1:
@@ -4339,6 +4681,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 515. Find Largest Value in Each Tree Row
+	 * 
 	 * You need to find the largest value in each row of a binary tree.
 	 * 
 	 * Example:
@@ -4392,6 +4736,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * 516. Longest Palindromic Subsequence
+	 * 
 	 * Given a string s, find the longest palindromic subsequence's length in s.
 	 * You may assume that the maximum length of s is 1000.
 	 *
