@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -111,6 +112,8 @@ public class TestJava {
 		String reverseStr = reverseBuilder.toString();
 		assertEquals(reverseStr, "heYymmoT");
 		
+		System.out.println("Original String: " + testStr + " -> Reverse String: " + reverseStr);
+		
 		System.out.println("<<<< testStringBuilderReverse done");
 	}
 
@@ -147,5 +150,12 @@ public class TestJava {
 		assertThat(map.values()).containsAll(objs);
 		
 		System.out.println("<<<< testStreamListToMap done");
+	}
+	
+	@Test
+	public void testMap() {
+		Map<String, String> map = new HashMap<>();
+		String orDefault = map.getOrDefault("Hello", "World");
+		System.out.println(orDefault);
 	}
 }

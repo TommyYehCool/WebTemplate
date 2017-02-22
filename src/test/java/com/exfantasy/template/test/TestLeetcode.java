@@ -1822,6 +1822,43 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given two strings s and t, determine if they are isomorphic.
+	 * 
+	 * Two strings are isomorphic if the characters in s can be replaced to get t.
+	 * 
+	 * All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
+	 * 
+	 * For example,
+	 * Given "egg", "add", return true.
+	 * 
+	 * Given "foo", "bar", return false.
+	 * 
+	 * Given "paper", "title", return true.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_205() {
+		String s1 = "egg", t1 = "add";
+		boolean output1 = isIsomorphic(s1, t1);
+		boolean expectedOutput1 = true;
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private boolean isIsomorphic(String s, String t) {
+		Map<Character, Character> s2t = new HashMap<>(), t2s = new HashMap<>();
+		for (int i = 0; i < s.length(); i++) {
+			if (s2t.getOrDefault(s.charAt(i), t.charAt(i)) != t.charAt(i) || 
+				t2s.getOrDefault(t.charAt(i), s.charAt(i)) != s.charAt(i)) {
+				return false;
+			}
+			s2t.put(s.charAt(i), t.charAt(i));
+			t2s.put(t.charAt(i), s.charAt(i));
+		}
+		return true;
+	}
+	
+	/**
+	 * <pre>
 	 * Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
 	 * 
 	 * For example:
@@ -2761,6 +2798,43 @@ public class TestLeetcode {
             odd.next = evenHead; 
         }
         return head;
+    }
+	
+	/**
+	 * <pre>
+	 * Write a function that takes a string as input and returns the string reversed.
+	 * 
+	 * Example:
+	 * Given s = "hello", return "olleh".
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_344() {
+		String s1 = "hello";
+		String output1 = reverseString(s1);
+		String expectedOutput1 = "olleh";
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String output2 = betterReverseString(s1);
+		assertThat(output2).isEqualTo(expectedOutput1);
+	}
+	
+    private String reverseString(String s) {
+        return new StringBuilder(s).reverse().toString();
+    }
+    
+    private String betterReverseString(String s) {
+        byte[] bytes = s.getBytes();
+        int i = 0;
+        int j = s.length() - 1;
+        while (i < j) {
+            byte temp = bytes[i];
+            bytes[i] = bytes[j];
+            bytes[j] = temp;
+            i++;
+            j--;
+        }
+        return new String(bytes);
     }
 	
 	/**
