@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +58,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 1. Two Sum
 	 * 
 	 * Given an array of integers, return indices of the two numbers such that they add up to a specific target.
@@ -76,13 +80,19 @@ public class TestLeetcode {
 		int[] output1 = twoSum1(nums1, target1);
 		int[] expectedOutput1 = new int[] {0, 1};
 		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[] nums2 = new int[] {3, 7, 12, 23, 28};
+		int target2 = 30;
+		int[] output2 = twoSum1(nums2, target2);
+		int[] expectedOutput2 = new int[] {1, 3};
+		assertThat(output2).isEqualTo(expectedOutput2);
 	}
 	
 	private int[] twoSum1(int[] nums, int target) {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		for (int i = 0; i < nums.length; i++) {
 			if (map.containsKey(nums[i])) {
-				return new int[] { map.get(nums[i]) + 1, i + 1 };
+				return new int[] { map.get(nums[i]), i};
 			} else {
 				map.put(target - nums[i], i);
 			}
@@ -136,6 +146,93 @@ public class TestLeetcode {
 			int medianIndex = (nums.length / 2);
 			return nums[medianIndex];
 		}
+	}
+	
+	/**
+	 * <pre>
+	 * 7. Reverse Integer
+	 * 
+	 * Reverse digits of an integer.
+	 * 
+	 * Example1: x = 123, return 321
+	 * Example2: x = -123, return -321
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_7() {
+		int x1 = 123;
+		int output1 = reverse(x1);
+		int expectedOutput1 = 321;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int x2 = -123;
+		int output2 = reverse(x2);
+		int expectedOutput2 = -321;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int reverse(int x) {
+		long rev = 0;
+		while (x != 0) {
+			rev = rev * 10 + x % 10;
+			x = x / 10;
+			
+			if (rev > Integer.MAX_VALUE || rev < Integer.MIN_VALUE)
+				return 0;
+		}
+		return (int) rev;
+    }
+	
+	/**
+	 * <pre>
+	 * 8. String to Integer (atoi)
+	 * 
+	 * Implement atoi to convert a string to an integer.
+	 * 
+	 * Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+	 * 
+	 * Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_8() {
+		String str1 = "   4357";
+		int output1 = myAtoi(str1);
+		int expectedOutput1 = 4357;
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int myAtoi(String str) {
+		int index = 0, sign = 1, total = 0;
+		
+		// 1. Empty string
+		if (str.length() == 0)
+			return 0;
+
+		// 2. Remove Spaces
+		while (str.charAt(index) == ' ' && index < str.length())
+			index++;
+
+		// 3. Handle signs
+		if (str.charAt(index) == '+' || str.charAt(index) == '-') {
+			sign = str.charAt(index) == '+' ? 1 : -1;
+			index++;
+		}
+
+		// 4. Convert number and avoid overflow
+		while (index < str.length()) {
+			int digit = str.charAt(index) - '0';
+			if (digit < 0 || digit > 9)
+				break;
+
+			// check if total will be overflow after 10 times and add digit
+			if (Integer.MAX_VALUE / 10 < total || Integer.MAX_VALUE / 10 == total && Integer.MAX_VALUE % 10 < digit)
+				return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+
+			total = 10 * total + digit;
+			index++;
+		}
+		return total * sign;
 	}
 	
 	/**
@@ -356,6 +453,51 @@ public class TestLeetcode {
 			}
 		}
 		return ans;
+	}
+	
+	/**
+	 * <pre>
+	 * 20. Valid Parentheses
+	 * 
+	 * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', 
+	 * 
+	 * determine if the input string is valid.
+	 * 
+	 * The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_20() {
+		String s1 = "()";
+		boolean output1 = isValid(s1);
+		assertThat(output1).isTrue();
+		
+		String s2 = "()[]{}";
+		boolean output2 = isValid(s2);
+		assertThat(output2).isTrue();
+		
+		String s3 = "(]";
+		boolean output3 = isValid(s3);
+		assertThat(output3).isTrue();
+		
+		String s4 = "([)]";
+		boolean output4 = isValid(s4);
+		assertThat(output4).isTrue();
+	}
+	
+	private boolean isValid(String s) {
+		Stack<Character> stack = new Stack<Character>();
+		for (char c : s.toCharArray()) {
+			if (c == '(')
+				stack.push(')');
+			else if (c == '{')
+				stack.push('}');
+			else if (c == '[')
+				stack.push(']');
+			else if (stack.isEmpty() || stack.pop() != c)
+				return false;
+		}
+		return stack.isEmpty();
 	}
 	
 	/**
@@ -1578,8 +1720,6 @@ public class TestLeetcode {
      * <pre>
      * 121. Best Time to Buy and Sell Stock
      * 
-     * [IMPORTANT]
-     * 
      * Say you have an array for which the ith element is the price of a given stock on day i.
      * 
      * If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
@@ -1600,17 +1740,17 @@ public class TestLeetcode {
     @Test
     public void test_leetcode_121() {
     	int[] prices1 = new int[] { 7, 1, 5, 3, 6, 4 };
-    	int output1 = maxProfit121(prices1);
+    	int output1 = maxProfitI(prices1);
     	int expectedOutput1 = 5;
     	assertThat(output1).isEqualTo(expectedOutput1);
     	
     	int[] prices2 = new int[] { 7, 6, 4, 3, 1 };
-    	int output2 = maxProfit121(prices2);
+    	int output2 = maxProfitI(prices2);
     	int expectedOutput2 = 0;
     	assertThat(output2).isEqualTo(expectedOutput2);
     }
     
-    private int maxProfit121(int[] prices) {
+    private int maxProfitI(int[] prices) {
     	int maxCur = 0, maxSoFar = 0;
         for(int i = 1; i < prices.length; i++) {
             maxCur = Math.max(0, maxCur += prices[i] - prices[i-1]);
@@ -1622,8 +1762,6 @@ public class TestLeetcode {
 	/**
 	 * <pre>
 	 * 122. Best Time to Buy and Sell Stock II
-	 * 
-	 * [IMPORTANT]
 	 * 
 	 * Say you have an array for which the ith element is the price of a given stock on day i.
 	 * 
@@ -1638,16 +1776,16 @@ public class TestLeetcode {
 	public void test_leetcode_122() {
 		int[] prices1 = new int[] {10,20,80};
 		int expectedOutput1 = 70;
-		int output1 = maxProfit(prices1);
+		int output1 = maxProfitII(prices1);
 		assertThat(output1).isEqualTo(expectedOutput1);
 		
 		int[] prices2 = new int[] {30,20,90,120,100,200};
 		int expectedOutput2 = 200;
-		int output2 = maxProfit(prices2);
+		int output2 = maxProfitII(prices2);
 		assertThat(output2).isEqualTo(expectedOutput2);
 	}
 	
-	private int maxProfit(int[] prices) {
+	private int maxProfitII(int[] prices) {
 		int len = prices.length, profit = 0;
         for (int i = 1; i < len; i++) {
             // as long as there is a price gap, we gain a profit.
@@ -1657,6 +1795,38 @@ public class TestLeetcode {
         }
         return profit;
 	}
+	
+	/**
+	 * <pre>
+	 * 123. Best Time to Buy and Sell Stock III
+	 * 
+	 * Say you have an array for which the ith element is the price of a given stock on day i.
+	 * 
+	 * Design an algorithm to find the maximum profit. You may complete at most two transactions.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_123() {
+		int[] prices1 = new int[] {10,20,80};
+		int expectedOutput1 = 70;
+		int output1 = maxProfitIII(prices1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+    private int maxProfitIII(int[] prices) {
+		int maxProfit1 = 0;
+		int maxProfit2 = 0;
+		int lowestBuyPrice1 = Integer.MAX_VALUE;
+		int lowestBuyPrice2 = Integer.MAX_VALUE;
+
+		for (int p : prices) {
+			maxProfit2 = Math.max(maxProfit2, p - lowestBuyPrice2);
+			lowestBuyPrice2 = Math.min(lowestBuyPrice2, p - maxProfit1);
+			maxProfit1 = Math.max(maxProfit1, p - lowestBuyPrice1);
+			lowestBuyPrice1 = Math.min(lowestBuyPrice1, p);
+		}
+		return maxProfit2;
+    }
 	
 	/**
 	 * <pre>
@@ -1713,8 +1883,6 @@ public class TestLeetcode {
 	 * <pre>
 	 * 142. Linked List Cycle II
 	 * 
-	 * [IMPORTANT]
-	 * 
 	 * Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 	 * 
 	 * Note: Do not modify the linked list.
@@ -1745,6 +1913,126 @@ public class TestLeetcode {
 //		}
 //		return null;
 //	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 146. LRU Cache
+	 * 
+	 * Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+	 * 
+	 * get(key) 
+	 * 		- Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+	 * put(key, value) 
+	 * 		- Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+	 * 
+	 * Follow up:
+	 * Could you do both operations in O(1) time complexity?
+	 * 
+	 * Example:
+	 * 
+	 * LRUCache cache = new LRUCache(2); -> 2: capacity
+	 * 
+	 * cache.put(1, 1);
+	 * cache.put(2, 2);
+	 * cache.get(1);       // returns 1
+	 * cache.put(3, 3);    // evicts key 2
+	 * cache.get(2);       // returns -1 (not found)
+	 * cache.put(4, 4);    // evicts key 1
+	 * cache.get(1);       // returns -1 (not found)
+	 * cache.get(3);       // returns 3
+	 * cache.get(4);       // returns 4
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_146() {
+		LRUCache cache = new LRUCache(2);
+		
+		cache.put(1, 1);
+		cache.put(2, 2);
+		int val1 = cache.get(1); assertThat(val1).isEqualTo(1);
+		cache.put(3, 3);
+		int val2 = cache.get(2); assertThat(val2).isEqualTo(-1);
+		cache.put(4, 4);
+		int val3 = cache.get(1); assertThat(val3).isEqualTo(-1);
+		int val4 = cache.get(3); assertThat(val4).isEqualTo(3);
+		int val5 = cache.get(4); assertThat(val5).isEqualTo(4);
+	}
+	
+	private class Node {
+		int key;
+		int value;
+		Node pre;
+		Node next;
+		
+		public Node(int key, int value) {
+			this.key = key;
+			this.value = value;
+		}
+	}
+	
+	private class LRUCache {
+
+		HashMap<Integer, Node> map;
+		int capicity, count;
+		Node head, tail;
+
+		public LRUCache(int capacity) {
+			this.capicity = capacity;
+			map = new HashMap<>();
+			head = new Node(0, 0);
+			tail = new Node(0, 0);
+			head.next = tail;
+			tail.pre = head;
+			head.pre = null;
+			tail.next = null;
+			count = 0;
+		}
+
+		private void deleteNode(Node node) {
+			node.pre.next = node.next;
+			node.next.pre = node.pre;
+		}
+
+		private void addToHead(Node node) {
+			node.next = head.next;
+			node.next.pre = node;
+			node.pre = head;
+			head.next = node;
+		}
+
+		public int get(int key) {
+			if (map.get(key) != null) {
+				Node node = map.get(key);
+				int result = node.value;
+				deleteNode(node);
+				addToHead(node);
+				return result;
+			}
+			return -1;
+		}
+
+		public void put(int key, int value) {
+			if (map.get(key) != null) {
+				Node node = map.get(key);
+				node.value = value;
+				deleteNode(node);
+				addToHead(node);
+			} else {
+				Node node = new Node(key, value);
+				map.put(key, node);
+				if (count < capicity) {
+					count++;
+					addToHead(node);
+				} else {
+					map.remove(tail.pre.key);
+					deleteNode(tail.pre);
+					addToHead(node);
+				}
+			}
+		}
+	}
 	
 	/**
 	 * <pre>
@@ -2018,8 +2306,6 @@ public class TestLeetcode {
 	 * <pre>
 	 * 188. Best Time to Buy and Sell Stock IV
 	 * 
-	 * [IMPORTANT]
-	 * 
 	 * Say you have an array for which the ith element is the price of a given stock on day i.
 	 * 
 	 * Design an algorithm to find the maximum profit. You may complete at most k transactions.
@@ -2040,35 +2326,35 @@ public class TestLeetcode {
 		int k = 2;
 		int[] prices = new int[] {10,20,80};
 		int expectedOutput = 70;
-		int output = maxProfit(k, prices);
+		int output = maxProfitIV(k, prices);
 		assertThat(output).isEqualTo(expectedOutput);
 
 		int k2 = 3;
 		int[] prices2 = new int[] {150,150,300,550,200,600,800};
 		int expectedOutput2 = 1000;
-		int output2 = maxProfit(k2, prices2);
+		int output2 = maxProfitIV(k2, prices2);
 		assertThat(output2).isEqualTo(expectedOutput2);
 		
 		int k3 = 3;
 		int[] prices3 = new int[] {150,150,300,550,200,600,800,1200};
-		int output3 = maxProfit(k3, prices3);
+		int output3 = maxProfitIV(k3, prices3);
 		int expectedOutput3 = 1400;
 		assertThat(output3).isEqualTo(expectedOutput3);
 		
 		int k4 = 3;
 		int[] prices4 = new int[] {150,150,300,550,200,600,800,1200};
 		int expectedOutput4 = 1400;
-		int output4 = maxProfitUnderstood(k4, prices4);
+		int output4 = maxProfitIVUnderstood(k4, prices4);
 		assertThat(output4).isEqualTo(expectedOutput4);
 		
 		int k5 = 2;
 		int[] prices5 = new int[] {10,30,120,100,90,190};
 		int expectedOutput5 = 210;
-		int output5 = maxProfitUnderstood(k5, prices5);
+		int output5 = maxProfitIVUnderstood(k5, prices5);
 		assertThat(output5).isEqualTo(expectedOutput5);
 	}
 	
-	private int maxProfit(int k, int[] prices) {
+	private int maxProfitIV(int k, int[] prices) {
         int len = prices.length;
         if (k >= len / 2) {
         	return quickSolve(prices);
@@ -2096,7 +2382,7 @@ public class TestLeetcode {
         return profit;
     }
 	
-	private int maxProfitUnderstood(int k, int[] prices) {
+	private int maxProfitIVUnderstood(int k, int[] prices) {
 		// means you can't do any transactions
 		if (k < 1) {
 			return 0;
@@ -2165,6 +2451,112 @@ public class TestLeetcode {
 		@SuppressWarnings("unused")
 		String result = "DELETE p1 FROM Person p1, Person p2 WHERE p1.Email = p2.Email AND p1.Id > p2.Id";
 	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 200. Number of Islands
+	 * 
+	 * Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. 
+	 * 
+	 * You may assume all four edges of the grid are all surrounded by water.
+	 * 
+	 * Example 1:
+	 * 11110
+	 * 11010
+	 * 11000
+	 * 00000
+	 * 
+	 * Answer: 1
+	 * 
+	 * Example 2:
+	 * 11000
+	 * 11000
+	 * 00100
+	 * 00011
+	 * 
+	 * Answer: 3
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_200() {
+		char[][] grid1 = new char[][] {
+			new char[] {'1', '1', '1', '1', '0'},
+			new char[] {'1', '1', '0', '1', '0'},
+			new char[] {'1', '1', '0', '0', '0'},
+			new char[] {'0', '0', '0', '0', '0'}
+		};
+		int output1 = numIslands(grid1);
+		int expectedOutput1 = 1;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		char[][] grid2 = new char[][] {
+			new char[] {'1', '1', '0', '0', '0'},
+			new char[] {'1', '1', '0', '0', '0'},
+			new char[] {'0', '0', '1', '0', '0'},
+			new char[] {'0', '0', '0', '1', '1'}
+		};
+		int output2 = numIslands(grid2);
+		int expectedOutput2 = 3;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	int x;
+	int y;
+	char[][] g;
+	
+	private int numIslands(char[][] grid) {
+        // Store the given grid
+        // This prevents having to make copies during recursion
+        g = grid;
+
+        // Our count to return
+        int c = 0;
+        
+        // Dimensions of the given graph
+        y = g.length;
+        if (y == 0) return 0;
+        x = g[0].length;
+        
+        // Iterate over the entire given grid
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                if (g[i][j] == '1') {
+                    dfs(i, j);
+                    c++;
+                }
+            }
+        }
+        return c;
+    }
+    
+    /**
+     * Marks the given site as visited, then checks adjacent sites.
+     * 
+     * Or, Marks the given site as water, if land, then checks adjacent sites.
+     * 
+     * Or, Given one coordinate (i,j) of an island, obliterates the island
+     * from the given grid, so that it is not counted again.
+     * 
+     * @param i, the row index of the given grid
+     * @param j, the column index of the given grid
+     */
+    private void dfs(int i, int j) {
+        
+        // Check for invalid indices and for sites that aren't land
+        if (i < 0 || i >= y || j < 0 || j >= x || g[i][j] != '1') return;
+        
+        // Mark the site as visited
+        g[i][j] = '0';
+        
+        // Check all adjacent sites
+        dfs(i + 1, j);
+        dfs(i - 1, j);
+        dfs(i, j + 1);
+        dfs(i, j - 1);
+    }
 	
 	/**
 	 * <pre>
@@ -2880,6 +3272,79 @@ public class TestLeetcode {
 	        else {
 	        	return max.peek();
 	        }
+	    }
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 297. Serialize and Deserialize Binary Tree
+	 * 
+	 * Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+	 * 
+	 * Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+	 * 
+	 * For example, you may serialize the following tree
+	 * 
+     * 		1
+   	 *     / \
+  	 *    2   3
+     *   / \
+     *  4   5
+	 * as "[1,2,3,null,null,4,5]", just the same as how LeetCode OJ serializes a binary tree. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.
+	 * Note: Do not use class member/global/static variables to store states. Your serialize and deserialize algorithms should be stateless.
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_297() {
+		Codec codec = new Codec();
+
+		// testing serialize
+		TreeNode root = new TreeNode(1);
+		root.addLeft(2);
+		root.addRight(3);
+		root.getLeftNode().addLeft(4);
+		root.getLeftNode().addRight(5);
+		
+		String serializeStr = codec.serialize(root);
+		String expectedOutput = "1/2/4/NULL/NULL/5/NULL/NULL/3/NULL/NULL/";
+		assertThat(serializeStr).isEqualTo(expectedOutput);
+		
+		// testing deserialize
+		String data = "1/2/4/NULL/NULL/5/NULL/NULL/3/NULL/NULL/";
+		TreeNode deTreeNode = codec.deserialize(data);
+		List<String> treePaths = binaryTreePaths(deTreeNode);
+		List<String> expectedTreePaths = Arrays.asList("1->2->4", "1->2->5", "1->3");
+		assertThat(treePaths).isEqualTo(expectedTreePaths);
+	}
+	
+	private class Codec {
+
+	    private static final String DELIMITER = "/";
+	    private static final String NULL_NODE = "NULL";
+
+	    // Encodes a tree to a single string.
+	    public String serialize(TreeNode root) {
+	        if (root == null)   return NULL_NODE + DELIMITER;
+	        return Integer.toString(root.val) + DELIMITER + serialize(root.left) + serialize(root.right);
+	    }
+
+	    // Decodes your encoded data to tree.
+	    public TreeNode deserialize(String data) {
+	        LinkedList<String> nodes = new LinkedList<String>();
+	        nodes.addAll(Arrays.asList(data.split(DELIMITER)));
+	        return buildTree(nodes);
+	    }
+
+	    private TreeNode buildTree(LinkedList<String> nodes) {
+	        String node = nodes.remove();
+	        if (node.equals(NULL_NODE))     return null;
+	        TreeNode root = new TreeNode(Integer.parseInt(node));
+	        root.left = buildTree(nodes);
+	        root.right = buildTree(nodes);
+	        return root;
 	    }
 	}
 	
@@ -4494,6 +4959,169 @@ public class TestLeetcode {
 		}
 		return false;
     }
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 460. LFU Cache
+	 * 
+	 * Design and implement a data structure for Least Frequently Used (LFU) cache. It should support the following operations: get and put.
+	 * 
+	 * get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+	 * put(key, value) - Set or insert the value if the key is not already present. When the cache reaches its capacity, it should invalidate the least frequently used item before inserting a new item. For the purpose of this problem, when there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be evicted.
+	 * 
+	 * Follow up:
+	 * Could you do both operations in O(1) time complexity?
+	 * 
+	 * Example:
+	 * 
+	 * LFUCache cache = new LFUCache(2); -> 2: capacity
+	 * 
+	 * cache.put(1, 1);
+	 * cache.put(2, 2);
+	 * cache.get(1);       // returns 1
+	 * cache.put(3, 3);    // evicts key 2
+	 * cache.get(2);       // returns -1 (not found)
+	 * cache.get(3);       // returns 3.
+	 * cache.put(4, 4);    // evicts key 1.
+	 * cache.get(1);       // returns -1 (not found)
+	 * cache.get(3);       // returns 3
+	 * cache.get(4);       // returns 4
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_460() {
+		LFUCache cache = new LFUCache(2);
+		
+		cache.put(1, 1);
+		cache.put(2, 2);
+		int val1 = cache.get(1); assertThat(val1).isEqualTo(1);
+		cache.put(3, 3);
+		int val2 = cache.get(2); assertThat(val2).isEqualTo(-1);
+		int val3 = cache.get(3); assertThat(val3).isEqualTo(3);
+		cache.put(4, 4);
+		int val4 = cache.get(1); assertThat(val4).isEqualTo(-1);
+		int val5 = cache.get(3); assertThat(val5).isEqualTo(3);
+		int val6 = cache.get(4); assertThat(val6).isEqualTo(4);
+	}
+	
+	private class LFUCache {
+
+		private Node head = null;
+		private int cap = 0;
+		private HashMap<Integer, Integer> valueHash = null;
+		private HashMap<Integer, Node> nodeHash = null;
+
+		public LFUCache(int capacity) {
+			this.cap = capacity;
+			valueHash = new HashMap<Integer, Integer>();
+			nodeHash = new HashMap<Integer, Node>();
+		}
+
+		public int get(int key) {
+			if (valueHash.containsKey(key)) {
+				increaseCount(key);
+				return valueHash.get(key);
+			}
+			return -1;
+		}
+
+		public void put(int key, int value) {
+			if (cap == 0)
+				return;
+			if (valueHash.containsKey(key)) {
+				valueHash.put(key, value);
+			} else {
+				if (valueHash.size() < cap) {
+					valueHash.put(key, value);
+				} else {
+					removeOld();
+					valueHash.put(key, value);
+				}
+				addToHead(key);
+			}
+			increaseCount(key);
+		}
+
+		private void addToHead(int key) {
+			if (head == null) {
+				head = new Node(0);
+				head.keys.add(key);
+			} else if (head.count > 0) {
+				Node node = new Node(0);
+				node.keys.add(key);
+				node.next = head;
+				head.prev = node;
+				head = node;
+			} else {
+				head.keys.add(key);
+			}
+			nodeHash.put(key, head);
+		}
+
+		private void increaseCount(int key) {
+			Node node = nodeHash.get(key);
+			node.keys.remove(key);
+
+			if (node.next == null) {
+				node.next = new Node(node.count + 1);
+				node.next.prev = node;
+				node.next.keys.add(key);
+			} else if (node.next.count == node.count + 1) {
+				node.next.keys.add(key);
+			} else {
+				Node tmp = new Node(node.count + 1);
+				tmp.keys.add(key);
+				tmp.prev = node;
+				tmp.next = node.next;
+				node.next.prev = tmp;
+				node.next = tmp;
+			}
+
+			nodeHash.put(key, node.next);
+			if (node.keys.size() == 0)
+				remove(node);
+		}
+
+		private void removeOld() {
+			if (head == null)
+				return;
+			int old = 0;
+			for (int n : head.keys) {
+				old = n;
+				break;
+			}
+			head.keys.remove(old);
+			if (head.keys.size() == 0)
+				remove(head);
+			nodeHash.remove(old);
+			valueHash.remove(old);
+		}
+
+		private void remove(Node node) {
+			if (node.prev == null) {
+				head = node.next;
+			} else {
+				node.prev.next = node.next;
+			}
+			if (node.next != null) {
+				node.next.prev = node.prev;
+			}
+		}
+
+		class Node {
+			public int count = 0;
+			public LinkedHashSet<Integer> keys = null;
+			public Node prev = null, next = null;
+
+			public Node(int count) {
+				this.count = count;
+				keys = new LinkedHashSet<Integer>();
+				prev = next = null;
+			}
+		}
+	}
 	
 	/**
 	 * <pre>
