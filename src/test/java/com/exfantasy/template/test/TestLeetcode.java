@@ -185,6 +185,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 8. String to Integer (atoi)
 	 * 
 	 * Implement atoi to convert a string to an integer.
@@ -307,6 +309,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 15. 3Sum
 	 * 
 	 * Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
@@ -412,6 +416,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 17. Letter Combinations of a Phone Number
 	 * 
 	 * Given a digit string, return all possible letter combinations that the number could represent.
@@ -457,6 +463,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 20. Valid Parentheses
 	 * 
 	 * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', 
@@ -847,6 +855,41 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 48. Rotate Image
+	 * 
+	 * You are given an n x n 2D matrix representing an image.
+	 * 
+	 * Rotate the image by 90 degrees (clockwise).
+	 * 
+	 * Follow up:
+	 * Could you do this in-place?
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_48() {
+		// TODO test case
+	}
+	
+    private void rotate(int[][] matrix) {
+		for (int i = 0; i < matrix.length / 2; i++) {
+			int[] temp = matrix[i];
+			matrix[i] = matrix[matrix.length - i - 1];
+			matrix[matrix.length - i - 1] = temp;
+		}
+
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = i + 1; j < matrix[i].length; j++) {
+				int temp = matrix[i][j];
+				matrix[i][j] = matrix[j][i];
+				matrix[j][i] = temp;
+			}
+		}
+    }
+	
+	/**
+	 * <pre>
 	 * 56. Merge Intervals
 	 * 
 	 * Given a collection of intervals, merge all overlapping intervals.
@@ -1142,6 +1185,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 78. Subsets
 	 * 
 	 * Given a set of distinct integers, nums, return all possible subsets.
@@ -1381,6 +1426,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 89. Gray Code
 	 * 
 	 * The gray code is a binary numeral system where two successive values differ in only one bit.
@@ -1456,6 +1503,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 102. Binary Tree Level Order Traversal
 	 * 
 	 * [Reference 107]
@@ -1718,6 +1767,8 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * [Amazon]
+     * 
      * 121. Best Time to Buy and Sell Stock
      * 
      * Say you have an array for which the ith element is the price of a given stock on day i.
@@ -1881,12 +1932,82 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 138. Copy List with Random Pointer
+	 * 
+	 * A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+	 * 
+	 * Return a deep copy of the list.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_138() {
+		// TODO test case
+	}
+	
+    private RandomListNode copyRandomList(RandomListNode head) {
+    	RandomListNode iter = head, next;
+
+    	// First round: make copy of each node,
+    	// and link them together side-by-side in a single list.
+    	while (iter != null) {
+    		next = iter.next;
+
+    		RandomListNode copy = new RandomListNode(iter.label);
+    		iter.next = copy;
+    		copy.next = next;
+
+    		iter = next;
+    	}
+
+    	// Second round: assign random pointers for the copy nodes.
+    	iter = head;
+    	while (iter != null) {
+    		if (iter.random != null) {
+    			iter.next.random = iter.random.next;
+    		}
+    		iter = iter.next.next;
+    	}
+
+    	// Third round: restore the original list, and extract the copy list.
+    	iter = head;
+    	RandomListNode pseudoHead = new RandomListNode(0);
+    	RandomListNode copy, copyIter = pseudoHead;
+
+    	while (iter != null) {
+    		next = iter.next.next;
+
+    		// extract the copy
+    		copy = iter.next;
+    		copyIter.next = copy;
+    		copyIter = copy;
+
+    		// restore the original list
+    		iter.next = next;
+
+    		iter = next;
+    	}
+    	return pseudoHead.next;
+    }
+    
+	private class RandomListNode {
+		int label;
+		RandomListNode next, random;
+
+		RandomListNode(int x) {
+			this.label = x;
+		}
+	};
+	
+	/**
+	 * <pre>
 	 * 142. Linked List Cycle II
 	 * 
 	 * Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 	 * 
 	 * Note: Do not modify the linked list.
-	 * 
+	 * </pre>
 	 */
 	@Test
 	@Ignore
@@ -2036,6 +2157,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 160. Intersection of Two Linked Lists
 	 * 
 	 * Write a program to find the node at which the intersection of two singly linked lists begins.
@@ -2083,6 +2206,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 167. Two Sum II - Input array is sorted
 	 * 
 	 * Given an array of integers that is already sorted in ascending order, find two numbers such that they add up to a specific target number.
@@ -2639,6 +2764,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 215. Kth Largest Element in an Array
 	 * 
 	 * Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
@@ -2840,6 +2967,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 234. Palindrome Linked List
 	 * 
 	 * Given a singly linked list, determine if it is a palindrome.
@@ -3621,6 +3750,8 @@ public class TestLeetcode {
     
     /**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 355. Design Twitter
 	 * 
 	 * Design a simplified version of Twitter where users can post tweets, 
@@ -4395,6 +4526,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 414. Third Maximum Number
 	 * 
 	 * Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).
@@ -4656,6 +4789,84 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 438. Find All Anagrams in a String
+	 * 
+	 * Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
+	 * 
+	 * Strings consists of lowercase English letters only and the length of both strings s and p will not be larger than 20,100.
+	 * 
+	 * The order of output does not matter.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input:
+	 * s: "cbaebabacd" p: "abc"
+	 * 
+	 * Output:
+	 * [0, 6]
+	 * 
+	 * Explanation:
+	 * The substring with start index = 0 is "cba", which is an anagram of "abc".
+	 * The substring with start index = 6 is "bac", which is an anagram of "abc".
+	 * 
+	 * Example 2:
+	 * 
+	 * Input:
+	 * s: "abab" p: "ab"
+	 * 
+	 * Output:
+	 * [0, 1, 2]
+	 * 
+	 * Explanation:
+	 * The substring with start index = 0 is "ab", which is an anagram of "ab".
+	 * The substring with start index = 1 is "ba", which is an anagram of "ab".
+	 * The substring with start index = 2 is "ab", which is an anagram of "ab".
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_438() {
+		// TODO test case
+	}
+	
+	private List<Integer> findAnagrams(String s, String p) {
+		List<Integer> list = new ArrayList<>();
+		if (s == null || s.length() == 0 || p == null || p.length() == 0)
+			return list;
+		int[] hash = new int[256]; // character hash
+		// record each character in p to hash
+		for (char c : p.toCharArray()) {
+			hash[c]++;
+		}
+		// two points, initialize count to p's length
+		int left = 0, right = 0, count = p.length();
+		while (right < s.length()) {
+			// move right everytime, if the character exists in p's hash,
+			// decrease the count
+			// current hash value >= 1 means the character is existing in p
+			if (hash[s.charAt(right++)]-- >= 1)
+				count--;
+
+			// when the count is down to 0, means we found the right anagram
+			// then add window's left to result list
+			if (count == 0)
+				list.add(left);
+
+			// if we find the window's size equals to p, then we have to move
+			// left (narrow the window) to find the new match window
+			// ++ to reset the hash because we kicked out the left
+			// only increase the count if the character is in p
+			// the count >= 0 indicate it was original in the hash, cuz it won't
+			// go below 0
+			if (right - left == p.length() && hash[s.charAt(left++)]++ >= 0)
+				count++;
+		}
+		return list;
+	}
+	
+	/**
+	 * <pre>
 	 * 441. Arranging Coins
 	 * 
 	 * You have a total of n coins that you want to form in a staircase shape, where every k-th row must have exactly k coins.
@@ -4903,6 +5114,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 459. Repeated Substring Pattern
 	 * 
 	 * Given a non-empty string check if it can be constructed by taking a substring of it and appending multiple copies of the substring together. You may assume the given string consists of lowercase English letters only and its length will not exceed 10000.
@@ -5364,6 +5577,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 516. Longest Palindromic Subsequence
 	 * 
 	 * Given a string s, find the longest palindromic subsequence's length in s.
