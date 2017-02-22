@@ -372,6 +372,95 @@ public class TestLeetcode {
     
     /**
      * <pre>
+     * Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
+     * 
+     * For "(()", the longest valid parentheses substring is "()", which has length = 2.
+     * 
+     * Another example is ")()())", where the longest valid parentheses substring is "()()", which has length = 4.
+     * </pre>
+     */
+    @Test
+    public void test_leetcode_32() {
+    	String s1 = "(()";
+    	int output1 = longestValidParentheses(s1);
+    	int expectedOutput1 = 2;
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    	
+    	String s2 = ")()())";
+    	int output2 = longestValidParentheses(s2);
+    	int expectedOutput2 = 4;
+    	assertThat(output2).isEqualTo(expectedOutput2);
+    	
+    	String s3 = "()(()";
+    	int output3 = longestValidParentheses(s3);
+    	int expectedOutput3 = 2;
+    	assertThat(output3).isEqualTo(expectedOutput3);
+    	
+    	String s4 = "()(())";
+    	int output4 = longestValidParentheses(s4);
+    	int expectedOutput4 = 6;
+    	assertThat(output4).isEqualTo(expectedOutput4);
+    }
+    
+	private int longestValidParentheses(String s) {
+		Stack<Integer> stack = new Stack<Integer>();
+		int max = 0;
+		int left = -1;
+		for (int i = 0; i < s.length(); i++) {
+			// got '('
+			if (s.charAt(i) == '(') {
+				stack.push(i);
+			}
+			// got ')'
+			else {
+				if (stack.isEmpty()) {
+					left = i;
+				}
+				else {
+					stack.pop();
+					if (stack.isEmpty()) {
+						max = Math.max(max, i - left);
+					}
+					else {
+						max = Math.max(max, i - stack.peek());
+					}
+				}
+			}
+		}
+		return max;
+	}
+    
+    private int myWrongSolution_longestValidParentheses(String s) {
+    	char[] sc = s.toCharArray();
+    	
+    	Stack<Character> stack = new Stack<>();
+    	
+    	int currentLength = 0;
+    	boolean lastCharIsLeft = false;
+    	for (char c : sc) {
+    		switch (c) {
+    			case '(':
+    				if (lastCharIsLeft) {
+    					currentLength = 0;
+    				}
+    				lastCharIsLeft = true;
+    				stack.push(c);
+    				break;
+    				
+    			case ')':
+    				lastCharIsLeft = false;
+    				Character pop = !stack.isEmpty() ? stack.pop() : ' ';
+    				if (pop == '(') {
+    					currentLength += 2;
+    				}
+    				break;
+    		}
+    	}
+    	return currentLength;
+    }
+    
+    /**
+     * <pre>
      * Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.
      * 
      * Your algorithm's runtime complexity must be in the order of O(log n).
@@ -398,7 +487,7 @@ public class TestLeetcode {
     	assertThat(output2).isEqualTo(expectedOutput2);
     }
     
-	public int[] searchRange(int[] nums, int target) {
+	private int[] searchRange(int[] nums, int target) {
 		int start = firstGreaterEqual(nums, target);
 		if (start == nums.length || nums[start] != target) {
 			return new int[] { -1, -1 };
@@ -581,7 +670,7 @@ public class TestLeetcode {
         return result;
 	}
 	
-	public class Interval {
+	private class Interval {
 		int start;
 		int end;
 
@@ -1591,6 +1680,29 @@ public class TestLeetcode {
 //	        return t.val ;
 //	    }
 //	}
+	}
+	
+	/**
+	 * <pre>
+	 * Write a SQL query to get the second highest salary from the Employee table.
+	 * 
+	 * +----+--------+
+	 * | Id | Salary |
+	 * +----+--------+
+	 * | 1  | 100    |
+	 * | 2  | 200    |
+	 * | 3  | 300    |
+	 * +----+--------+
+	 * For example, given the above Employee table, the second highest salary is 200. If there is no second highest salary, then the query should return null.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_176() {
+		/**
+		 * SELECT max(Salary) AS SecondHighestSalary
+		 * FROM Employee
+		 * WHERE Salary < (SELECT max(Salary) FROM Employee)
+		 */
 	}
 	
 	/**
@@ -4162,7 +4274,7 @@ public class TestLeetcode {
     	assertThat(output2).isEqualTo(expectedOutput2);
     }
     
-    public int findBottomLeftValue(TreeNode root) {
+    private int findBottomLeftValue(TreeNode root) {
     	if (root == null) return 0;
         
         int result = 0;
