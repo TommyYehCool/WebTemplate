@@ -2088,6 +2088,74 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given a singly linked list, determine if it is a palindrome.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_234() {
+		System.out.println(">>>> test_leetcode_234 starting...");
+		ListNode head = new ListNode(1);
+		head.addLast(2);
+		head.addLast(3);
+		head.addLast(2);
+		head.addLast(1);
+		boolean output1 = isPalindrome(head);
+		boolean expectedOutput1 = true;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		System.out.println("<<<< test_leetcode_234 starting done");
+	}
+	
+	/**
+	 * <a href="https://discuss.leetcode.com/topic/33376/java-easy-to-understand">java easy to understand</a> 
+	 */
+    private boolean isPalindrome(ListNode head) {
+        ListNode fast = head, slow = head;
+        
+        System.out.println("Set Fast as head: " + fast);
+        System.out.println("Set Slow as head: " + slow);
+        
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            System.out.println("Set Fast as next next: " + fast);
+            slow = slow.next;
+            System.out.println("Set Slow as next: " + slow);
+        }
+        if (fast != null) { // odd nodes: let right half smaller
+            slow = slow.next;
+            System.out.println("Set Slow as next: " + slow);
+        }
+        slow = reverse(slow);
+        System.out.println("Reverse Slow: " + slow);
+        
+        fast = head;
+        System.out.println("Set Fast as head: " + fast);
+        
+        while (slow != null) {
+            if (fast.val != slow.val) {
+                return false;
+            }
+            fast = fast.next;
+            System.out.println("Set Fast as next: " + slow);
+            
+            slow = slow.next;
+            System.out.println("Set Slow as next: " + slow);
+        }
+        return true;
+    }
+
+    private ListNode reverse(ListNode head) {
+        ListNode prev = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+	
+	/**
+	 * <pre>
 	 * Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
 	 * 
 	 * Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node with value 3, 
@@ -4049,6 +4117,69 @@ public class TestLeetcode {
             }
         }   
         return next;
+    }
+    
+    /**
+     * <pre>
+     * Given a binary tree, find the leftmost value in the last row of the tree.
+     * 
+     * Example 1:
+     * Input:
+     * 
+     * 		2
+     * 	   / \
+     *    1   3
+	 *
+     * Output:
+     * 1
+     * 
+     * Example 2: 
+     * Input:
+     * 
+     * 		1
+     * 	   / \
+     * 	  2   3
+     *   /   / \
+     *  4   5   6
+     *     /
+     *    7
+     * 
+     * Output:
+     * 7
+     * Note: You may assume the tree (i.e., the given root node) is not NULL.
+     * </pre>
+     */
+    @Test
+    public void test_leetcode_513() {
+    	TreeNode root1 = sortedArrayToBST(new int[] {1,2,3});
+    	int output1 = findBottomLeftValue(root1);
+    	int expectedOutput1 = 1;
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    	
+    	TreeNode root2 = sortedArrayToBST(new int[] {1,2,3,4,5,6,7,8,9});
+    	int output2 = findBottomLeftValue(root2);
+    	int expectedOutput2 = 4;
+    	assertThat(output2).isEqualTo(expectedOutput2);
+    }
+    
+    public int findBottomLeftValue(TreeNode root) {
+    	if (root == null) return 0;
+        
+        int result = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                if (i == 0) result = node.val;
+                if (node.left != null) queue.add(node.left);
+                if (node.right != null) queue.add(node.right);
+            }
+        }
+        
+        return result;
     }
 	
 	/**
