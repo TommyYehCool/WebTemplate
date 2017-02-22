@@ -2623,6 +2623,49 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * Given an unsorted array of integers, find the length of longest increasing subsequence.
+	 * 
+	 * For example,
+	 * Given [10, 9, 2, 5, 3, 7, 101, 18],
+	 * The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4. Note that there may be more than one LIS combination, it is only necessary for you to return the length.
+	 * 
+	 * Your algorithm should run in O(n2) complexity.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_300() {
+		int[] nums1 = new int[] {10, 9, 2, 5, 3, 7, 101, 18};
+		int output1 = lengthOfLIS(nums1);
+		int expectedOutput1 = 4;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		int[] nums2 = new int[] {10, 9, 2, 5, 6, 3, 7, 101, 18};
+		int output2 = lengthOfLIS(nums2);
+		int expectedOutput2 = 5;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int lengthOfLIS(int[] nums) {
+		int[] dp = new int[nums.length];
+		int len = 0;
+
+		for (int num : nums) {
+			int index = Arrays.binarySearch(dp, 0, len, num);
+			if (index < 0) {
+				index = -(index + 1);
+			}
+			
+			dp[index] = num;
+			
+			if (index == len) {
+				len++;
+			}
+		}
+		return len;
+	}
+	
+	/**
+	 * <pre>
 	 * Design a simplified version of Twitter where users can post tweets, 
 	 * 
 	 * follow/unfollow another user and is able to see the 10 most recent tweets in the user's news feed. 
