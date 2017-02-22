@@ -17,6 +17,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.junit.FixMethodOrder;
@@ -2090,6 +2091,40 @@ public class TestLeetcode {
 
 		return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
 	}
+	
+	/**
+	 * <pre>
+     * [Amazon]
+     * 
+     * 119. Pascal's Triangle II
+     * 
+     * Given an index k, return the kth row of the Pascal's triangle.
+     * 
+     * For example, given k = 3,
+     * Return [1,3,3,1].
+     * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_119() {
+		int rowIndex = 3;
+		List<Integer> output = getRow(rowIndex);
+		List<Integer> expectedOutput = Arrays.asList(1,3,3,1);
+		assertThat(output).isEqualTo(expectedOutput);
+	}
+	
+    private List<Integer> getRow(int rowIndex) {
+    	List<Integer> ret = new ArrayList<Integer>();
+    	ret.add(1);
+    	for (int i = 1; i <= rowIndex; i++) {
+    		for (int j = i - 1; j >= 1; j--) {
+    			int tmp = ret.get(j - 1) + ret.get(j);
+    			ret.set(j, tmp);
+    		}
+    		ret.add(1);
+    	}
+    	return ret;
+    }
 	
 	/**
 	 * <pre>
@@ -6260,6 +6295,98 @@ public class TestLeetcode {
 			root.right = getNode(q);
 			return root;
 		}
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 451. Sort Characters By Frequency
+	 * 
+	 * Given a string, sort it in decreasing order based on the frequency of characters.
+	 * 
+	 * Example 1:
+	 * 
+	 * Input:
+	 * "tree"
+	 * 
+	 * Output:
+	 * "eert"
+	 * 
+	 * Explanation:
+	 * 'e' appears twice while 'r' and 't' both appear once.
+	 * So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
+	 * 
+	 * Example 2:
+	 * 
+	 * Input:
+	 * "cccaaa"
+	 * 
+	 * Output:
+	 * "cccaaa"
+	 * 
+	 * Explanation:
+	 * Both 'c' and 'a' appear three times, so "aaaccc" is also a valid answer.
+	 * Note that "cacaca" is incorrect, as the same characters must be together.
+	 * 
+	 * Example 3:
+	 * 
+	 * Input:
+	 * "Aabb"
+	 * 
+	 * Output:
+	 * "bbAa"
+	 * 
+	 * Explanation:
+	 * "bbaA" is also a valid answer, but "Aabb" is incorrect.
+	 * Note that 'A' and 'a' are treated as two different characters.
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_451() {
+		String s1 = "tree";
+		String output1 = frequencySort(s1);
+		assertThat(output1).isIn("eert", "eetr");
+		
+		String s2 = "cccaaa";
+		String output2 = frequencySort(s2);
+		assertThat(output2).isIn("cccaaa", "aaaccc");
+		
+		String s3 = "Aabb";
+		String output3 = frequencySort(s3);
+		assertThat(output3).isIn("bbAa", "bbaA");
+	}
+	
+	private String frequencySort(String s) {
+		Map<Character, Integer> map = new HashMap<>();
+        for (char c : s.toCharArray()) {
+            if (map.containsKey(c)) {
+                map.put(c, map.get(c) + 1);
+            } else {
+                map.put(c, 1);
+            }
+        }
+        @SuppressWarnings("unchecked")
+		List<Character> [] bucket = new List[s.length() + 1];
+        for (char key : map.keySet()) {
+            int frequency = map.get(key);
+            if (bucket[frequency] == null) {
+                bucket[frequency] = new ArrayList<>();
+            }
+            bucket[frequency].add(key);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int pos = bucket.length - 1; pos >=0; pos--) {
+            if (bucket[pos] != null) {
+                for (char num : bucket[pos]) {
+                    for (int i = 0; i < map.get(num); i++) {
+                        sb.append(num);
+                    }
+                }
+            }
+        }
+        return sb.toString();
 	}
 
 	/**
