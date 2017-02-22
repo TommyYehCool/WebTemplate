@@ -26,6 +26,16 @@ import lombok.Data;
 public class TestJava {
 	
 	@Test
+	public void testAscii() {
+		char a = 'a';
+		char z = 'z';
+		System.out.println((int) a);
+		System.out.println((int) z);
+		
+		System.out.println((int) z - (int) a);
+	}
+	
+	@Test
 	@Ignore
 	public void testDate() {
 		Long timeInMillis = 1486783800000L;

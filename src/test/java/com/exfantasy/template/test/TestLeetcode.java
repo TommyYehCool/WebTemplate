@@ -101,6 +101,112 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 2. Add Two Numbers
+	 * 
+	 * You are given two non-empty linked lists representing two non-negative integers. 
+	 * 
+	 * The digits are stored in reverse order and each of their nodes contain a single digit. 
+	 * 
+	 * Add the two numbers and return it as a linked list.
+	 * 
+	 * You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+	 * 
+	 * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+	 * Output: 7 -> 0 -> 8
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_2() {
+		ListNode l1 = new ListNode(2);
+		l1.addLast(4);;
+		l1.addLast(3);
+		ListNode l2 = new ListNode(5);
+		l2.addLast(6);
+		l2.addLast(4);
+		ListNode output1 = addTwoNumbers(l1, l2);
+
+		String expectedOutput1 = "7 -> 0 -> 8";
+		assertThat(output1.toString()).isEqualTo(expectedOutput1);
+	}
+	
+	private ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+		ListNode c1 = l1;
+        ListNode c2 = l2;
+        ListNode sentinel = new ListNode(0);
+        ListNode d = sentinel;
+        int sum = 0;
+        while (c1 != null || c2 != null) {
+            sum /= 10;
+            if (c1 != null) {
+                sum += c1.val;
+                c1 = c1.next;
+            }
+            if (c2 != null) {
+                sum += c2.val;
+                c2 = c2.next;
+            }
+            d.next = new ListNode(sum % 10);
+            d = d.next;
+        }
+        
+        if (sum / 10 == 1)
+            d.next = new ListNode(1);
+        
+        return sentinel.next;
+    }
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 3. Longest Substring Without Repeating Characters
+	 * 
+	 * Given a string, find the length of the longest substring without repeating characters.
+	 * 
+	 * Examples:
+	 * 
+	 * Given "abcabcbb", the answer is "abc", which the length is 3.
+	 * 
+	 * Given "bbbbb", the answer is "b", with the length of 1.
+	 * 
+	 * Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_3() {
+		String s1 = "abcabcbb";
+		int output1 = lengthOfLongestSubstring(s1);
+		assertThat(output1).isEqualTo(3);
+		
+		String s2 = "bbbbb";
+		int output2 = lengthOfLongestSubstring(s2);
+		assertThat(output2).isEqualTo(1);
+		
+		String s3 = "pwwkew";
+		int output3 = lengthOfLongestSubstring(s3);
+		assertThat(output3).isEqualTo(3);
+	}
+	
+    private int lengthOfLongestSubstring(String s) {
+		if (s.length() == 0)
+			return 0;
+		HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+		int max = 0;
+		for (int i = 0, j = 0; i < s.length(); ++i) {
+			if (map.containsKey(s.charAt(i))) {
+				j = Math.max(j, map.get(s.charAt(i)) + 1);
+			}
+			map.put(s.charAt(i), i);
+			max = Math.max(max, i - j + 1);
+		}
+		return max;
+    }
+	
+	/**
+	 * <pre>
 	 * 4. Median of Two Sorted Arrays
 	 * 
 	 * There are two sorted arrays nums1 and nums2 of size m and n respectively.
@@ -145,6 +251,73 @@ public class TestLeetcode {
 			int medianIndex = (nums.length / 2);
 			return nums[medianIndex];
 		}
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 5. Longest Palindromic Substring
+	 * 
+	 * Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+	 * 
+	 * Example:
+	 * 
+	 * Input: "babad"
+	 * 
+	 * Output: "bab"
+	 * 
+	 * Note: "aba" is also a valid answer.
+	 * 
+	 * Example:
+	 * 
+	 * Input: "cbbd"
+	 * 
+	 * Output: "bb"
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_5() {
+		String s1 = "babad";
+		String output1 = longestPalindrome(s1);
+		String expectedOutput1 = "bab";
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String s2 = "cbbd";
+		String output2 = longestPalindrome(s2);
+		String expectedOutput2 = "bb";
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private String longestPalindrome(String s) {
+		int maxLen = 0, start = -1;
+
+		for (int i = 0; i < s.length(); i++) {
+			int lenOdd = extendStr(s, i, true);
+			if (maxLen < 2 * lenOdd - 1) {
+				start = i - lenOdd + 1;
+				maxLen = 2 * lenOdd - 1;
+			}
+			int lenEven = extendStr(s, i, false);
+			if (maxLen < 2 * lenEven) {
+				start = i - lenEven + 1;
+				maxLen = 2 * lenEven;
+			}
+		}
+		return s.substring(start, start + maxLen);
+	}
+
+	private int extendStr(String s, int middle, boolean odd) {
+		int left = middle, right = odd ? middle : middle + 1;
+		if (left < 0 || right >= s.length())
+			return 0;
+		int len = 0;
+		while (left >= 0 && right < s.length()) {
+			if (s.charAt(left--) != s.charAt(right++))
+				break;
+			len++;
+		}
+		return len;
 	}
 	
 	/**
@@ -485,11 +658,11 @@ public class TestLeetcode {
 		
 		String s3 = "(]";
 		boolean output3 = isValid(s3);
-		assertThat(output3).isTrue();
+		assertThat(output3).isFalse();
 		
 		String s4 = "([)]";
 		boolean output4 = isValid(s4);
-		assertThat(output4).isTrue();
+		assertThat(output4).isFalse();
 	}
 	
 	private boolean isValid(String s) {
@@ -505,6 +678,89 @@ public class TestLeetcode {
 				return false;
 		}
 		return stack.isEmpty();
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 21. Merge Two Sorted Lists
+	 * 
+	 * Merge two sorted linked lists and return it as a new list. 
+	 * 
+	 * The new list should be made by splicing together the nodes of the first two lists.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_21() {
+		ListNode node1 = new ListNode(1);
+		node1.addLast(2);
+		node1.addLast(3);
+		ListNode node2 = new ListNode(4);
+		node2.addLast(5);
+		
+		ListNode output = merge(node1, node2);
+		
+		assertThat(output.toString()).isEqualTo("1 -> 2 -> 3 -> 4 -> 5");
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 23. Merge k Sorted Lists
+	 * 
+	 * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_23() {
+		ListNode node1 = new ListNode(1);
+		node1.addLast(2);
+		node1.addLast(3);
+		ListNode node2 = new ListNode(4);
+		node2.addLast(5);
+
+		ListNode[] lists = new ListNode[] {node1, node2};
+		
+		ListNode output = mergeKLists(lists);
+		
+		assertThat(output.toString()).isEqualTo("1 -> 2 -> 3 -> 4 -> 5");
+	}
+	
+	private ListNode mergeKLists(ListNode[] listsarray) {
+		List<ListNode> lists = Arrays.asList(listsarray);
+		
+		if (lists == null || lists.isEmpty())
+			return null;
+		int n = lists.size() - 1;
+
+		while (n > 0) {
+			for (int i = 0; i < (n + 1) / 2; i++) {
+				lists.set(i, merge(lists.get(i), lists.get(n - i)));
+			}
+			n /= 2;
+		}
+
+		return lists.get(0);
+	}
+
+	private ListNode merge(ListNode node1, ListNode node2) {
+		ListNode virtual = new ListNode(0);
+		ListNode node = virtual;
+
+		while (node1 != null || node2 != null) {
+			if (node2 == null || (node1 != null && node1.val < node2.val)) {
+				node.next = node1;
+				node1 = node1.next;
+			} else {
+				node.next = node2;
+				node2 = node2.next;
+			}
+			node = node.next;
+		}
+
+		return virtual.next;
 	}
 	
 	/**
@@ -1186,6 +1442,70 @@ public class TestLeetcode {
 	 * <pre>
 	 * [Amazon]
 	 * 
+	 * 73. Set Matrix Zeroes
+	 * 
+	 * Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_73() {
+		System.out.println(">>>> test_leetcode_73 starting...");
+		int[][] matrix = new int[][] {
+			new int[] {1, 1, 1, 1, 1},
+			new int[] {1, 0, 1, 1, 1},
+			new int[] {1, 1, 1, 1, 1},
+			new int[] {1, 1, 1, 1, 0},
+			new int[] {1, 1, 1, 1, 1}
+		};
+		setZeroes(matrix);
+		
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				System.out.print(matrix[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println("<<<< test_leetcode_73 done");
+	}
+	
+    private void setZeroes(int[][] matrix) {
+		boolean fr = false, fc = false;
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				if (matrix[i][j] == 0) {
+					if (i == 0)
+						fr = true;
+					if (j == 0)
+						fc = true;
+					matrix[0][j] = 0;
+					matrix[i][0] = 0;
+				}
+			}
+		}
+		for (int i = 1; i < matrix.length; i++) {
+			for (int j = 1; j < matrix[0].length; j++) {
+				if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+					matrix[i][j] = 0;
+				}
+			}
+		}
+		if (fr) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				matrix[0][j] = 0;
+			}
+		}
+		if (fc) {
+			for (int i = 0; i < matrix.length; i++) {
+				matrix[i][0] = 0;
+			}
+		}
+    }
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 78. Subsets
 	 * 
 	 * Given a set of distinct integers, nums, return all possible subsets.
@@ -1460,6 +1780,51 @@ public class TestLeetcode {
 		List<Integer> result = new LinkedList<>();
 	    for (int i = 0; i < 1 << n; i++) result.add(i ^ i >> 1);
 	    return result;
+    }
+	
+	/**
+	 * <pre>
+	 * 98. Validate Binary Search Tree
+	 * 
+	 * Given a binary tree, determine if it is a valid binary search tree (BST).
+	 * 
+	 * Assume a BST is defined as follows:
+	 * 
+	 * The left subtree of a node contains only nodes with keys less than the node's key.
+	 * The right subtree of a node contains only nodes with keys greater than the node's key.
+	 * Both the left and right subtrees must also be binary search trees.
+	 * 
+	 * Example 1:
+	 *     2
+	 *    / \
+	 *   1   3
+	 * Binary tree [2,1,3], return true.
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_98() {
+		TreeNode root1 = new TreeNode(2);
+		root1.addLeft(1);
+		root1.addRight(3);
+		boolean output1 = isValidBST(root1);
+		assertThat(output1).isTrue();
+		
+		TreeNode root2 = new TreeNode(1);
+		root2.addLeft(2);
+		root2.addRight(3);
+		boolean output2 = isValidBST(root2);
+		assertThat(output2).isFalse();
+	}
+	
+    private boolean isValidBST(TreeNode root) {
+    	return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    
+    public boolean isValidBST(TreeNode root, long minVal, long maxVal) {
+        if (root == null) return true;
+        if (root.val >= maxVal || root.val <= minVal) return false;
+        return isValidBST(root.left, minVal, root.val) && isValidBST(root.right, root.val, maxVal);
     }
 	
 	/**
@@ -1933,6 +2298,199 @@ public class TestLeetcode {
 	 * <pre>
 	 * [Amazon]
 	 * 
+	 * [Hard]
+	 * 
+	 * 126. Word Ladder II
+	 * 
+	 * Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:
+	 * 
+	 * Only one letter can be changed at a time
+	 * Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+	 * For example,
+	 * 
+	 * Given:
+	 * beginWord = "hit"
+	 * endWord = "cog"
+	 * wordList = ["hot","dot","dog","lot","log","cog"]
+	 * Return
+	 *   [
+	 *     ["hit","hot","dot","dog","cog"],
+	 *     ["hit","hot","lot","log","cog"]
+	 *   ]
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_126() {
+		String beginWord = "hit";
+		String endWord = "cog";
+		List<String> wordList = Arrays.asList("hot","dot","dog","lot","log","cog");
+		List<List<String>> output = findLadders(beginWord, endWord, wordList);
+		List<List<String>> expectedOutput1 = new ArrayList<>();
+		expectedOutput1.add(Arrays.asList("hit","hot","dot","dog","cog"));
+		expectedOutput1.add(Arrays.asList("hit","hot","lot","log","cog"));
+		assertThat(output).isEqualTo(expectedOutput1);
+	}
+	
+	public List<List<String>> findLadders(String start, String end, List<String> wordList) {
+		HashSet<String> dict = new HashSet<String>(wordList);
+		List<List<String>> res = new ArrayList<List<String>>();
+		HashMap<String, ArrayList<String>> nodeNeighbors = new HashMap<String, ArrayList<String>>(); // Neighbors for every node
+		HashMap<String, Integer> distance = new HashMap<String, Integer>(); // Distance of every node from the start node
+		ArrayList<String> solution = new ArrayList<String>();
+
+		dict.add(start);
+		bfs(start, end, dict, nodeNeighbors, distance);
+		dfs(start, end, dict, nodeNeighbors, distance, solution, res);
+		return res;
+	}
+
+	// BFS: Trace every node's distance from the start node (level by level).
+	private void bfs(String start, String end, Set<String> dict, HashMap<String, ArrayList<String>> nodeNeighbors,
+			HashMap<String, Integer> distance) {
+		for (String str : dict)
+			nodeNeighbors.put(str, new ArrayList<String>());
+
+		Queue<String> queue = new LinkedList<String>();
+		queue.offer(start);
+		distance.put(start, 0);
+
+		while (!queue.isEmpty()) {
+			int count = queue.size();
+			boolean foundEnd = false;
+			for (int i = 0; i < count; i++) {
+				String cur = queue.poll();
+				int curDistance = distance.get(cur);
+				ArrayList<String> neighbors = getNeighbors(cur, dict);
+
+				for (String neighbor : neighbors) {
+					nodeNeighbors.get(cur).add(neighbor);
+					if (!distance.containsKey(neighbor)) { // Check if visited
+						distance.put(neighbor, curDistance + 1);
+						if (end.equals(neighbor)) // Found the shortest path
+							foundEnd = true;
+						else
+							queue.offer(neighbor);
+					}
+				}
+			}
+
+			if (foundEnd)
+				break;
+		}
+	}
+
+	// Find all next level nodes.
+	private ArrayList<String> getNeighbors(String node, Set<String> dict) {
+		ArrayList<String> res = new ArrayList<String>();
+		char chs[] = node.toCharArray();
+
+		for (char ch = 'a'; ch <= 'z'; ch++) {
+			for (int i = 0; i < chs.length; i++) {
+				if (chs[i] == ch)
+					continue;
+				char old_ch = chs[i];
+				chs[i] = ch;
+				if (dict.contains(String.valueOf(chs))) {
+					res.add(String.valueOf(chs));
+				}
+				chs[i] = old_ch;
+			}
+
+		}
+		return res;
+	}
+
+	// DFS: output all paths with the shortest distance.
+	private void dfs(String cur, String end, Set<String> dict, HashMap<String, ArrayList<String>> nodeNeighbors,
+			HashMap<String, Integer> distance, ArrayList<String> solution, List<List<String>> res) {
+		solution.add(cur);
+		if (end.equals(cur)) {
+			res.add(new ArrayList<String>(solution));
+		} else {
+			for (String next : nodeNeighbors.get(cur)) {
+				if (distance.get(next) == distance.get(cur) + 1) {
+					dfs(next, end, dict, nodeNeighbors, distance, solution, res);
+				}
+			}
+		}
+		solution.remove(solution.size() - 1);
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 127. Word Ladder
+	 * 
+	 * Given two words (beginWord and endWord), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
+	 * 
+	 * Only one letter can be changed at a time.
+	 * Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+	 * For example,
+	 * 
+	 * Given:
+	 * beginWord = "hit"
+	 * endWord = "cog"
+	 * wordList = ["hot","dot","dog","lot","log","cog"]
+	 * As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+	 * return its length 5.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_127() {
+		String beginWord = "hit";
+		String endWord = "cog";
+		
+		List<String> wordList = Arrays.asList("hot","dot","dog","lot","log","cog");
+		int output1 = ladderLength(beginWord, endWord, wordList);
+		int expectedOutput1 = 5;
+		assertThat(output1).isEqualTo(expectedOutput1);
+	}
+	
+	private int ladderLength(String beginWord, String endWord, List<String> wordAsList) {
+		if (!wordAsList.contains(endWord))
+			return 0;
+
+		Set<String> wordList = new HashSet<String>(wordAsList);
+		Set<String> start = new HashSet<String>();
+		Set<String> end = new HashSet<String>();
+		int length = 1;
+		start.add(beginWord);
+		end.add(endWord);
+		wordList.remove(beginWord);
+		wordList.remove(endWord);
+
+		while (!start.isEmpty()) {
+			Set<String> next = new HashSet<String>();
+			for (String word : start) {
+				char[] wordArray = word.toCharArray();
+				for (int i = 0; i < word.length(); i++) {
+					char old = wordArray[i];
+					for (char c = 'a'; c <= 'z'; c++) {
+						wordArray[i] = c;
+						String str = String.valueOf(wordArray);
+						if (end.contains(str))
+							return length + 1;
+						if (wordList.contains(str)) {
+							next.add(str);
+							wordList.remove(str);
+						}
+					}
+					wordArray[i] = old;
+				}
+			}
+			start = next.size() < end.size() ? next : end;
+			end = start.size() < end.size() ? end : next;
+			length++;
+		}
+		return 0;
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
 	 * 138. Copy List with Random Pointer
 	 * 
 	 * A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
@@ -1942,7 +2500,13 @@ public class TestLeetcode {
 	 */
 	@Test
 	public void test_leetcode_138() {
-		// TODO test case
+		RandomListNode head = new RandomListNode(1);
+		head.next = new RandomListNode(2);
+		head.next.next = new RandomListNode(3);
+	
+		RandomListNode output = copyRandomList(head);
+		
+		assertThat(output).isEqualTo(head);
 	}
 	
     private RandomListNode copyRandomList(RandomListNode head) {
@@ -1997,7 +2561,135 @@ public class TestLeetcode {
 		RandomListNode(int x) {
 			this.label = x;
 		}
+
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + label;
+			result = prime * result + ((next == null) ? 0 : next.hashCode());
+			result = prime * result + ((random == null) ? 0 : random.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			RandomListNode other = (RandomListNode) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (label != other.label)
+				return false;
+			if (next == null) {
+				if (other.next != null)
+					return false;
+			} else if (!next.equals(other.next))
+				return false;
+			if (random == null) {
+				if (other.random != null)
+					return false;
+			} else if (!random.equals(other.random))
+				return false;
+			return true;
+		}
+
+		private TestLeetcode getOuterType() {
+			return TestLeetcode.this;
+		}
 	};
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 139. Word Break
+	 * 
+	 * Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words. You may assume the dictionary does not contain duplicate words.
+	 * 
+	 * For example, given
+	 * s = "leetcode",
+	 * dict = ["leet", "code"].
+	 * 
+	 * Return true because "leetcode" can be segmented as "leet code".
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_139() {
+		String s = "leetcode";
+		List<String> wordDict = Arrays.asList("leet", "code");
+		boolean output1 = wordBreak(s, wordDict);
+		assertThat(output1).isTrue();
+	}
+	
+	private boolean wordBreak(String s, List<String> wordDict) {
+		if (s == null || s.length() == 0) {
+			return true;
+		}
+		int n = s.length();
+
+		boolean[] dp = new boolean[n + 1];
+		dp[0] = true;
+
+		int maxLength = 0;
+		for (String t : wordDict) {
+			maxLength = Math.max(maxLength, t.length());
+		}
+
+		for (int i = 1; i <= n; i++) {
+			dp[i] = false;
+			for (int j = i - 1; j >= Math.max(0, i - maxLength) && !dp[i]; j--) {
+				if (dp[j]) {
+					if (wordDict.contains(s.substring(j, i))) {
+						dp[i] = true;
+					}
+				}
+			}
+
+		}
+
+		return dp[n];
+
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 141. Linked List Cycle
+	 * 
+	 * Given a linked list, determine if it has a cycle in it.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_141() {
+		ListNode head = new ListNode(1);
+		head.next = new ListNode(2);
+		head.next.next = new ListNode(3);
+		head.next.next.next = head;
+		
+		boolean output1 = hasCycle(head);
+		
+		assertThat(output1).isTrue();
+	}
+	
+	private boolean hasCycle(ListNode head) {
+		if (head == null)
+			return false;
+		ListNode walker = head;
+		ListNode runner = head;
+		while (runner.next != null && runner.next.next != null) {
+			walker = walker.next;
+			runner = runner.next.next;
+			if (walker == runner)
+				return true;
+		}
+		return false;
+	}
 	
 	/**
 	 * <pre>
@@ -2011,28 +2703,39 @@ public class TestLeetcode {
 	@Test
 	@Ignore
 	public void test_leetcode_142() {
-//		ListNode cycleBeginNode = detectCycle(head);
+		ListNode head = new ListNode(1);
+		head.next = new ListNode(2);
+		head.next.next = new ListNode(3);
+		
+		ListNode output = detectCycle(head);
+		assertThat(output).isNull();
+		
+		System.out.println("~~~~~~~~~~");
+		
+		head.next.next.next = head;
+		output = detectCycle(head);
+		System.out.println(output.toString());
 	}
 	
-//	private ListNode detectCycle(ListNode head) {
-//		ListNode slow = head;
-//		ListNode fast = head;
-//
-//		while (fast != null && fast.next != null) {
-//			fast = fast.next.next;
-//			slow = slow.next;
-//
-//			if (fast == slow) {
-//				ListNode slow2 = head;
-//				while (slow2 != slow) {
-//					slow = slow.next;
-//					slow2 = slow2.next;
-//				}
-//				return slow;
-//			}
-//		}
-//		return null;
-//	}
+	private ListNode detectCycle(ListNode head) {
+		ListNode slow = head;
+		ListNode fast = head;
+
+		while (fast != null && fast.next != null) {
+			fast = fast.next.next;
+			slow = slow.next;
+
+			if (fast == slow) {
+				ListNode slow2 = head;
+				while (slow2 != slow) {
+					slow = slow.next;
+					slow2 = slow2.next;
+				}
+				return slow;
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * <pre>
@@ -2166,9 +2869,9 @@ public class TestLeetcode {
 	 * For example, the following two linked lists:
 	 * 
 	 * A:      a1 → a2
-     *			                   ↘
+     *			       ↘
      * 				    c1 → c2 → c3
-     * 				       ↗            
+     * 				   ↗            
 	 * B: b1 → b2 → b3
 	 * begin to intersect at node c1.
 	 * 
@@ -2424,6 +3127,61 @@ public class TestLeetcode {
 			"Select DISTINCT l1.Num ConsecutiveNums from Logs l1, Logs l2, Logs l3" +  
 			"where l1.Id=l2.Id-1 and l2.Id=l3.Id-1" +
 			"and l1.Num=l2.Num and l2.Num=l3.Num";
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 186. Reverse Words in a String II
+	 * 
+	 * Given an input string, reverse the string word by word. A word is defined as a sequence of non-space characters.
+	 * 
+	 * The input string does not contain leading or trailing spaces and the words are always separated by a single space.
+	 * 
+	 * For example,
+	 * Given s = "the sky is blue",
+	 * return "blue is sky the".
+	 * 
+	 * Could you do it in-place without allocating extra space?
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_186() {
+		char[] s = "the sky is blue".toCharArray();
+		String expectedOutput = "blue is sky the";
+		reverseWords(s);
+		assertThat(new String(s)).isEqualTo(expectedOutput);
+	}
+	
+	private void reverseWords(char[] s) {
+	    // Three step to reverse
+
+		// 1, reverse the whole sentence
+	    reverse(s, 0, s.length - 1);
+	    
+	    // 2, reverse each word
+	    int start = 0;
+	    for (int i = 0; i < s.length; i++) {
+	        if (s[i] == ' ') {
+	            reverse(s, start, i - 1);
+	            start = i + 1;
+	        }
+	    }
+	    
+	    // 3, reverse the last word, if there is only one word this will solve the corner case
+	    reverse(s, start, s.length - 1);
+	}
+
+	private void reverse(char[] s, int start, int end) {
+	    while (start < end) {
+	        char temp = s[start];
+	        s[start] = s[end];
+	        s[end] = temp;
+	        start++;
+	        end--;
+	    }
 	}
 	
 	/**
@@ -2723,6 +3481,35 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 206. Reverse Linked List
+	 * 
+	 * Reverse a singly linked list.
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_206() {
+		ListNode head = new ListNode(1);
+		head.addLast(2);
+		head.addLast(3);
+		ListNode output1 = reverseList(head);
+		assertThat(output1.toString()).isEqualTo("3 -> 2 -> 1");
+	}
+	
+    private ListNode reverseList(ListNode head) {
+    	ListNode prev = null;
+        while (head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+	
+	/**
+	 * <pre>
 	 * 214. Shortest Palindrome
 	 * 
 	 * Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. Find and return the shortest palindrome you can find by performing this transformation.
@@ -2984,7 +3771,7 @@ public class TestLeetcode {
 		boolean output1 = isPalindrome(head);
 		boolean expectedOutput1 = true;
 		assertThat(output1).isEqualTo(expectedOutput1);
-		System.out.println("<<<< test_leetcode_234 starting done");
+		System.out.println("<<<< test_leetcode_234 done");
 	}
 	
 	/**
@@ -3006,7 +3793,7 @@ public class TestLeetcode {
             slow = slow.next;
             System.out.println("Set Slow as next: " + slow);
         }
-        slow = reverse(slow);
+        slow = reverseList(slow);
         System.out.println("Reverse Slow: " + slow);
         
         fast = head;
@@ -3025,17 +3812,6 @@ public class TestLeetcode {
         return true;
     }
 
-    private ListNode reverse(ListNode head) {
-        ListNode prev = null;
-        while (head != null) {
-            ListNode next = head.next;
-            head.next = prev;
-            prev = head;
-            head = next;
-        }
-        return prev;
-    }
-	
 	/**
 	 * <pre>
 	 * 237. Delete Node in a Linked List
@@ -3125,6 +3901,219 @@ public class TestLeetcode {
             return result;
 		}
 	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 238. Product of Array Except Self
+	 * 
+	 * Given an array of n integers where n > 1, nums, 
+	 * 
+	 * return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].
+	 * 
+	 * Solve it without division and in O(n).
+	 * 
+	 * For example, given [1,2,3,4], return [24,12,8,6].
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_238() {
+		int[] nums1 = new int[] {1,2,3,4};
+		int[] output1 = productExceptSelf(nums1);
+		assertThat(output1).contains(6,8,12,24);
+		
+		int[] nums2 = new int[] {5,6,7,8};
+		int[] output2 = productExceptSelf(nums2);
+		assertThat(output2).contains(336,280,240,210);
+	}
+	
+    private int[] productExceptSelf(int[] nums) {
+    	int n = nums.length;
+        int[] res = new int[n];
+        res[0] = 1;
+        for (int i = 1; i < n; i++) {
+            res[i] = res[i - 1] * nums[i - 1];
+        }
+        int right = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            res[i] *= right;
+            right *= nums[i];
+        }
+        return res;
+    }
+    
+    /**
+     * <pre>
+     * [Amazon]
+     * 
+     * 239. Sliding Window Maximum
+     * 
+     * Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+     * 
+     * For example,
+     * Given nums = [1,3,-1,-3,5,3,6,7], and k = 3.
+     * 
+     * Window position                Max
+     * ---------------               -----
+     * [1  3  -1] -3  5  3  6  7       3
+     *  1 [3  -1  -3] 5  3  6  7       3
+     *  1  3 [-1  -3  5] 3  6  7       5
+     *  1  3  -1 [-3  5  3] 6  7       5
+     *  1  3  -1  -3 [5  3  6] 7       6
+     *  1  3  -1  -3  5 [3  6  7]      7
+     * Therefore, return the max sliding window as [3,3,5,5,6,7].
+     * </pre>
+     */
+    @Test
+	public void test_leetcode_239() {
+    	int[] nums1 = new int[] {1,3,-1,-3,5,3,6,7};
+    	int k1 = 3;
+    	int[] output1 = maxSlidingWindow(nums1, k1);
+    	int[] expectedOutput1 = new int[] {3,3,5,5,6,7};
+    	assertThat(output1).isEqualTo(expectedOutput1);
+    	
+    	int[] nums2 = new int[] {1,3,-1,-3,5,3,6,7};
+    	int k2 = 4;
+    	int[] output2 = maxSlidingWindow(nums2, k2);
+    	int[] expectedOutput2 = new int[] {3,5,5,6,7};
+    	assertThat(output2).isEqualTo(expectedOutput2);
+    }
+    
+    private int[] maxSlidingWindow(int[] nums, int k) {
+    	int n = nums.length;
+        if (n == 0) {
+            return nums;
+        }
+        int[] result = new int[n - k + 1];
+        LinkedList<Integer> dq = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            if (!dq.isEmpty() && dq.peek() < i - k + 1) {
+                dq.poll();
+            }
+            while (!dq.isEmpty() && nums[i] >= nums[dq.peekLast()]) {
+                dq.pollLast();
+            }
+            dq.offer(i);
+            if (i - k + 1 >= 0) {
+                result[i - k + 1] = nums[dq.peek()];
+            }
+        }
+        return result;
+    }
+    
+    /**
+     * <pre>
+     * [Amazon]
+     * 
+     * 240. Search a 2D Matrix II
+     * 
+     * Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+     * 
+     * Integers in each row are sorted in ascending from left to right.
+     * Integers in each column are sorted in ascending from top to bottom.
+     * For example,
+     * 
+     * Consider the following matrix:
+     * 
+     * [
+     *   [1,   4,  7, 11, 15],
+     *   [2,   5,  8, 12, 19],
+     *   [3,   6,  9, 16, 22],
+     *   [10, 13, 14, 17, 24],
+     *   [18, 21, 23, 26, 30]
+     * ]
+     * Given target = 5, return true.
+     * 
+     * Given target = 20, return false.
+     * 
+     * </pre>
+     */
+    @Test
+	public void test_leetcode_240() {
+    	int[][] matrix = new int[][] {
+    		new int[] { 1,  4,  7, 11, 15},
+    		new int[] { 2,  5,  8, 12, 19},
+    		new int[] { 3,  6,  9, 16, 22},
+    		new int[] {10, 13, 14, 17, 24},
+    		new int[] {18, 21, 23, 26, 30}
+    	};
+    	int target1 = 5;
+    	boolean output1 = searchMatrix(matrix, target1);
+    	assertThat(output1).isTrue();
+    	
+    	int target2 = 20;
+    	boolean output2 = searchMatrix(matrix, target2);
+    	assertThat(output2).isFalse();
+    }
+    
+    /**
+     * We start search the matrix from top right corner, 
+     * 
+     * initialize the current position to top right corner, 
+     * 
+     * if the target is greater than the value in current position, 
+     * 
+     * then the target can not be in entire row of current position because the row is sorted, 
+     * 
+     * if the target is less than the value in current position, 
+     * 
+     * then the target can not in the entire column because the column is sorted too. 
+     * 
+     * We can rule out one row or one column each time, so the time complexity is O(m+n). 
+     */
+	private boolean searchMatrix(int[][] matrix, int target) {
+		if (matrix == null || matrix.length < 1 || matrix[0].length < 1) {
+			return false;
+		}
+		int col = matrix[0].length - 1;
+		int row = 0;
+		while (col >= 0 && row <= matrix.length - 1) {
+			if (target == matrix[row][col]) {
+				return true;
+			} else if (target < matrix[row][col]) {
+				col--;
+			} else if (target > matrix[row][col]) {
+				row++;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 242. Valid Anagram
+	 * 
+	 * Given two strings s and t, write a function to determine if t is an anagram of s.
+	 * 
+	 * For example,
+	 * s = "anagram", t = "nagaram", return true.
+	 * s = "rat", t = "car", return false.
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_242() {
+		String s1 = "anagram";
+		String t1 = "nagaram";
+		boolean output1 = isAnagram(s1, t1);
+		assertThat(output1).isTrue();
+		
+		String s2 = "rat";
+		String t2 = "car";
+		boolean output2 = isAnagram(s2, t2);
+		assertThat(output2).isFalse();
+	}
+	
+    private boolean isAnagram(String s, String t) {
+    	int[] alphabet = new int[26];
+        for (int i = 0; i < s.length(); i++) alphabet[s.charAt(i) - 'a']++;
+        for (int i = 0; i < t.length(); i++) alphabet[t.charAt(i) - 'a']--;
+        for (int i : alphabet) if (i != 0) return false;
+        return true;
+    }
 	
 	/**
 	 * <pre>
@@ -3427,7 +4416,7 @@ public class TestLeetcode {
 	 */
 	@Test
 	public void test_leetcode_297() {
-		Codec codec = new Codec();
+		Codec297 codec = new Codec297();
 
 		// testing serialize
 		TreeNode root = new TreeNode(1);
@@ -3448,7 +4437,7 @@ public class TestLeetcode {
 		assertThat(treePaths).isEqualTo(expectedTreePaths);
 	}
 	
-	private class Codec {
+	private class Codec297 {
 
 	    private static final String DELIMITER = "/";
 	    private static final String NULL_NODE = "NULL";
@@ -4137,6 +5126,155 @@ public class TestLeetcode {
 				hi = mid;
 		}
 		return lo;
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 380. Insert Delete GetRandom O(1)
+	 * 
+	 * Design a data structure that supports all following operations in average O(1) time.
+	 * 
+	 * insert(val): Inserts an item val to the set if not already present.
+	 * remove(val): Removes an item val from the set if present.
+	 * getRandom: Returns a random element from current set of elements. Each element must have the same probability of being returned.
+	 * 
+	 * Example:
+	 * 
+	 * // Init an empty set.
+	 * RandomizedSet randomSet = new RandomizedSet();
+	 * 
+	 * // Inserts 1 to the set. Returns true as 1 was inserted successfully.
+	 * randomSet.insert(1);
+	 * 
+	 * // Returns false as 2 does not exist in the set.
+	 * randomSet.remove(2);
+	 * 
+	 * // Inserts 2 to the set, returns true. Set now contains [1,2].
+	 * randomSet.insert(2);
+	 * 
+	 * // getRandom should return either 1 or 2 randomly.
+	 * randomSet.getRandom();
+	 * 
+	 * // Removes 1 from the set, returns true. Set now contains [2].
+	 * randomSet.remove(1);
+	 * 
+	 * // 2 was already in the set, so return false.
+	 * randomSet.insert(2);
+	 * 
+	 * // Since 2 is the only number in the set, getRandom always return 2.
+	 * randomSet.getRandom();
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_380() {
+		RandomizedSet randomSet = new RandomizedSet();
+		
+		boolean val1 = randomSet.insert(1); assertThat(val1).isTrue();
+		
+		boolean val2 = randomSet.remove(2); assertThat(val2).isFalse();
+		
+		boolean val3 = randomSet.insert(2); assertThat(val3).isTrue();
+		
+		int val4 = randomSet.getRandom(); assertThat(val4).isIn(1,2);
+
+		boolean val5 = randomSet.remove(1); assertThat(val5).isTrue();
+		
+		boolean val6 = randomSet.insert(2); assertThat(val6).isFalse();
+		
+		int val7 = randomSet.getRandom(); assertThat(val7).isEqualTo(2);
+	}
+	
+	class RandomizedSet {
+
+		ArrayList<Integer> nums;
+		HashMap<Integer, Integer> locs;
+		java.util.Random rand = new java.util.Random();
+
+		/** Initialize your data structure here. */
+		public RandomizedSet() {
+			nums = new ArrayList<Integer>();
+			locs = new HashMap<Integer, Integer>();
+		}
+
+		/**
+		 * Inserts a value to the set. Returns true if the set did not already
+		 * contain the specified element.
+		 */
+		public boolean insert(int val) {
+			boolean contain = locs.containsKey(val);
+			if (contain)
+				return false;
+			locs.put(val, nums.size());
+			nums.add(val);
+			return true;
+		}
+
+		/**
+		 * Removes a value from the set. Returns true if the set contained the
+		 * specified element.
+		 */
+		public boolean remove(int val) {
+			boolean contain = locs.containsKey(val);
+			if (!contain)
+				return false;
+			int loc = locs.get(val);
+			if (loc < nums.size() - 1) { // not the last one than swap the last one with this val
+				int lastone = nums.get(nums.size() - 1);
+				nums.set(loc, lastone);
+				locs.put(lastone, loc);
+			}
+			locs.remove(val);
+			nums.remove(nums.size() - 1);
+			return true;
+		}
+
+		/** Get a random element from the set. */
+		public int getRandom() {
+			return nums.get(rand.nextInt(nums.size()));
+		}
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * 387. First Unique Character in a String
+	 * 
+	 * Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+     * 
+     * Examples:
+     * 
+     * s = "leetcode"
+     * return 0.
+     * 
+     * s = "loveleetcode",
+     * return 2.
+     * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_387() {
+		String s1 = "leetcode";
+		int output1 = firstUniqChar(s1);
+		int expectedOutput1 = 0;
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String s2 = "loveleetcode";
+		int output2 = firstUniqChar(s2);
+		int expectedOutput2 = 2;
+		assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int firstUniqChar(String s) {
+		int freq[] = new int[26];
+		for (int i = 0; i < s.length(); i++)
+			freq[s.charAt(i) - 'a']++;
+		for (int i = 0; i < s.length(); i++)
+			if (freq[s.charAt(i) - 'a'] == 1)
+				return i;
+		return -1;
 	}
 	
 	/**
@@ -5054,6 +6192,74 @@ public class TestLeetcode {
 			}
 		}
 		return res;
+	}
+	
+	/**
+	 * <pre>
+	 * 449. Serialize and Deserialize BST
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_leetcode_449() {
+		// TODO test case
+	}
+	
+	class Codec449 {
+
+		private static final String SEP = ",";
+		private static final String NULL = "null";
+
+		// Encodes a tree to a single string.
+		public String serialize(TreeNode root) {
+			StringBuilder sb = new StringBuilder();
+			if (root == null)
+				return NULL;
+			// traverse it recursively if you want to, I am doing it iteratively here
+			Stack<TreeNode> st = new Stack<>();
+			st.push(root);
+			while (!st.empty()) {
+				root = st.pop();
+				sb.append(root.val).append(SEP);
+				if (root.right != null)
+					st.push(root.right);
+				if (root.left != null)
+					st.push(root.left);
+			}
+			return sb.toString();
+		}
+
+		// Decodes your encoded data to tree.
+		// pre-order traversal
+		public TreeNode deserialize(String data) {
+			if (data.equals(NULL))
+				return null;
+			String[] strs = data.split(SEP);
+			Queue<Integer> q = new LinkedList<>();
+			for (String e : strs) {
+				q.offer(Integer.parseInt(e));
+			}
+			return getNode(q);
+		}
+
+		// some notes:
+		//    5
+		//  3   6
+		// 2     7
+		private TreeNode getNode(Queue<Integer> q) { // q: 5,3,2,6,7
+			if (q.isEmpty())
+				return null;
+			TreeNode root = new TreeNode(q.poll());// root (5)
+			Queue<Integer> samllerQueue = new LinkedList<>();
+			while (!q.isEmpty() && q.peek() < root.val) {
+				samllerQueue.offer(q.poll());
+			}
+			// smallerQueue : 3,2 storing elements smaller than 5 (root)
+			root.left = getNode(samllerQueue);
+			// q: 6,7 storing elements bigger than 5 (root)
+			root.right = getNode(q);
+			return root;
+		}
 	}
 
 	/**
