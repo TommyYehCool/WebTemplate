@@ -76,6 +76,30 @@ public class TestJava {
         System.out.println("<<<< testShift done");
 	}
 	
+	/**
+	 * <pre>
+	 * <a href="http://rx1226.pixnet.net/blog/post/323727963-%5Bjava%5D-5-3-%E4%BD%8D%E7%A7%BB%E9%81%8B%E7%AE%97%E5%AD%90-shift-operators">Java shift operators</a>
+	 * </pre>
+	 */
+	@Test
+	public void testShift2() {
+		System.out.println(">>>> Starting to testShift2");
+		
+		// 結果 0x0000 0010 相當於乘 2 
+		System.out.printf("0x%x\n", 1 << 1);
+		
+		// 結果 0x0000 0000 相當於計算機的除 2
+		System.out.printf("0x%x\n", 1 >> 1);
+		
+		// 左邊補上原來最左邊的位元值, 相當於除 2
+		System.out.printf("0x%x\n", -1 >> 1);
+		
+		// 左邊補上 0, 其他向右位移
+		System.out.printf("0x%x\n", -1 >>> 1);
+		
+		System.out.println("<<<< testShift2 done");
+	}
+	
 	@Test
 	public void testStack() {
 		System.out.println(">>>> Starting to testStack");
