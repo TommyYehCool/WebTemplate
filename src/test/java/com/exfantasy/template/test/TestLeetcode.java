@@ -7047,6 +7047,11 @@ public class TestLeetcode {
 		int expectedOutput3 = 5;
 		int output3 = longestPalindromeSubseq(input3);
 		assertThat(output3).isEqualTo(expectedOutput3);
+		
+		String input4 = "aba";
+		int expectedOutput4 = 3;
+		int output4 = longestPalindromeSubseq(input4);
+		assertThat(output4).isEqualTo(expectedOutput4);
 	}
 
 	private int longestPalindromeSubseq(String s) {
