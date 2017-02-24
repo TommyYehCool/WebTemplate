@@ -2903,9 +2903,9 @@ public class TestLeetcode {
 	 * For example, the following two linked lists:
 	 * 
 	 * A:      a1 → a2
-     *			       ↘
+     *			                    ↘
      * 				    c1 → c2 → c3
-     * 				   ↗            
+     * 				        ↗            
 	 * B: b1 → b2 → b3
 	 * begin to intersect at node c1.
 	 * 
@@ -6669,6 +6669,111 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * 480. Sliding Window Median
+	 * 
+	 * Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
+	 * 
+	 * Examples: 
+	 * [2,3,4] , the median is 3
+	 * 
+	 * [2,3], the median is (2 + 3) / 2 = 2.5
+	 * 
+	 * Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Your job is to output the median array for each window in the original array.
+	 * 
+	 * For example,
+	 * Given nums = [1,3,-1,-3,5,3,6,7], and k = 3.
+	 * 
+	 * Window position                Median
+	 * ---------------                -----
+	 * [1  3  -1] -3  5  3  6  7        1
+	 *  1 [3  -1  -3] 5  3  6  7       -1
+	 *  1  3 [-1  -3  5] 3  6  7       -1
+	 *  1  3  -1 [-3  5  3] 6  7        3
+	 *  1  3  -1  -3 [5  3  6] 7        5
+	 *  1  3  -1  -3  5 [3  6  7]       6
+	 * Therefore, return the median sliding window as [1,-1,-1,3,5,6].
+	 * 
+	 * Note: 
+	 * You may assume k is always valid, ie: 1 ≤ k ≤ input array's size for non-empty array.
+	 * 
+	 * </pre> 
+	 */
+	@Test
+	public void test_leetcode_480() {
+		int[] nums = new int[] {1, 3, -1, -3, 5, 3, 6, 7};
+		int k = 3;
+		double[] output = medianSlidingWindow(nums, k);
+		double[] expectedOutput = new double[] {1, -1, -1, 3, 5, 6};
+		assertThat(output).isEqualTo(expectedOutput);
+	}
+	
+	PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+	PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(new Comparator<Integer>() {
+		public int compare(Integer i1, Integer i2) {
+			return i2.compareTo(i1);
+		}
+	});
+
+	private double[] medianSlidingWindow(int[] nums, int k) {
+		int n = nums.length - k + 1;
+		if (n <= 0)
+			return new double[0];
+
+		double[] result = new double[n];
+
+		for (int i = 0; i <= nums.length; i++) {
+			if (i >= k) {
+				result[i - k] = getMedian();
+				remove(nums[i - k]);
+			}
+			if (i < nums.length) {
+				add(nums[i]);
+			}
+		}
+		return result;
+	}
+
+	private void add(int num) {
+		if (num < getMedian()) {
+			maxHeap.add(num);
+		} else {
+			minHeap.add(num);
+		}
+		if (maxHeap.size() > minHeap.size()) {
+			minHeap.add(maxHeap.poll());
+		}
+		if (minHeap.size() - maxHeap.size() > 1) {
+			maxHeap.add(minHeap.poll());
+		}
+	}
+
+	private void remove(int num) {
+		if (num < getMedian()) {
+			maxHeap.remove(num);
+		} else {
+			minHeap.remove(num);
+		}
+		if (maxHeap.size() > minHeap.size()) {
+			minHeap.add(maxHeap.poll());
+		}
+		if (minHeap.size() - maxHeap.size() > 1) {
+			maxHeap.add(minHeap.poll());
+		}
+	}
+
+	private double getMedian() {
+		if (maxHeap.isEmpty() && minHeap.isEmpty())
+			return 0;
+
+		if (maxHeap.size() == minHeap.size()) {
+			return ((double) maxHeap.peek() + (double) minHeap.peek()) / 2.0;
+		} else {
+			return (double) minHeap.peek();
+		}
+	}
+	
+	/**
+	 * <pre>
 	 * 494. Target Sum
 	 * 
 	 * You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.
@@ -6950,5 +7055,58 @@ public class TestLeetcode {
 			}
 		}
 		return dp[0][s.length() - 1];
+	}
+	
+	/**
+	 * <pre>
+	 * [Amazon]
+	 * 
+	 * Sliding Window Sum
+	 * 
+	 * Given a list of integers and a window size, return a new list of integers where each integer is the sum of all integers in the kth window of the input list. 
+	 * 
+	 * The kth window of the input list is the integers from index k to index k + window size - 1 (inclusive).
+	 * 
+	 * For example, [1, 2, 3, 4] and window size 3 should return [6,9]. 
+	 * 
+	 * </pre>
+	 */
+	@Test
+	public void test_nonleetcode_sliding_windows_sum() {
+		int[] nums1 = new int[] {1, 2, 3, 4};
+        int[] output1 = slidingWindowSum(nums1, 3);
+        int[] expectedOutput1 = new int[] {6, 9};
+        assertThat(output1).isEqualTo(expectedOutput1);
+        
+        int[] nums2 = new int[] {4, 2, 73, 11, -5};
+        int[] output2 = slidingWindowSum(nums2, 2);
+        int[] expectedOutput2 = new int[] {6, 75, 84, 6};
+        assertThat(output2).isEqualTo(expectedOutput2);
+	}
+	
+	private int[] slidingWindowSum(int[] nums, int k) {
+		int n = nums.length;
+        if (n == 0) {
+            return nums;
+        }
+        int[] result = new int[n - k + 1];
+        
+        int curSum = 0;
+        
+        for (int i = 0, j = 0; i < nums.length; i++) {
+        	curSum += nums[i];
+        	
+        	// 達到 window 的 size
+        	if (i >= k - 1) {
+        		if (i - k >= 0) {
+        			// 將加總扣掉上一個 window 的第一個值
+        			curSum -= nums[i - k];
+        		}
+        		
+        		// 將加總塞入結果
+        		result[j++] = curSum;
+        	}
+        }
+        return result;
 	}
 }
