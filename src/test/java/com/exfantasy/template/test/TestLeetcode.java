@@ -7033,12 +7033,20 @@ public class TestLeetcode {
 	 */
 	@Test
 	public void test_leetcode_516() {
-		String input = "bbbab";
-		int expectedOutput = 4;
-
-		int output = longestPalindromeSubseq(input);
-
-		assertThat(output).isEqualTo(expectedOutput);
+		String input1 = "bbbab";
+		int expectedOutput1 = 4;
+		int output1 = longestPalindromeSubseq(input1);
+		assertThat(output1).isEqualTo(expectedOutput1);
+		
+		String input2 = "cbbd";
+		int expectedOutput2 = 2;
+		int output2 = longestPalindromeSubseq(input2);
+		assertThat(output2).isEqualTo(expectedOutput2);
+		
+		String input3 = "xbqvqbs";
+		int expectedOutput3 = 5;
+		int output3 = longestPalindromeSubseq(input3);
+		assertThat(output3).isEqualTo(expectedOutput3);
 	}
 
 	private int longestPalindromeSubseq(String s) {
