@@ -4783,14 +4783,14 @@ public class TestLeetcode {
     
     private String betterReverseString(String s) {
         byte[] bytes = s.getBytes();
-        int i = 0;
-        int j = s.length() - 1;
-        while (i < j) {
-            byte temp = bytes[i];
-            bytes[i] = bytes[j];
-            bytes[j] = temp;
-            i++;
-            j--;
+        int start = 0;
+        int end = s.length() - 1;
+        while (start < end) {
+            byte temp = bytes[start];
+            bytes[start] = bytes[end];
+            bytes[end] = temp;
+            start++;
+            end--;
         }
         return new String(bytes);
     }
