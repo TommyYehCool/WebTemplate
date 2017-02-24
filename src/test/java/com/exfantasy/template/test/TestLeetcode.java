@@ -228,14 +228,17 @@ public class TestLeetcode {
 	 */
 	@Test
 	public void test_leetcode_4() {
-		int[] nums1 = new int[] { 4, 5, 6, 8, 9, 11 };
-		int[] nums2 = new int[] {};
-
-		double expectedOutput = (double) (6 + 8) / 2;
-
-		double median = findMedianSortedArrays(nums1, nums2);
-
-		assertThat(median).isEqualTo(expectedOutput);
+		int[] nums1_1 = new int[] { 4, 5, 6, 8, 9, 11 };
+		int[] nums2_1 = new int[] {};
+		double expectedOutput1 = (double) (6 + 8) / 2;
+		double median1 = findMedianSortedArrays(nums1_1, nums2_1);
+		assertThat(median1).isEqualTo(expectedOutput1);
+		
+		int[] nums1_2 = new int[] { 1, 2 };
+		int[] nums2_2 = new int[] { 3, 4 };
+		double expectedOutput2 = (double) (2 + 3) / 2;
+		double median2 = findMedianSortedArrays(nums1_2, nums2_2);
+		assertThat(median2).isEqualTo(expectedOutput2);
 	}
 
 	private double findMedianSortedArrays(int[] nums1, int[] nums2) {
