@@ -248,11 +248,15 @@ public class TestLeetcode {
 		System.arraycopy(nums1, 0, nums, 0, nums1.length);
 		System.arraycopy(nums2, 0, nums, nums1.length, nums2.length);
 		Arrays.sort(nums);
+		
+		// length is even
 		if (nums.length % 2 == 0) {
 			int firstMedianIndex = (nums.length / 2) - 1;
 			int secondMedianIndex = (nums.length / 2);
 			return (double) (nums[firstMedianIndex] + nums[secondMedianIndex]) / 2;
-		} else {
+		} 
+		// length is odd
+		else {
 			int medianIndex = (nums.length / 2);
 			return nums[medianIndex];
 		}
