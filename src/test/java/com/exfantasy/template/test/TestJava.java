@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +27,36 @@ import lombok.Data;
 public class TestJava {
 	
 	@Test
+	public void testBinarySearch() {
+		System.out.println(">>>> Starting to testBinarySearch");
+
+		int[] nums = new int[] {6, 2, 3, 8, 23, 22, 10, 18, 12, 17};
+		
+		int index = 7;
+		int target = nums[index];
+
+		// 因為陣列沒排序過就用 binary search 會找不到
+		int foundIndex = Arrays.binarySearch(nums, target);
+		assertThat(index).isNotEqualTo(foundIndex);
+		
+		// 陣列經過排序後, 用 binary search 就可以找到
+		Arrays.sort(nums);
+		foundIndex = Arrays.binarySearch(nums, target);
+		assertThat(index).isEqualTo(foundIndex);
+		
+		System.out.println("<<<< testBinarySearch done");
+	}
+	
+	@Test
 	public void testStrReverse() {
+		System.out.println(">>>> Starting to testStrReverse");
+		
 		char[] c1 = "123456".toCharArray();
 		reverse(c1, 0, c1.length - 1);
 		String expectedOutput = "654321";
 		assertThat(new String(c1)).isEqualTo(expectedOutput);
+		
+		System.out.println("<<<< testStrReverse done");
 	}
 	
 	private void reverse(char[] s, int start, int end) {
