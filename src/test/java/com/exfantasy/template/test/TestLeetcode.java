@@ -17,7 +17,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.junit.FixMethodOrder;
@@ -1822,7 +1821,7 @@ public class TestLeetcode {
     	return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
     
-    public boolean isValidBST(TreeNode root, long minVal, long maxVal) {
+    private boolean isValidBST(TreeNode root, long minVal, long maxVal) {
         if (root == null) return true;
         if (root.val >= maxVal || root.val <= minVal) return false;
         return isValidBST(root.left, minVal, root.val) && isValidBST(root.right, root.val, maxVal);
@@ -2367,7 +2366,7 @@ public class TestLeetcode {
 		assertThat(output).isEqualTo(expectedOutput1);
 	}
 	
-	public List<List<String>> findLadders(String start, String end, List<String> wordList) {
+	private List<List<String>> findLadders(String start, String end, List<String> wordList) {
 		HashSet<String> dict = new HashSet<String>(wordList);
 		List<List<String>> res = new ArrayList<List<String>>();
 		HashMap<String, ArrayList<String>> nodeNeighbors = new HashMap<String, ArrayList<String>>(); // Neighbors for every node
