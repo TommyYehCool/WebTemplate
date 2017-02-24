@@ -57,6 +57,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Easy]
+	 * 
 	 * [Amazon]
 	 * 
 	 * 1. Two Sum
@@ -6470,6 +6472,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Hard]
+	 * 
 	 * [Amazon]
 	 * 
 	 * 459. Repeated Substring Pattern
@@ -7038,6 +7042,8 @@ public class TestLeetcode {
 
 	/**
 	 * <pre>
+	 * [Hard]
+	 * 
 	 * [Amazon]
 	 * 
 	 * 516. Longest Palindromic Subsequence
@@ -7097,6 +7103,8 @@ public class TestLeetcode {
 	
 	/**
 	 * <pre>
+	 * [Easy]
+	 * 
 	 * [Amazon]
 	 * 
 	 * Sliding Window Sum
