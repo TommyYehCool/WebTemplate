@@ -1,7 +1,7 @@
 package com.exfantasy.template.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
 import java.text.MessageFormat;
@@ -24,6 +24,24 @@ import lombok.Data;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestJava {
+	
+	@Test
+	public void testStrReverse() {
+		char[] c1 = "123456".toCharArray();
+		reverse(c1, 0, c1.length - 1);
+		String expectedOutput = "654321";
+		assertThat(new String(c1)).isEqualTo(expectedOutput);
+	}
+	
+	private void reverse(char[] s, int start, int end) {
+	    while (start < end) {
+	        char temp = s[start];
+	        s[start] = s[end];
+	        s[end] = temp;
+	        start++;
+	        end--;
+	    }
+	}
 	
 	@Test
 	public void testAscii() {
