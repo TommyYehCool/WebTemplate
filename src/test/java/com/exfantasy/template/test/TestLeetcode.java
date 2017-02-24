@@ -7102,7 +7102,6 @@ public class TestLeetcode {
         			// 將加總扣掉上一個 window 的第一個值
         			curSum -= nums[i - k];
         		}
-        		
         		// 將加總塞入結果
         		result[j++] = curSum;
         	}
