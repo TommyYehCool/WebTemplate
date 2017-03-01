@@ -50,7 +50,7 @@ public class ScheduledTasks {
     }
     
     /**
-     * 每天早上 08:00 去抓最新的 NBA 賽程資料
+     * 每天早上 08:00 去抓最新的 NBA 賽事結果
      */
     @Scheduled(cron = SCHEDULED_TIME)
     public void fetchNewestNBAGames() {
