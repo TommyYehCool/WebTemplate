@@ -1,5 +1,7 @@
 package com.exfantasy.template;
 
+import java.util.TimeZone;
+
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -25,12 +27,12 @@ public class Application extends SpringBootServletInitializer {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	
+	private final String TIME_ZONE_ID = "GMT+8";
+	
 	@PostConstruct
-	public void logSomething() {
-		logger.info("測試中文");
-		logger.info("Sample Info Message");
-		logger.debug("Sample Debug Message");
-		logger.trace("Sample Trace Message");
+	public void started() {
+		TimeZone.setDefault(TimeZone.getTimeZone(TIME_ZONE_ID));
+		logger.info(">>>>> Set default TimeZone to <{}> done <<<<<", TIME_ZONE_ID);
 	}
 	
 	public static void main(String[] args) {
