@@ -9,10 +9,10 @@ spring:
         # Connection Setting
         # Ref: http://stackoverflow.com/questions/30451470/connection-to-db-dies-after-424-in-spring-boot-jpa-hibernate
         # Ref: https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku
-        max-active: 10
-        max-idle: 5
+        max-active: 7
+        max-idle: 3
         min-idle: 2
-        initial-size: 5
+        initial-size: 3
         removeAbandoned: true
         test-while-idle: true
         test-on-borrow: true
