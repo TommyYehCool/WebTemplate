@@ -24,9 +24,10 @@ public class ScheduledTasks {
     private NBAService nbaService;
     
     // second, minute, hour, day of month, month, day(s) of week
-//    private final String SCHEDULED_TIME = "0 0 8 * * *";
+    private final String SCHEDULED_TIME = "0 0 8 * * *";
 
-    private final String SCHEDULED_TIME = "0 57 15 * * *";
+    // for testing
+//    private final String SCHEDULED_TIME = "0 57 15 * * *";
 
 //    @Scheduled(fixedRate = 5000)
 //    public void reportCurrentTime() {
