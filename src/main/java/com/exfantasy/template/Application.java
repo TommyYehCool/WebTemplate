@@ -27,12 +27,9 @@ public class Application extends SpringBootServletInitializer {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	
-	private final String TIME_ZONE_ID = "GMT+8";
-	
 	@PostConstruct
 	public void started() {
-		TimeZone.setDefault(TimeZone.getTimeZone(TIME_ZONE_ID));
-		logger.info(">>>>> Set default TimeZone to <{}> done <<<<<", TIME_ZONE_ID);
+		logger.info(">>>>> Application started <<<<<");
 	}
 	
 	public static void main(String[] args) {
