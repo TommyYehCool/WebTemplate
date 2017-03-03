@@ -1,7 +1,5 @@
 package com.exfantasy.template;
 
-import java.util.TimeZone;
-
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
