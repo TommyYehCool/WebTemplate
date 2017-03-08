@@ -236,4 +236,9 @@ public class TestJava {
 		String orDefault = map.getOrDefault("Hello", "World");
 		System.out.println(orDefault);
 	}
+	
+	@Test
+	public void testAddToBuild() {
+		System.out.println("haha");
+	}
 }
