@@ -93,10 +93,6 @@ dependencies {
 	compile "org.springframework.boot:spring-boot-starter-websocket"
 	compile "org.springframework.boot:spring-boot-starter-test"
 	
-	// --------- line bot spring boot ---------
-	// 整進來會有 exception, 待了解問題再說
-	// compile "com.linecorp.bot:line-bot-spring-boot:1.6.0"
-	
 	// ---------- 待了解這可以幹嘛 ----------
 	// ref: https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-enabling
 	// ref: http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-jmx.html
