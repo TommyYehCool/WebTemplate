@@ -38,7 +38,7 @@ public class RandomUtil {
 	private static String getRandomCodeFromResource(CodeType codeType) {
 		Random random = new Random();
 
-		char[] resources = null;
+		char[] resources = new char[0];
 		switch (codeType) {
 			case CHARACTERS:
 				resources = characters;

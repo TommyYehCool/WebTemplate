@@ -160,7 +160,7 @@ public class ConsumeController {
 			@RequestParam(value = "lotteryNo", required = false) String lotteryNo
 		) {
 		if (endDate != null) {
-			setEndDateTime(endDate);
+			endDate = setEndDateTime(endDate);
 		}
 		
 		User user = sessionService.getLoginUser();
@@ -184,12 +184,12 @@ public class ConsumeController {
 		return typhoonVacation;
 	}
 	
-	private void setEndDateTime(Date endDate) {
+	private Date setEndDateTime(Date endDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(endDate);
 		cal.set(Calendar.HOUR, 23);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
-		endDate = cal.getTime();
+		return cal.getTime();
 	}
 }
