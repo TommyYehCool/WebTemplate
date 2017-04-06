@@ -37,7 +37,7 @@ public enum MapFieldsOfUser implements MapFields {
 	
 	public static MapFieldsOfUser convert(String fieldName) {
 		for (MapFieldsOfUser e : MapFieldsOfUser.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}

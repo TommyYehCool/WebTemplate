@@ -28,7 +28,7 @@ public enum MapFieldsOfNBASchedule implements MapFields {
 	
 	public static MapFieldsOfNBASchedule convert(String fieldName) {
 		for (MapFieldsOfNBASchedule e : MapFieldsOfNBASchedule.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}

@@ -40,7 +40,7 @@ public enum MapFieldsOfActivity implements MapFields {
 	
 	public static MapFieldsOfActivity convert(String fieldName) {
 		for (MapFieldsOfActivity e : MapFieldsOfActivity.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}

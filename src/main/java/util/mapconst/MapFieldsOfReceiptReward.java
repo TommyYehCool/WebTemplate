@@ -27,7 +27,7 @@ public enum MapFieldsOfReceiptReward implements MapFields {
 	
 	public static MapFieldsOfReceiptReward convert(String fieldName) {
 		for (MapFieldsOfReceiptReward e : MapFieldsOfReceiptReward.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}

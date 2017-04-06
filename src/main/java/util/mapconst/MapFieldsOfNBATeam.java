@@ -44,7 +44,7 @@ public enum MapFieldsOfNBATeam implements MapFields {
 	
 	public static MapFieldsOfNBATeam convert(String fieldName) {
 		for (MapFieldsOfNBATeam e : MapFieldsOfNBATeam.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}

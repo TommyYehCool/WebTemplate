@@ -33,7 +33,7 @@ public enum MapFieldsOfActivityMessages implements MapFields {
 	
 	public static MapFieldsOfActivityMessages convert(String fieldName) {
 		for (MapFieldsOfActivityMessages e : MapFieldsOfActivityMessages.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}

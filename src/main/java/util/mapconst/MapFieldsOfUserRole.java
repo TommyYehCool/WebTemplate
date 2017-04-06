@@ -25,7 +25,7 @@ public enum MapFieldsOfUserRole implements MapFields {
 	
 	public static MapFieldsOfUserRole convert(String fieldName) {
 		for (MapFieldsOfUserRole e : MapFieldsOfUserRole.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}

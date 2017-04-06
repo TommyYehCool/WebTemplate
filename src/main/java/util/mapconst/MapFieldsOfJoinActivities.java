@@ -26,7 +26,7 @@ public enum MapFieldsOfJoinActivities implements MapFields {
 	
 	public static MapFieldsOfJoinActivities convert(String fieldName) {
 		for (MapFieldsOfJoinActivities e : MapFieldsOfJoinActivities.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}

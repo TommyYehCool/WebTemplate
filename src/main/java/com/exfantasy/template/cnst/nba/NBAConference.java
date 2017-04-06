@@ -24,7 +24,7 @@ public enum NBAConference {
 	
 	public static String getChinese(String english) {
 		for (NBAConference e : NBAConference.values()) {
-			if (e.english.compareToIgnoreCase(english) == 0) {
+			if (e.english.equalsIgnoreCase(english)) {
 				return e.chinese;
 			}
 		}

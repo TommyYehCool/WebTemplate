@@ -40,7 +40,7 @@ public enum MapClassFieldsDef {
 	
 	public static MapClassFieldsDef convert(String className) {
 		for (MapClassFieldsDef e : MapClassFieldsDef.values()) {
-			if (e.getClassName().compareToIgnoreCase(className) == 0) {
+			if (e.getClassName().equalsIgnoreCase(className)) {
 				return e;
 			}
 		}

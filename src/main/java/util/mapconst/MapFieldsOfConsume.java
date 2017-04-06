@@ -39,7 +39,7 @@ public enum MapFieldsOfConsume implements MapFields {
 	
 	public static MapFieldsOfConsume convert(String fieldName) {
 		for (MapFieldsOfConsume e : MapFieldsOfConsume.values()) {
-			if (e.getFieldName().compareToIgnoreCase(fieldName) == 0) {
+			if (e.getFieldName().equalsIgnoreCase(fieldName)) {
 				return e;
 			}
 		}
