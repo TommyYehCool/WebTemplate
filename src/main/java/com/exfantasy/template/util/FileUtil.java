@@ -21,7 +21,7 @@ import org.springframework.http.MediaType;
  */
 public class FileUtil {
 	
-	private final Logger logger = LoggerFactory.getLogger(FileUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
 	public static HttpHeaders getHttpHeaderByFileName(String pathAndName, byte[] bytes) {
 		String fileName = pathAndName.substring(pathAndName.lastIndexOf("/") + 1, pathAndName.length());
