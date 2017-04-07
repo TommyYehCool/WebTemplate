@@ -21,7 +21,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @Configuration
 public class MailConfig {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MailConfig.class);
+	private final Logger logger = LoggerFactory.getLogger(MailConfig.class);
 
 	@Value("${mail.username}")
 	private String username;

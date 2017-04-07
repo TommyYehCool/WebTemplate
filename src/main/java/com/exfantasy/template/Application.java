@@ -23,7 +23,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 @SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
 public class Application extends SpringBootServletInitializer {
 	
-	private static final Logger logger = LoggerFactory.getLogger(Application.class);
+	private final Logger logger = LoggerFactory.getLogger(Application.class);
 	
 	@PostConstruct
 	public void started() {

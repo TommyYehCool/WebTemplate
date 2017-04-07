@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class ActivityVoDeserializer extends JsonDeserializer<ActivityVo> {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ActivityVoDeserializer.class);
+	private final Logger logger = LoggerFactory.getLogger(ActivityVoDeserializer.class);
 	
 	private SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

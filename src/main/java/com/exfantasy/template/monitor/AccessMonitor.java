@@ -34,7 +34,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 public class AccessMonitor {
 	
-	private static final Logger logger = LoggerFactory.getLogger(AccessMonitor.class);
+	private final Logger logger = LoggerFactory.getLogger(AccessMonitor.class);
 	
 	@Pointcut("execution(* com.exfantasy.template.controller..*(..)) and @annotation(org.springframework.web.bind.annotation.RequestMapping)")
 	public void controllerMethodPointcut() {}

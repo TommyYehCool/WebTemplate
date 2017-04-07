@@ -29,7 +29,7 @@ import com.exfantasy.template.vo.response.file.ListFileResp;
  */
 @Service
 public class FileService {
-	private static final Logger logger = LoggerFactory.getLogger(FileService.class);
+	private final Logger logger = LoggerFactory.getLogger(FileService.class);
 	
 	private final String PROFILE_IMAGE_NAME = "profileImage.jpg";
 	

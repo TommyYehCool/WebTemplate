@@ -49,7 +49,7 @@ import com.exfantasy.template.vo.request.user.RegisterVo;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UserService {
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	private final Logger logger = LoggerFactory.getLogger(UserService.class);
 	
     @Autowired
     private UserMapper userMapper;

@@ -17,7 +17,7 @@ import com.exfantasy.template.cnst.jms.QueueName;
  */
 @Component
 public class Consumer {
-	private static final Logger logger = LoggerFactory.getLogger(Consumer.class);
+	private final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
 	@JmsListener(destination = QueueName.TESTING_Q)
 	public void receiveFromTestingQueue(String text) {

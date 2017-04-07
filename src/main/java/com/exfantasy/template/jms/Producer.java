@@ -20,7 +20,7 @@ import com.exfantasy.template.cnst.jms.QueueName;
  */
 @Component
 public class Producer {
-	private static final Logger logger = LoggerFactory.getLogger(Producer.class);
+	private final Logger logger = LoggerFactory.getLogger(Producer.class);
 	
 	@Autowired
 	private JmsMessagingTemplate jmsMessageTemplate;

@@ -31,7 +31,7 @@ import com.exfantasy.template.util.BCryptUtil;
 @Component
 public class MyAuthenticationProvider implements AuthenticationProvider {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MyAuthenticationProvider.class);
+	private final Logger logger = LoggerFactory.getLogger(MyAuthenticationProvider.class);
 
 	@Autowired
 	private MyUserDetailsService myUserDetailsService;

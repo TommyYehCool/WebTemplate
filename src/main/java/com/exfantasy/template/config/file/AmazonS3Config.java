@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class AmazonS3Config {
-//	private static final Logger logger = LoggerFactory.getLogger(AmazonS3Config.class);
+//	private final Logger logger = LoggerFactory.getLogger(AmazonS3Config.class);
 //
 //	@Value("${aws.s3.accessKey}")
 //	private String accessKey;

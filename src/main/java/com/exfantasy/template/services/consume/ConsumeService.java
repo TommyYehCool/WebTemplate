@@ -43,7 +43,7 @@ import com.exfantasy.utils.tools.typhoon_vacation.TyphoonVacationUtil;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ConsumeService {
-	private static final Logger logger = LoggerFactory.getLogger(ConsumeService.class);
+	private final Logger logger = LoggerFactory.getLogger(ConsumeService.class);
 	
 	@Autowired
 	private CustomConsumeMapper consumeMapper;

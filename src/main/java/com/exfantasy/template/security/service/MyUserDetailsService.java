@@ -29,7 +29,7 @@ import com.exfantasy.template.services.user.UserService;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
+	private final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 	
 	@Autowired
 	private UserService userService;

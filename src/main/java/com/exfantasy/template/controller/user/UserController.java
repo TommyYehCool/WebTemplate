@@ -51,7 +51,7 @@ import io.swagger.annotations.ApiOperation;
 @Api("UserController - 使用者相關 API")
 public class UserController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;

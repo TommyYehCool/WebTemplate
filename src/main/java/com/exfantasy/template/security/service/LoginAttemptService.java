@@ -27,7 +27,7 @@ import com.google.common.cache.LoadingCache;
 @Service
 public class LoginAttemptService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(LoginAttemptService.class);
+	private final Logger logger = LoggerFactory.getLogger(LoginAttemptService.class);
 	/**
 	 * 客製化設定
 	 */

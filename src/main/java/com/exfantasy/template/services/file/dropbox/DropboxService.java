@@ -37,7 +37,7 @@ import com.exfantasy.template.util.FileUtil;
  */
 @Service
 public class DropboxService {
-	private static final Logger logger = LoggerFactory.getLogger(DropboxService.class);
+	private final Logger logger = LoggerFactory.getLogger(DropboxService.class);
 	
 	@Autowired
     private DbxClientV2 dropboxClient;

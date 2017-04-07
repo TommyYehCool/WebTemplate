@@ -32,7 +32,7 @@ import com.exfantasy.template.mybatis.model.User;
  */
 @Service
 public class MailService {
-	private static final Logger logger = LoggerFactory.getLogger(MailService.class);
+	private final Logger logger = LoggerFactory.getLogger(MailService.class);
 	
 	@Autowired
 	private JavaMailSender mailSender;
